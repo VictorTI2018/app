@@ -1,0 +1,2 @@
+export const SET_DRAWER_LOCKED = 'SET_DRAWER_LOCKED'
+export const SET_STACK_COUNT = 'SET_STACK_COUNT'
