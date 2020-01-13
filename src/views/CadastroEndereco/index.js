@@ -129,7 +129,9 @@ export default function CadastroEndereco({ navigation }) {
         showImagePicker().then(({ uri, didCancel, data }) => {
             if (didCancel) return
 
+           if(!didCancel) {
             setImagem({ uri: uri, base64: data})
+           }
         })
     }
 

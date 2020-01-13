@@ -61,7 +61,8 @@ function CadastroPet({ navigation }) {
     const [doar, setDoar] = useState(false)
     const [token, setToken] = useState()
     const [loading, setLoading] = useState(false)
-    const [ ong, setOng ] = useState(false)
+    const [ong, setOng] = useState(false)
+    const [imagem, setImagem] = useState()
 
     function getModel() {
         return {
@@ -75,13 +76,14 @@ function CadastroPet({ navigation }) {
             termos,
             foto,
             id_usuario,
-            doar
+            doar,
+            imagem
         }
     }
     useEffect(() => {
         let doar = navigation.getParam('doar')
         setDoar(doar)
-    }, [ doar ])
+    }, [doar])
 
 
 
@@ -158,9 +160,12 @@ function CadastroPet({ navigation }) {
     }
 
     function addFoto() {
-        showImagePicker().then(({ uri, didCancel }) => {
+        showImagePicker().then(({ uri, didCancel, data }) => {
             if (didCancel) return
-            console.log(uri)
+
+            if (!didCancel) {
+                setImagem({ uri: uri, base64: data })
+            }
         })
     }
 
