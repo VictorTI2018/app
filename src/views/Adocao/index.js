@@ -30,7 +30,8 @@ import {
     ContainerDono,
     Row,
     ViewRow,
-    SubmitChat
+    ContainerButtons,
+    ContainerButton
 } from './styles'
 
 import theme from '../../theme'
@@ -48,47 +49,20 @@ const sliderWidth = Dimensions.get('window').width
 const itemWidth = slideWidth + horizontalMargin * 2
 const itemHeight = 200
 
-export default function DashBoard(props) {
+export default function Adocao(props) {
 
     const _carousel = useRef(null)
-
-    const [pet, setPet] = useState([])
     const [pets, setPets] = useState([])
-    const [qtd_pets, setQtdPet] = useState(0)
-    const [id_usuario, setIdUsuario] = useState()
-    const [usuario, setUsuario] = useState([])
     const [loading, setLoading] = useState(false)
-    const [isVisible, setIsVisible] = useState(false)
-    const [nome_usuario, setNomeUsuario ] = useState()
+    const [ isVisible, setIsVisible ] = useState(false)
 
-    async function getIdUser() {
-        const id_usuario = await AsyncStorage.getItem('id_usuario')
-        let nome_usuario = await AsyncStorage.getItem("nome_usuario")
-        setIdUsuario(id_usuario)
-        setNomeUsuario(nome_usuario)
-    }
-
-    useEffect(() => {
-        getIdUser()
-    }, [])
-
-    async function loadUser() {
-        try {
-            setLoading(true)
-            const res = await loadUsuario(id_usuario)
-            setUsuario(res.data)
-            setPet(res.data.pets)
-            setQtdPet(res.data.qtd_pets)
-        } finally {
-            setLoading(false)
-        }
-    }
 
     async function loadPets() {
         try {
             setLoading(true)
             const resp = await getPets()
-            setPets(resp.data)
+            let pets = resp.data.filter(item => item.doar)
+            setPets(pets)
         } finally {
             setLoading(false)
         }
@@ -98,18 +72,6 @@ export default function DashBoard(props) {
         loadPets()
     }, [])
 
-    useEffect(() => {
-        loadUser()
-    }, [qtd_pets])
-
-
-    function buscarPet() {
-        props.navigation.navigate('BuscarPet')
-    }
-
-    function chat() {
-        props.navigation.push('Chat')
-    }
 
     function renderCarouselPets({ item }) {
         const nome = get(item, 'nome', '')
@@ -156,76 +118,50 @@ export default function DashBoard(props) {
         )
     }
 
+    function cadastrarPetDoar() {
+        props.navigation.push('CadastroPet', { doar: true })
+    }
 
     function renderPet() {
         const nome_pet = ''
         return (
             <CardPet>
                 <ContainerCard>
-                    <SubmitChat onPress={chat}>
-                        <Icon name='pets' size={40} color='#FFF' />
-                    </SubmitChat>
                     <ContainerPet>
-                        <FotoPet source={require('../../assets/cachorro1.png')} />
-                        <NomePet>{nome_pet || 'Totozinho'}</NomePet>
+                        <FotoPet source={require('../../assets/pesquisa-cachorro.png')} />
                     </ContainerPet>
-                    <SubmitChat color={theme.colors.errors}>
-                        <Iconn name='heart' size={40} color='#FFF' />
-                    </SubmitChat>
+
                 </ContainerCard>
-                <Submit colors={theme.colors.errors} onPress={() => { setIsVisible(true) }}>Achar um pet Ideal</Submit>
+                <ContainerButtons>
+                    <ContainerButton>
+                        <Submit style={{ width: '100%' }} colors="#0D47A1" onPress={cadastrarPetDoar}>Quero doar um pet</Submit>
+                    </ContainerButton>
+                    <ContainerButton>
+                        <Submit colors={theme.colors.errors} style={{ width: '70%' }} onPress={() => { setIsVisible(true) }}>Adotar um pet</Submit>
+                    </ContainerButton>
+                </ContainerButtons>
+                <Submit colors={theme.colors.primary}>Minha lista de interesses</Submit>
             </CardPet>
         )
 
     }
 
-    function cadastrarPet() {
-        props.navigation.navigate('CadastroPet')
-    }
-
-    function cadastrarPetDoar() {
-        props.navigation.navigate('CadastroPet', { doar: true })
-    }
-
-    function renderButtons() {
-        return (
-            <>
-                <Submit colors={theme.colors.errors} onPress={cadastrarPet}>Cadastrar meu Pet</Submit>
-                <Submit colors={theme.colors.blue}>Quero adotar um Pet</Submit>
-                <Submit colors={theme.colors.primary} onPress={cadastrarPetDoar}>Quero doar um Pet</Submit>
-            </>
-        )
-    }
-
-    function openDrawer() {
-        props.navigation.toggleDrawer()
-    }
-
     return (
         <>
-            <Topo title={`Olá ${nome_usuario}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
-            <BuscarPet isVisible={isVisible} onCancel={() => { setIsVisible(false) }} />
+            <Topo title="Adoção" onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
+            <BuscarPet isVisible={isVisible} onCancel={() => { setIsVisible(false) }} data={pets} />
             <ScrollView>
-                {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
-                    <Container>
-                        {qtd_pets > 0 ? renderPet() : renderButtons()}
-                        {/* {renderPet()} */}
-                        <ContainerCarosel>
-                            {pets.length ? (
-
-                                <Carousel
-                                    firstItem={1}
-                                    data={pets}
-                                    renderItem={renderCarouselPets}
-                                    sliderWidth={sliderWidth}
-                                    itemWidth={itemWidth} />
-                            ) : (
-                                    <Text style={{ fontSize: 23}}>Não há pets no momento!</Text>
-                                )}
-
-                        </ContainerCarosel>
-                    </Container>
-                )}
+                <Container>
+                    {renderPet()}
+                    <ContainerCarosel>
+                        <Carousel
+                            firstItem={1}
+                            data={pets}
+                            renderItem={renderCarouselPets}
+                            sliderWidth={sliderWidth}
+                            itemWidth={itemWidth} />
+                    </ContainerCarosel>
+                </Container>
             </ScrollView>
         </>
     )

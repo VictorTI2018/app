@@ -20,6 +20,8 @@ import ChatAmizade from '../views/ChatAmizade'
 import BuscarPet from '../views/BuscarPet'
 import CadastroPet from '../views/CadastroPet'
 
+import Adocao from '../views/Adocao'
+
 const Screens = {
     DashBoard,
     PetShops,
@@ -30,7 +32,8 @@ const Screens = {
     CadastroPet,
     DetalhesClinica,
     Chat,
-    ChatAmizade
+    ChatAmizade,
+    Adocao
 }
 
 const stackOptions = {

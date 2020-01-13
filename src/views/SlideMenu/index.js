@@ -28,6 +28,14 @@ export default function SlideMenu(props) {
             }
         },
         {
+            name: 'Adotar ou Doar um Pet',
+            action: () => props.navigation.navigate('Adocao'),
+            icon: {
+                name: 'home',
+                type: 'MaterialIcons'
+            }
+        },
+        {
             name: 'Pet Shop',
             action: () => props.navigation.navigate('PetShops'),
             icon: {
@@ -78,7 +86,7 @@ export default function SlideMenu(props) {
 
     useEffect(() => {
         loadUser()
-    }, [model])
+    }, [])
 
 
     async function removeStore() {

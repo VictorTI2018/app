@@ -29,7 +29,7 @@ export const ContainerTitle = styled.View`
 `
 
 export const Title = styled.Text`
-    font-size: 34px;
+    font-size: 30px;
     color: ${theme.colors.errors};
 `
 

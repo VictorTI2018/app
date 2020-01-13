@@ -41,7 +41,7 @@ export function Topo(props) {
                 </View>
                 {iconMenu && (
                     <TouchableOpacity style={[styles.iconMenu, stylesToken]} {...props}>
-                        <Icon name={iconName} color="#000" size={40} />
+                        <Icon name={iconName} color="#000" size={40} style={{ marginRight: 15}} />
                     </TouchableOpacity>
                 )}
 
@@ -53,7 +53,7 @@ export function Topo(props) {
                         {props.title}
                     </Text>
                 </View>
-                <TouchableOpacity {...props} style={[stylesToken, { marginRight: 20}]}>
+                <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30}]}>
                     {token && perfil && <Avatar rounded icon={{ name: 'user', type: 'font-awesome' }} />}
                 </TouchableOpacity>
 

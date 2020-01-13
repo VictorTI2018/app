@@ -61,6 +61,7 @@ function CadastroPet({ navigation }) {
     const [doar, setDoar] = useState(false)
     const [token, setToken] = useState()
     const [loading, setLoading] = useState(false)
+    const [ ong, setOng ] = useState(false)
 
     function getModel() {
         return {
@@ -80,7 +81,7 @@ function CadastroPet({ navigation }) {
     useEffect(() => {
         let doar = navigation.getParam('doar')
         setDoar(doar)
-    }, [])
+    }, [ doar ])
 
 
 
@@ -250,10 +251,10 @@ function CadastroPet({ navigation }) {
                         textStyle={{ color: theme.colors.placeholder }}
                         onPress={() => setPedigree(!pedigree)} checkedColor={theme.colors.primary} />
                     {doar && (
-                        <Check title="Sim, faço parte de uma ONG?" checked={pedigree}
+                        <Check title="Sim, faço parte de uma ONG?" checked={ong}
                             containerStyle={{ borderWidth: 0, backgroundColor: '#FFF' }}
                             textStyle={{ color: theme.colors.placeholder }}
-                            onPress={() => setPedigree(!pedigree)} checkedColor={theme.colors.primary} />
+                            onPress={() => setOng(!ong)} checkedColor={theme.colors.primary} />
                     )}
 
                     <Submit onPress={galeriaFotos}>Criar galeria de fotos do pet</Submit>

@@ -24,7 +24,7 @@ export default StyleSheet.create({
         borderRadius: 30,
     },
     iconMenu: {
-        marginRight: 20
+        // paddingRight: 30
     },
     logo: {
         alignItems: 'center',
