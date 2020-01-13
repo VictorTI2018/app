@@ -26,6 +26,7 @@ export default function CadastroEndereco({ navigation }) {
     const [data, setData] = useState([])
     const [ id_cidade, setIdCidade ] = useState()
     const [ id_endereco, setIdEndereco ] = useState()
+    const [ imagem, setImagem ] = useState()
 
     useEffect(() => {
         let id_usuario = navigation.getParam('id_usuario')
@@ -57,7 +58,8 @@ export default function CadastroEndereco({ navigation }) {
             cidade,
             uf,
             id_usuario,
-            id_cidade
+            id_cidade,
+            imagem
         }
     }
 
@@ -83,7 +85,6 @@ export default function CadastroEndereco({ navigation }) {
         try {
             setLoading(true)
             const resp = await updateEndereco(id_endereco, getModel())
-            console.log(resp.data)
             if(resp.data.status === "sucesso") {
                 showMessage({
                     message: "SUCESSO",
@@ -125,8 +126,10 @@ export default function CadastroEndereco({ navigation }) {
     }
 
     function addFoto() {
-        showImagePicker().then(({ uri, didCancel }) => {
+        showImagePicker().then(({ uri, didCancel, data }) => {
             if (didCancel) return
+
+            setImagem({ uri: uri, base64: data})
         })
     }
 
