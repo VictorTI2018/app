@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity, ActivityIndicator, View } from 'react-native'
-import ImagePicker from 'react-native-image-picker'
-import { Topo, useForm } from '../../components'
+
+import { Topo } from '../../components'
 import { FormContainer, Input, Submit, Logo, Title, ButtonContainer } from './styles'
 
-import { Rule } from '../../helpers'
 import theme from '../../theme'
 import axios from 'axios'
 
@@ -16,7 +15,7 @@ const MAX_FILE_SIZE = 3
 export default function CadastroEndereco({ navigation }) {
 
     const [loading, setLoading] = useState(false)
-    const [ cep, setCep ] = useState()
+    const [cep, setCep] = useState()
     const [logradouro, setLogradouro] = useState()
     const [bairro, setBairro] = useState()
     const [cidade, setCidade] = useState()
@@ -24,9 +23,9 @@ export default function CadastroEndereco({ navigation }) {
     const [foto, setFoto] = useState()
     const [id_usuario, setIdUsuario] = useState()
     const [data, setData] = useState([])
-    const [ id_cidade, setIdCidade ] = useState()
-    const [ id_endereco, setIdEndereco ] = useState()
-    const [ imagem, setImagem ] = useState()
+    const [id_cidade, setIdCidade] = useState()
+    const [id_endereco, setIdEndereco] = useState()
+    const [imagem, setImagem] = useState()
 
     useEffect(() => {
         let id_usuario = navigation.getParam('id_usuario')
@@ -38,7 +37,7 @@ export default function CadastroEndereco({ navigation }) {
     useEffect(() => {
         let id_endereco = navigation.getParam('id_endereco') || 0
         let update = navigation.getParam('update')
-        if(id_endereco > 0 && update) {
+        if (id_endereco > 0 && update) {
             let model = navigation.getParam('endereco')
             setCep(model.cep)
             setLogradouro(model.logradouro)
@@ -75,8 +74,8 @@ export default function CadastroEndereco({ navigation }) {
                     icon: 'auto',
                     duration: 1500
                 })
-            } 
-        }finally {
+            }
+        } finally {
             setLoading(false)
         }
     }
@@ -85,7 +84,7 @@ export default function CadastroEndereco({ navigation }) {
         try {
             setLoading(true)
             const resp = await updateEndereco(id_endereco, getModel())
-            if(resp.data.status === "sucesso") {
+            if (resp.data.status === "sucesso") {
                 showMessage({
                     message: "SUCESSO",
                     description: "Endereco Atualizado com sucesso",
@@ -94,18 +93,18 @@ export default function CadastroEndereco({ navigation }) {
                     duration: 1500
                 })
             }
-        }finally {
+        } finally {
             setLoading(false)
         }
     }
 
     async function handleSubmit() {
         try {
-           if(id_endereco > 0 ) {
-            await update(id_endereco)
-           } else {
-               await register()
-           }
+            if (id_endereco > 0) {
+                await update(id_endereco)
+            } else {
+                await register()
+            }
         } finally {
             setLoading(false)
         }
@@ -125,50 +124,9 @@ export default function CadastroEndereco({ navigation }) {
         }
     }
 
-    function addFoto() {
-        showImagePicker().then(({ uri, didCancel, data }) => {
-            if (didCancel) return
-
-           if(!didCancel) {
-            setImagem({ uri: uri, base64: data})
-           }
-        })
-    }
 
     function cadastroPet() {
         navigation.push('CadastroPet', { id_usuario: id_usuario, usuario: data })
-    }
-
-    function showImagePicker() {
-        return new Promise((resolve, reject) => {
-            const options = {
-                title: null,
-                cancelButtonTitle: 'Cancelar',
-                takePhotoButtonTitle: 'Tirar Foto',
-                chooseFromLibraryButtonTitle: 'Escolher Foto',
-                quality: 0.6,
-                storageOptions: {
-                    noData: true
-                },
-                permissionDenied: {
-                    title: 'Permissão negada',
-                    text: 'Para ser possivel selecionar fotos é necessário que seja dada as devidas permissãoes para o app',
-                    retryTitle: 'Tentar novamente',
-                    okTitle: 'Tenho Certeza'
-                }
-            }
-            ImagePicker.showImagePicker(options, (response) => {
-                const { fileSize, error } = response
-                if (fileSize / 100000 > MAX_FILE_SIZE) {
-                    reject(Error(`A foto não pode ultrapassar ${MAX_FILE_SIZE} MB`))
-                } else if (error) {
-                    reject(Error(error))
-                } else {
-                    let source = { uri: response.uri }
-                    setFoto(source)
-                }
-            })
-        })
     }
 
     function actionBack() {
@@ -184,10 +142,8 @@ export default function CadastroEndereco({ navigation }) {
     return (
         <FormContainer>
             <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" />
-            <TouchableOpacity onPress={addFoto}>
-                {foto === undefined || foto.uri === undefined ?
-                    <Logo source={require('../../assets/upload-image.png')} /> :
-                    <Logo source={foto} />}
+            <TouchableOpacity >
+                <Logo source={require('../../assets/upload-image.png')} />
             </TouchableOpacity>
             <View style={{ paddingLeft: 15, paddingRight: 15 }}>
                 <Input placeholder="CEP" value={cep} onChangeText={(value) => setCep(value)} onBlur={getEndereco} />
@@ -199,8 +155,8 @@ export default function CadastroEndereco({ navigation }) {
                     <Title>{cidade || ''} - {uf || ''}</Title>
 
                 </View>}
-                {logradouro && <Submit disabled={loading} onPress={handleSubmit} color="#00C853">{loading ? 'Aguarde...' : 'Finalizar'}</Submit>}
-            
+            {logradouro && <Submit disabled={loading} onPress={handleSubmit} color="#00C853">{loading ? 'Aguarde...' : 'Finalizar'}</Submit>}
+
             <ButtonContainer>
                 <Submit onPress={cadastroPet}>Cadastrar meu Pet</Submit>
                 <Submit color="blue">Quero adotar um Pet</Submit>

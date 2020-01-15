@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
+import ImagePicker from 'react-native-image-picker'
+import { View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
-import { PasswordField, useForm, Background, Topo } from '../../components'
+import { PasswordField, Topo } from '../../components'
 import { FormContainer, Input, Submit, Logo, Container } from './styles'
 
 import { showMessage } from 'react-native-flash-message'
 import { createUsuario, updateUsuario } from '../../webservice/cadastro-usuario'
+
+
+import RNFetchBlob from 'react-native-fetch-blob'
+import AsyncStorage from '@react-native-community/async-storage'
+
+const MAX_FILE_SIZE = 3
 
 function CadastroUsuario({ navigation }) {
 
@@ -17,13 +24,13 @@ function CadastroUsuario({ navigation }) {
     const [sobrenome, setSobreNome] = useState()
     const [id_usuario, setIdUsuario] = useState()
     const [loading, setLoading] = useState(false)
+    const [ imagem, setImagem ] = useState()
+    const [foto, setFoto] = useState()
 
     useEffect(() => {
         let id_usuario = navigation.getParam('id_usuario')
-        console.log(id_usuario)
         if (id_usuario > 0) {
             let model = navigation.getParam('model')
-            console.log(model)
             setNome(model.nome)
             setEmail(model.email)
             setSobreNome(model.sobrenome)
@@ -37,7 +44,8 @@ function CadastroUsuario({ navigation }) {
             nome: nome,
             sobrenome: sobrenome,
             email: email,
-            senha
+            senha,
+            imagem
         }
     }
 
@@ -48,7 +56,9 @@ function CadastroUsuario({ navigation }) {
     async function register() {
         try {
             setLoading(true)
+
             const resp = await createUsuario(getModel())
+            console.log(resp.data)
             if (resp.data.status) {
                 const id_usuario = resp.data.id_usuario
                 navigation.push('CadastroEndereco', { id_usuario: id_usuario, usuario: resp.data })
@@ -64,6 +74,7 @@ function CadastroUsuario({ navigation }) {
         } finally {
             setLoading(false)
         }
+
     }
 
     async function update(id_usuario) {
@@ -80,7 +91,7 @@ function CadastroUsuario({ navigation }) {
     }
 
     async function handleSubmit() {
-        if (nome.value || email.value || senha) {
+        if (nome || email || senha) {
             if (senha === confirme_senha) {
 
                 if (id_usuario > 0) {
@@ -110,15 +121,46 @@ function CadastroUsuario({ navigation }) {
         }
 
     }
+    async function addFoto() {
+        Alert.alert("Imagem adicionada")
+    }
+
+    function pickImage() {
+        ImagePicker.showImagePicker({
+            title: 'Escolha a imagem',
+            cancelButtonTitle: 'Cancelar',
+            takePhotoButtonTitle: 'Tirar Foto',
+            chooseFromLibraryButtonTitle: 'Escolher Foto',
+            quality: 0.6,
+            storageOptions: {
+                noData: true
+            },
+            permissionDenied: {
+                title: 'Permissão Negada',
+                text: 'Para ser possivel selecionar fotos é necessário que seja dada as devidas permissões para o app',
+                reTryTitle: 'Tentar novamente',
+                okTitle: 'Tenho certeza'
+            },
+            maxHeight: 600,
+            maxWidth: 800
+        }, res => {
+            if (!res.didCancel) {
+                setFoto({ uri: res.uri })
+                setImagem({ uri: 'data:image/png;base64,' + res.data})
+            }
+        })
+    }
 
 
     const title = id_usuario > 0 ? `Editar Usuario` : 'Cadastro Usuario'
     return (
         <FormContainer>
             <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" />
-            <View>
-                <Logo source={require('../../assets/cadastro-usuario.png')} />
-            </View>
+            <TouchableOpacity onPress={pickImage} style={{ borderRadius: 100, }}>
+                {foto === undefined || foto.uri === undefined ?
+                    <Logo source={require('../../assets/upload-image.png')} /> :
+                    <Logo source={foto} />}
+            </TouchableOpacity>
             <View style={{ paddingLeft: 15, paddingRight: 15 }}>
                 <Input placeholder="Nome"
                     value={nome}

@@ -65,6 +65,7 @@ export default function SlideMenu(props) {
         try {
             setLoading(true)
             const resp = await loadUsuario(id_usuario)
+            console.log(resp.data)
             setModel(resp.data)
             setQtdPets(resp.data.qtd_pets)
         } finally {
@@ -81,12 +82,11 @@ export default function SlideMenu(props) {
 
     useEffect(() => {
         userLogged()
-
     }, [])
 
     useEffect(() => {
         loadUser()
-    }, [])
+    }, [ ])
 
 
     async function removeStore() {
@@ -119,6 +119,7 @@ export default function SlideMenu(props) {
     }
 
     let nome_pet = ''
+    let imagem = model ? model.imagem : '';
     return (
         <View style={styles.menu}>
             <View style={{ borderBottomColor: '#FFF', borderBottomWidth: 1 }}>
@@ -131,7 +132,7 @@ export default function SlideMenu(props) {
 
                 <View style={styles.rowImage}>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        <Image style={styles.rounded} source={require('../../assets/mulher1.png')} />
+                        <Image style={styles.rounded} source={{ uri: imagem }} />
                         <Submit onPress={editarCliente}>Editar Perfil</Submit>
                         <Nome>{nomeUsuario || 'Nome do Cliente'}</Nome>
                     </View>
