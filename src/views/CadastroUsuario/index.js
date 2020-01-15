@@ -121,9 +121,6 @@ function CadastroUsuario({ navigation }) {
         }
 
     }
-    async function addFoto() {
-        Alert.alert("Imagem adicionada")
-    }
 
     function pickImage() {
         ImagePicker.showImagePicker({

@@ -65,7 +65,7 @@ export default function SlideMenu(props) {
         try {
             setLoading(true)
             const resp = await loadUsuario(id_usuario)
-            console.log(resp.data)
+            console.log(resp.data.pets)
             setModel(resp.data)
             setQtdPets(resp.data.qtd_pets)
         } finally {
@@ -86,7 +86,7 @@ export default function SlideMenu(props) {
 
     useEffect(() => {
         loadUser()
-    }, [ ])
+    }, [])
 
 
     async function removeStore() {
@@ -120,24 +120,29 @@ export default function SlideMenu(props) {
 
     let nome_pet = ''
     let imagem = model ? model.imagem : '';
+    let imagePet = model ? model.pets.imagem : ''
     return (
         <View style={styles.menu}>
             <View style={{ borderBottomColor: '#FFF', borderBottomWidth: 1 }}>
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center' }}>
                     <Image source={require('../../assets/menu-min.png')} style={{ height: 50, width: 170 }} />
                     <TouchableOpacity onPress={toggleDrawer}>
-                        <Icon type='MaterialIcons' name={openDrawer && 'keyboard-arrow-left'} style={{ fontSize: 40, color: theme.colors.primary}} />
+                        <Icon type='MaterialIcons' name={openDrawer && 'keyboard-arrow-left'} style={{ fontSize: 40, color: theme.colors.primary }} />
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.rowImage}>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        <Image style={styles.rounded} source={{ uri: imagem }} />
+                        {imagem !== ''
+                            ? <Image style={styles.rounded} source={{ uri: imagem }} />
+                            : <Image style={styles.rounded} source={require('../../assets/mulher1.png')} />}
                         <Submit onPress={editarCliente}>Editar Perfil</Submit>
                         <Nome>{nomeUsuario || 'Nome do Cliente'}</Nome>
                     </View>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        <Image style={styles.roundedDog} source={require('../../assets/cachorro1.png')} />
+                        {imagePet !== ''
+                            ? <Image style={styles.roundedDog} source={{ uri: imagePet }} />
+                            : <Image style={styles.roundedDog} source={require('../../assets/cachorro1.png')} />}
                         <Submit>Editar Perfil</Submit>
                         <Nome>{nome_pet || 'Nome Pet'}</Nome>
                     </View>

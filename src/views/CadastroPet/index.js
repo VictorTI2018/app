@@ -74,7 +74,6 @@ function CadastroPet({ navigation }) {
             castrado,
             pedigree,
             termos,
-            foto,
             id_usuario,
             doar,
             imagem
@@ -129,11 +128,6 @@ function CadastroPet({ navigation }) {
         loadEspecie()
     }, [])
 
-    useEffect(() => {
-        async function getPet() {
-            const resp = await getPetId(id_usuario)
-        }
-    })
 
     async function handleSubmit() {
         try {
@@ -159,49 +153,35 @@ function CadastroPet({ navigation }) {
         }
     }
 
-    function addFoto() {
-        showImagePicker().then(({ uri, didCancel, data }) => {
-            if (didCancel) return
 
-            if (!didCancel) {
-                setImagem({ uri: uri, base64: data })
-            }
-        })
-    }
 
     function galeriaFotos() {
         navigation.push('GaleriaPet')
     }
 
-    function showImagePicker() {
-        return new Promise((resolve, reject) => {
-            const options = {
-                title: null,
-                cancelButtonTitle: 'Cancelar',
-                takePhotoButtonTitle: 'Tirar Foto',
-                chooseFromLibraryButtonTitle: 'Escolher Foto',
-                quality: 0.6,
-                storageOptions: {
-                    noData: true
-                },
-                permissionDenied: {
-                    title: 'Permissão negada',
-                    text: 'Para ser possível selecionar fotos é necessário que seja dada as devidas permissões para o app',
-                    reTryTitle: 'Tentar novamente',
-                    okTitle: 'Tenho certeza'
-                }
+    function pickImage() {
+        ImagePicker.showImagePicker({
+            title: 'Escolha a imagem',
+            cancelButtonTitle: 'Cancelar',
+            takePhotoButtonTitle: 'Tirar Foto',
+            chooseFromLibraryButtonTitle: 'Escolher Foto',
+            quality: 0.6,
+            storageOptions: {
+                noData: true
+            },
+            permissionDenied: {
+                title: 'Permissão Negada',
+                text: 'Para ser possivel selecionar fotos é necessário que seja dada as devidas permissões para o app',
+                reTryTitle: 'Tentar novamente',
+                okTitle: 'Tenho certeza'
+            },
+            maxHeight: 600,
+            maxWidth: 800
+        }, res => {
+            if (!res.didCancel) {
+                setFoto({ uri: res.uri })
+                setImagem({ uri: 'data:image/png;base64,' + res.data})
             }
-            ImagePicker.showImagePicker(options, (response) => {
-                const { fileSize, error } = response
-                if (fileSize / 100000 > MAX_FILE_SIZE) {
-                    reject(Error(`A foto não pode ultrapassar ${MAX_FILE_SIZE} MB`))
-                } else if (error) {
-                    reject(Error(error))
-                } else {
-                    let source = { uri: response.uri }
-                    setFoto(source)
-                }
-            })
         })
     }
 
@@ -215,7 +195,7 @@ function CadastroPet({ navigation }) {
             <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" perfil />
             <FormContainer>
 
-                <TouchableOpacity onPress={addFoto}>
+                <TouchableOpacity onPress={pickImage}>
                     {foto === undefined || foto.uri === undefined ?
                         <Logo source={require('../../assets/upload-image.png')} /> :
                         <Logo source={foto} />}
