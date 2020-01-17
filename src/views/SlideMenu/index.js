@@ -36,22 +36,6 @@ export default function SlideMenu(props) {
             }
         },
         {
-            name: 'Pet Shop',
-            action: () => props.navigation.navigate('PetShops'),
-            icon: {
-                name: 'pets',
-                type: 'MaterialIcons'
-            }
-        },
-        {
-            name: 'Clinicas',
-            action: () => props.navigation.navigate('Clinicas'),
-            icon: {
-                name: 'hospital-o',
-                type: 'FontAwesome'
-            }
-        },
-        {
             name: 'Sair',
             action: () => logout(),
             icon: {
