@@ -102,6 +102,10 @@ export default function SlideMenu(props) {
         props.navigation.push('CadastroUsuario', { id_usuario: id_usuario, model: model })
     }
 
+    async function loadLocais() {
+        
+    }
+
     let nome_pet = ''
     let imagem = model ? model.imagem : '';
     let imagePet = model ? model.pets.imagem : ''
