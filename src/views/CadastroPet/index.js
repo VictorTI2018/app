@@ -143,7 +143,7 @@ function CadastroPet({ navigation }) {
                     setLoading(true)
                     if (token) {
                         let res = await createPet(getModel())
-                        console.log(res.data)
+                        console.log(res.datapara)
                         if (res.data.status === 'sucesso') {
                             navigation.push('Parabens', { pet: getModel() })
                         }
