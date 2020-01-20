@@ -208,7 +208,7 @@ function CadastroPet({ navigation }) {
         navigation.pop()
     }
 
-    const title = doar ? 'Cadastro para adpção' : 'Cadastro do Pet'
+    const title = doar ? 'Cadastro para adoção' : 'Cadastro do Pet'
     return (
         <>
             <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" />

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-community/async-storage';
-import { View, Alert } from 'react-native'
+import { View, Alert, NativeModules } from 'react-native'
 import { showMessage } from 'react-native-flash-message'
 
 import { get } from 'lodash'
@@ -15,6 +15,7 @@ import { login } from '../../webservice/login'
 import { Rule } from '../../helpers'
 
 function Login({ navigation }) {
+
 
 
     const initialValues = {
@@ -37,6 +38,17 @@ function Login({ navigation }) {
         return {
             email: email.value,
             password
+        }
+    }
+
+    useEffect(() => {
+        load()
+    }, [])
+
+    async function load() {
+        const token = await AsyncStorage.getItem('token')
+        if(token) {
+            navigation.replace('MainStack')
         }
     }
 
