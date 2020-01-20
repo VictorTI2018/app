@@ -14,7 +14,7 @@ export default function SlideMenu(props) {
 
     const [id_usuario, setIdUsuario] = useState()
     const [qtd_pets, setQtdPets] = useState()
-    const [model, setModel] = useState()
+    const [model, setModel] = useState([])
     const [loading, setLoading] = useState(false)
     const [nomeUsuario, setNomeUsuario] = useState()
 
@@ -49,7 +49,6 @@ export default function SlideMenu(props) {
         try {
             setLoading(true)
             const resp = await loadUsuario(id_usuario)
-            console.log(resp.data.pets)
             setModel(resp.data)
             setQtdPets(resp.data.qtd_pets)
         } finally {
@@ -70,6 +69,7 @@ export default function SlideMenu(props) {
 
     useEffect(() => {
         loadUser()
+        console.log(model)
     }, [])
 
 
@@ -103,12 +103,14 @@ export default function SlideMenu(props) {
     }
 
     async function loadLocais() {
-        
+
     }
 
+
+
     let nome_pet = ''
-    let imagem = model ? model.imagem : '';
-    let imagePet = model ? model.pets.imagem : ''
+    let imagem = ''
+    let imagePet = ''
     return (
         <View style={styles.menu}>
             <View style={{ borderBottomColor: '#FFF', borderBottomWidth: 1 }}>
@@ -174,6 +176,7 @@ export default function SlideMenu(props) {
             </ScrollView>
         </View>
     )
+
 }
 
 const styles = {

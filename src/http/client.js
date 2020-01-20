@@ -5,7 +5,7 @@ import { BASE_URL } from '../config/config'
 import AsyncStorage from '@react-native-community/async-storage'
 
 const client = axios.create({
-    baseURL: 'http://192.168.0.124:8000'
+    baseURL: "http://192.168.0.124:8000"
 })
 const timeOut = 30000
 

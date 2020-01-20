@@ -37,16 +37,16 @@ export const Submit = props => {
 
 const LogoContainer = styled.View`
   flex-direction: row;
-  height: 200px;
+  height: 180px;
   width: 100%;
   justify-content: center;
   align-items: flex-end;
+  margin-top: 10px;
 `
-const LogoImage = styled.Image.attrs({
-  resizeMode: 'contain'
-})`
+const LogoImage = styled.Image`
   height: 100%;
   width: 50%;
+  border-radius: 200px;
 `
 
 export const Logo = props => (

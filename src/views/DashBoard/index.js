@@ -184,7 +184,7 @@ export default function DashBoard(props) {
     }
 
     function cadastrarPetDoar() {
-        props.navigation.navigate('CadastroPet', { doar: true })
+        props.navigation.navigate('CadastroPet', { doar: true, usuario: usuario, id_usuario: id_usuario })
     }
 
     function renderButtons() {

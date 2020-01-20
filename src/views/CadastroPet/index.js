@@ -9,6 +9,7 @@ import { Logo, FormContainer, Input, Row, Check, Submit, RoundedSelect } from '.
 
 import theme from '../../theme'
 import { createPet } from '../../webservice/cadastro-usuario'
+import { createPetNoToken } from '../../webservice/pet'
 import { getRacas } from '../../webservice/raca'
 import { getEspecies } from '../../webservice/especie'
 import { showMessage } from 'react-native-flash-message';
@@ -26,7 +27,13 @@ const dataIdade = [
     { label: '3 anos', value: '3' },
     { label: '4 anos', value: '4' },
     { label: '5 anos', value: '5' },
-    { label: '6 anos', value: '6' }
+    { label: '6 anos', value: '6' },
+    { label: '7 ano', value: '7' },
+    { label: '8 anos', value: '8' },
+    { label: '9 anos', value: '9' },
+    { label: '10 anos', value: '10' },
+    { label: '11 anos', value: '11' },
+    { label: '12 anos', value: '12' },
 ]
 
 const placeholderEspecie =
@@ -58,10 +65,11 @@ function CadastroPet({ navigation }) {
     const [termos, setTermos] = useState(false)
     const [foto, setFoto] = useState()
     const [id_usuario, setIdUsuario] = useState()
-    const [doar, setDoar] = useState(false)
-    const [token, setToken] = useState()
+    const [doar, setDoar] = useState(navigation.getParam('doar'))
+    const [token, setToken] = useState(null)
     const [loading, setLoading] = useState(false)
     const [ong, setOng] = useState(false)
+    const [nomeOng, setNomeOng] = useState('')
     const [imagem, setImagem] = useState()
 
     function getModel() {
@@ -76,18 +84,16 @@ function CadastroPet({ navigation }) {
             termos,
             id_usuario,
             doar,
-            imagem
+            imagem,
+            nomeOng
         }
     }
-    useEffect(() => {
-        let doar = navigation.getParam('doar')
-        setDoar(doar)
-    }, [doar])
+
 
 
 
     async function getToken() {
-        const token = await AsyncStorage.getItem('token')
+        const token = await AsyncStorage.getItem('token') || null
         let id_usuario = token ? await AsyncStorage.getItem('id_usuario') : navigation.getParam("id_usuario")
         setToken(token)
         setIdUsuario(id_usuario)
@@ -130,26 +136,41 @@ function CadastroPet({ navigation }) {
 
 
     async function handleSubmit() {
-        try {
-            setLoading(true)
-            const res = await createPet(getModel())
-            if (res.data.status === 'sucesso') {
-                if (token) {
-                    navigation.push('Parabens', { pet: getModel() })
-                } else {
-                    showMessage({
-                        message: "SUCESSO",
-                        description: "Cadastro efetuado com sucesso...",
-                        type: 'success',
-                        icon: 'auto',
-                        duration: 2000
-                    })
+        console.log(token)
+        if (termos) {
+            if (nome && sexos) {
+                try {
+                    setLoading(true)
+                    if (token) {
+                        let res = await createPet(getModel())
+                        console.log(res.data)
+                        if (res.data.status === 'sucesso') {
+                            navigation.push('Parabens', { pet: getModel() })
+                        }
+                    } else {
+                        let res = await createPetNoToken(getModel())
+                        console.log(res.data)
+                    }
+                } finally {
+                    setLoading(false)
                 }
-
-
+            } else {
+                showMessage({
+                    message: "ATENÇÃO",
+                    description: "Por favor preencha todos os campos",
+                    type: 'danger',
+                    icons: 'auto',
+                    duration: 2000
+                })
             }
-        } finally {
-            setLoading(false)
+        } else {
+            showMessage({
+                message: "ATENÇÃO",
+                description: "Por favor aceite os termos e condições",
+                type: 'danger',
+                icons: 'auto',
+                duration: 2000
+            })
         }
     }
 
@@ -180,7 +201,7 @@ function CadastroPet({ navigation }) {
         }, res => {
             if (!res.didCancel) {
                 setFoto({ uri: res.uri })
-                setImagem({ uri: 'data:image/png;base64,' + res.data})
+                setImagem({ uri: 'data:image/png;base64,' + res.data })
             }
         })
     }
@@ -192,10 +213,10 @@ function CadastroPet({ navigation }) {
     const title = doar ? 'Cadastro para adpção' : 'Cadastro do Pet'
     return (
         <>
-            <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" perfil />
+            <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" />
             <FormContainer>
 
-                <TouchableOpacity onPress={pickImage}>
+                <TouchableOpacity onPress={pickImage} style={{ flex: 1 }}>
                     {foto === undefined || foto.uri === undefined ?
                         <Logo source={require('../../assets/upload-image.png')} /> :
                         <Logo source={foto} />}
@@ -240,7 +261,10 @@ function CadastroPet({ navigation }) {
                             containerStyle={{ borderWidth: 0, backgroundColor: '#FFF' }}
                             textStyle={{ color: theme.colors.placeholder }}
                             onPress={() => setOng(!ong)} checkedColor={theme.colors.primary} />
+
+
                     )}
+                    {ong && <Input placeholder="Nome da Ong" value={nomeOng} onChangeText={(value) => setNomeOng(value)} />}
 
                     <Submit onPress={galeriaFotos}>Criar galeria de fotos do pet</Submit>
 

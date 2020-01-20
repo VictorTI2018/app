@@ -134,7 +134,7 @@ export default function CadastroEndereco({ navigation }) {
     }
 
     function doarPet() {
-        navigation.push('CadastroPet', { doar: true, usuario: data })
+        navigation.push('CadastroPet', { doar: true, usuario: data, id_usuario: id_usuario })
     }
 
     let title = id_endereco > 0 ? 'Atualizar Endereço' : 'Cadastrar Endereço'
