@@ -124,9 +124,9 @@ export const Detalhes = props => {
 
 export const RowContainer = styled.View`
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 5px;
-    margin: 5px;
+    
 `
 
 export const FotoDono = styled.Image`
@@ -136,7 +136,7 @@ export const FotoDono = styled.Image`
 `
 
 export const ContainerDono = styled.View`
-    flex-basis: 50%;
+    flex-basis: 40%;
 `
 
 export const ViewRow = styled.View`
@@ -164,15 +164,20 @@ export const ContainerButton = styled.View`
 `
 
 export const DadosDono = styled.Text`
-    font-size: 20px;
+    font-size: 15px;
 `
 
 export const Texto = styled.Text`
     color: ${props => props.colors ? props.colors : '#000'};
-    font-size: ${props => props.fontSize ? props.fontSize : 20};
+    font-size: ${props => props.fontSize ? props.fontSize : 16};
 `
 
 export const Div = styled.View`
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+`
+
+export const DivRow = styled.View`
+    flex-direction: row;
 `

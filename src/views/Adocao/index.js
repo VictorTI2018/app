@@ -34,7 +34,8 @@ import {
     ContainerButton,
     DadosDono,
     Texto,
-    Div
+    Div,
+    DivRow
 } from './styles'
 
 import theme from '../../theme'
@@ -65,7 +66,7 @@ export default function Adocao(props) {
             setLoading(true)
             const resp = await getPets()
             let pets = resp.data.filter(item => item.status === 'adoção')
-            
+
         } finally {
             setLoading(false)
         }
@@ -117,18 +118,19 @@ export default function Adocao(props) {
                 </ContainerCard>
                 <RowContainer>
                     <ContainerDono>
-                        <RowContainer>
+                        <DivRow>
                             <FotoDono source={require('../../assets/mulher1.png')} />
-                            {/* <DadosDono>Pessoa / entidade</DadosDono> */}
-                        </RowContainer>
-
+                        </DivRow>
                     </ContainerDono>
-                    <Div>
-                        <ContainerIcon color={theme.colors.errors}>
-                            <Iconn name='heart' size={60} color='#FF80AB' />
-                        </ContainerIcon>
-                        <Texto colors={theme.colors.errors}>Quero Adotar</Texto>
-                    </Div>
+
+                    <ContainerDono>
+                        <Div>
+                            <ContainerIcon color={theme.colors.errors}>
+                                <Iconn name='heart' size={60} color='#FF80AB' />
+                            </ContainerIcon>
+                            <Texto colors={theme.colors.errors}>Quero Adotar</Texto>
+                        </Div>
+                    </ContainerDono>
 
                 </RowContainer>
             </ContainerPets>
