@@ -136,13 +136,13 @@ function CadastroPet({ navigation }) {
 
 
     async function handleSubmit() {
-        console.log(token)
         if (termos) {
             if (nome && sexos) {
                 try {
                     setLoading(true)
                     if (token) {
                         let res = await createPet(getModel())
+                        console.log(res.data)
                         if (res.data.status === 'sucesso') {
                             navigation.push('Parabens', { pet: getModel() })
                         }

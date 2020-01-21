@@ -17,7 +17,7 @@ import styles, { Container } from './styles'
 export function Topo(props) {
     const { iconBack, iconName, iconMenu, perfil, pet_perfil, } = props
     const [token, setToken] = useState()
-    const stylesToken = !token ? { flexBasis: '33%' } : ''
+    const stylesToken = !token ? {  } : {  }
 
     async function getToken() {
         let token = await AsyncStorage.getItem("token")
@@ -30,9 +30,9 @@ export function Topo(props) {
     return (
         <>
             <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
-            <Container >
+            <Container style={!token ? { justifyContent: 'space-around' } : { justifyContent: 'space-between'}} >
 
-                <View style={stylesToken}>
+                <View style={{ stylesToken }}>
                     {iconBack && (
                         <TouchableOpacity style={styles.colorIconBack} {...props}>
                             <Icon name={iconName} color="#000" size={30} />
@@ -41,7 +41,7 @@ export function Topo(props) {
                 </View>
                 {iconMenu && (
                     <TouchableOpacity style={[styles.iconMenu, stylesToken]} {...props}>
-                        <Icon name={iconName} color="#000" size={40} style={{ marginRight: 15}} />
+                        <Icon name={iconName} color="#000" size={40} style={{ marginRight: 15 }} />
                     </TouchableOpacity>
                 )}
 
@@ -53,7 +53,8 @@ export function Topo(props) {
                         {props.title}
                     </Text>
                 </View>
-                <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30}]}>
+                
+                <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30 }]}>
                     {token && perfil && <Avatar rounded icon={{ name: 'user', type: 'font-awesome' }} />}
                 </TouchableOpacity>
 

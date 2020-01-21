@@ -8,7 +8,7 @@ export const Container = styled.View`
     align-items: center;
     padding: 3px;
     background-color: ${theme.colors.primary};
-    justify-content: space-between;
+    
 `
 
 export default StyleSheet.create({
@@ -42,6 +42,6 @@ export default StyleSheet.create({
         height: 40,
     },
     profile: {
-        padding: 10
+        
     }
 })

@@ -14,7 +14,7 @@ export default function SlideMenu(props) {
 
     const [id_usuario, setIdUsuario] = useState()
     const [qtd_pets, setQtdPets] = useState()
-    const [model, setModel] = useState([])
+    const [model, setModel] = useState(null)
     const [loading, setLoading] = useState(false)
     const [nomeUsuario, setNomeUsuario] = useState()
 
@@ -65,12 +65,11 @@ export default function SlideMenu(props) {
 
     useEffect(() => {
         userLogged()
-    }, [])
+    }, [id_usuario])
 
     useEffect(() => {
         loadUser()
-        console.log(model)
-    }, [])
+    }, [ id_usuario])
 
 
     async function removeStore() {
@@ -106,10 +105,8 @@ export default function SlideMenu(props) {
 
     }
 
-
-
     let nome_pet = ''
-    let imagem = ''
+    let imagem = model ? model.imagem : null
     let imagePet = ''
     return (
         <View style={styles.menu}>
@@ -123,7 +120,7 @@ export default function SlideMenu(props) {
 
                 <View style={styles.rowImage}>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        {imagem !== ''
+                        {imagem
                             ? <Image style={styles.rounded} source={{ uri: imagem }} />
                             : <Image style={styles.rounded} source={require('../../assets/mulher1.png')} />}
                         <Submit onPress={editarCliente}>Editar Perfil</Submit>

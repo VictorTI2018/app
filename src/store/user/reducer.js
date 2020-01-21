@@ -1,13 +1,24 @@
-import { useReducer } from '../reducer'
-import { SET_NAME } from './types'
+import * as t from './types'
+import Reducer from '../reducer'
 
 const initialState = {
-    name: null
+    usuario: null
 }
 
-export default function (state = initialState, action) {
-    const { type } = action
-    const { set } = useReducer(state, action)
-    if(type === SET_NAME ) { return set('name') }
-    return false 
+export default(state = initialState, action) => {
+    const r = new Reducer(state, action)
+
+    switch(action.type) {
+        case t.SET_API_TOKEN:
+            return {
+                ...state,
+                usuario: {
+                    ...state.usuario,
+                    token: action.token
+                }
+            }
+        case t.SET_USUARIO: return r.set('usuario')
+        default:
+            return state
+    }
 }

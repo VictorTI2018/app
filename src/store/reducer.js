@@ -1,9 +1,14 @@
-export function useReducer(state, action) {
-    function set(name, value) {
+export default class Reducer {
+
+    constructor(state, action) {
+        this.state = state,
+        this.action = action
+    }
+
+    set(name, value) {
         return {
-            ...state,
-            [name]: value !== undefined ? value : action[name]
+            ...this.state,
+            [name]: value !== undefined ? value : this.action[`${name}`]
         }
     }
-    return [set]
 }

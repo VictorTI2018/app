@@ -1,64 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import AsyncStorage from '@react-native-community/async-storage';
-import { View, Alert, NativeModules } from 'react-native'
 import { showMessage } from 'react-native-flash-message'
 
-import { get } from 'lodash'
+import { View, Alert } from 'react-native'
 
-import { Image, useForm, PasswordField, Topo } from '../../components'
+import { Image, PasswordField, Topo } from '../../components'
 import { Input, FormContainer, Submit, Anchor } from './styles'
-
-import { setStorage } from '../../helpers'
 
 import { login } from '../../webservice/login'
 
-import { Rule } from '../../helpers'
+function Login(props) {
 
-function Login({ navigation }) {
-
-
-
-    const initialValues = {
-        email: ''
-    }
 
     const [password, setPassword] = useState()
+    const [email, setEmail] = useState()
 
     const [loading, setLoading] = useState(false)
 
-    const rules = {
-        email: [Rule.required()]
+    function cadastrar() {
+        props.navigation.push('CadastroUsuario')
     }
-
-    const { getFieldProps } = useForm(initialValues, rules, handleSubmit, getModel)
-
-    const [email] = getFieldProps('email')
 
     function getModel() {
         return {
-            email: email.value,
+            email,
             password
         }
     }
 
-    useEffect(() => {
-        load()
-    }, [])
-
-    async function load() {
-        const token = await AsyncStorage.getItem('token')
-        if(token) {
-            navigation.replace('MainStack')
-        }
-    }
-
-    function cadastrar() {
-        navigation.push('CadastroUsuario')
-    }
-
     async function handleSubmit() {
         try {
-            if (email.value && password) {
+            if (email && password) {
                 setLoading(true)
                 const resp = await login(getModel())
                 if (resp.data.errorEmail) {
@@ -94,7 +66,7 @@ function Login({ navigation }) {
                             duration: 1100
                         })
                         setTimeout(() => {
-                            navigation.replace('MainStack')
+                            props.navigation.replace('MainStack')
                         }, 1150)
                     }
                 }
@@ -120,6 +92,7 @@ function Login({ navigation }) {
         } finally {
             setLoading(false)
         }
+
     }
 
     return (
@@ -131,9 +104,11 @@ function Login({ navigation }) {
                     img={require('../../assets/destaque-login.png')} />
             </View>
             <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-                <Input placeholder='Email...' {...email} KeyboardType="email-address" />
+                <Input placeholder='Email...'
+                    KeyboardType="email-address"
+                    value={email}
+                    onChangeText={(value) => setEmail(value)} />
                 <PasswordField
-                    returnKeyType="next"
                     style={{ marginTop: 10, }}
                     value={password}
                     onChangeText={(value) => setPassword(value)}
@@ -147,4 +122,7 @@ function Login({ navigation }) {
 Login.navigationOptions = () => ({
     title: 'Login'
 })
+
+
+
 export default Login
