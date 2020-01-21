@@ -23,8 +23,8 @@ export const ContainerPet = styled.View`
 export const ContainerIcon = styled.View`
     border-radius: 55px;
     background-color: ${props => props.color ? props.color : theme.colors.primary};
-    height: 70px;
-    width: 70px;
+    height: 92px;
+    width: 92px;
     justify-content: center;
     align-items: center;
 `
@@ -161,4 +161,18 @@ export const ContainerButtons = styled.View`
 
 export const ContainerButton = styled.View`
     flex-basis: 48%;
+`
+
+export const DadosDono = styled.Text`
+    font-size: 20px;
+`
+
+export const Texto = styled.Text`
+    color: ${props => props.colors ? props.colors : '#000'};
+    font-size: ${props => props.fontSize ? props.fontSize : 20};
+`
+
+export const Div = styled.View`
+    flex-direction: column;
+    justify-content: center;
 `

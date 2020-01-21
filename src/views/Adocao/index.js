@@ -31,14 +31,17 @@ import {
     Row,
     ViewRow,
     ContainerButtons,
-    ContainerButton
+    ContainerButton,
+    DadosDono,
+    Texto,
+    Div
 } from './styles'
 
 import theme from '../../theme'
 import { get } from 'lodash'
 
 import { getPets } from '../../webservice/pet'
-import { loadUsuario } from '../../webservice/usuario'
+import { loadUsuarios } from '../../webservice/usuario'
 
 
 
@@ -46,7 +49,7 @@ const horizontalMargin = 20
 const slideWidth = 300
 
 const sliderWidth = Dimensions.get('window').width
-const itemWidth = slideWidth + horizontalMargin * 2
+const itemWidth = slideWidth + horizontalMargin * 1
 const itemHeight = 200
 
 export default function Adocao(props) {
@@ -54,22 +57,31 @@ export default function Adocao(props) {
     const _carousel = useRef(null)
     const [pets, setPets] = useState([])
     const [loading, setLoading] = useState(false)
-    const [ isVisible, setIsVisible ] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
 
 
     async function loadPets() {
         try {
             setLoading(true)
             const resp = await getPets()
-            let pets = resp.data.filter(item => item.doar)
-            setPets(pets)
+            let pets = resp.data.filter(item => item.status === 'adoção')
+            
         } finally {
             setLoading(false)
         }
     }
 
+    async function loadUsuariosWithPets() {
+        const resp = await loadUsuarios()
+        let pets = resp.data.map(item => item.pets)
+        let pet = pets.filter(item => item.status === 'adoção')
+        setPets(pet)
+        console.log(pet)
+    }
+
     useEffect(() => {
         loadPets()
+        loadUsuariosWithPets()
     }, [])
 
 
@@ -84,21 +96,10 @@ export default function Adocao(props) {
                     <NomePet cor>{nome || ''}</NomePet>
                 </ContainerNome>
                 <ContainerCard>
-                    <ContainerIcon >
-                        <Icon name='pets' size={40} color='#FFF' />
-                    </ContainerIcon>
                     <ContainerPet>
                         <FotoPet source={require('../../assets/cachorro2.png')} />
                         <Detalhes>Saiba +</Detalhes>
                     </ContainerPet>
-                    <ContainerIcon color={theme.colors.errors}>
-                        <Iconn name='heart' size={40} color='#FFF' />
-                    </ContainerIcon>
-                </ContainerCard>
-                <RowContainer>
-                    <ContainerDono>
-                        <FotoDono source={require('../../assets/mulher1.png')} />
-                    </ContainerDono>
                     <ContainerDono>
                         <ViewRow>
                             <Row>Especie:  Cachorro</Row>
@@ -113,6 +114,22 @@ export default function Adocao(props) {
                             <Row>Idade:  {idade || 0} anos</Row>
                         </ViewRow>
                     </ContainerDono>
+                </ContainerCard>
+                <RowContainer>
+                    <ContainerDono>
+                        <RowContainer>
+                            <FotoDono source={require('../../assets/mulher1.png')} />
+                            {/* <DadosDono>Pessoa / entidade</DadosDono> */}
+                        </RowContainer>
+
+                    </ContainerDono>
+                    <Div>
+                        <ContainerIcon color={theme.colors.errors}>
+                            <Iconn name='heart' size={60} color='#FF80AB' />
+                        </ContainerIcon>
+                        <Texto colors={theme.colors.errors}>Quero Adotar</Texto>
+                    </Div>
+
                 </RowContainer>
             </ContainerPets>
         )
@@ -137,7 +154,7 @@ export default function Adocao(props) {
                         <Submit style={{ width: '100%' }} colors="#0D47A1" onPress={cadastrarPetDoar}>Quero doar um pet</Submit>
                     </ContainerButton>
                     <ContainerButton>
-                        <Submit colors={theme.colors.errors} style={{ width: '70%' }} onPress={() => { setIsVisible(true) }}>Adotar um pet</Submit>
+                        <Submit colors={theme.colors.errors} style={{ width: '75%' }} onPress={() => { setIsVisible(true) }}>Adotar um pet</Submit>
                     </ContainerButton>
                 </ContainerButtons>
                 <Submit colors={theme.colors.primary}>Minha lista de interesses</Submit>

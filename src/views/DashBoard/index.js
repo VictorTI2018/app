@@ -45,7 +45,7 @@ const horizontalMargin = 20
 const slideWidth = 300
 
 const sliderWidth = Dimensions.get('window').width
-const itemWidth = slideWidth + horizontalMargin * 2
+const itemWidth = slideWidth + horizontalMargin * 1
 const itemHeight = 200
 
 export default function DashBoard(props) {
