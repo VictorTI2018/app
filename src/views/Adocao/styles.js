@@ -148,7 +148,7 @@ export const ViewRow = styled.View`
 `
 
 export const Row = styled.Text`
-    font-size: 16px;
+    font-size: 14px;
     color: ${theme.colors.placeholder};
 `
 

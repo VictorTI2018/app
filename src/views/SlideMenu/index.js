@@ -7,6 +7,8 @@ import theme from '../../theme'
 import { Submit, Nome } from './styles'
 import AsyncStorage from '@react-native-community/async-storage';
 import { loadUsuario } from '../../webservice/usuario'
+import { getLocais } from '../../webservice/locais'
+
 import { toggleDrawer, openDrawer } from '../../navigation'
 
 
@@ -18,7 +20,7 @@ export default function SlideMenu(props) {
     const [loading, setLoading] = useState(false)
     const [nomeUsuario, setNomeUsuario] = useState()
 
-    const listItems = [
+    let listItems = [
         {
             name: 'Dashboard',
             action: () => props.navigation.navigate('DashBoard'),
@@ -42,8 +44,10 @@ export default function SlideMenu(props) {
                 name: 'power-off',
                 type: 'FontAwesome'
             }
-        }
+        },
     ]
+
+    const [lista, setLista] = useState(listItems)
 
     async function loadUser() {
         try {
@@ -69,7 +73,11 @@ export default function SlideMenu(props) {
 
     useEffect(() => {
         loadUser()
-    }, [ id_usuario])
+    }, [id_usuario])
+
+    useEffect(() => {
+        loadLocais()
+    }, [])
 
 
     async function removeStore() {
@@ -102,7 +110,19 @@ export default function SlideMenu(props) {
     }
 
     async function loadLocais() {
-
+        const resp = await getLocais()
+        let local = resp.data.map(element => element);
+        console.log(local[0].nome)
+        let locais =
+        {
+            name: local[0].nome,
+            action: () => props.navigation.navigate('DashBoard'),
+            icon: {
+                name: 'home',
+                type: 'MaterialIcons'
+            }
+        }
+        lista.push(locais)
     }
 
     let nome_pet = ''
@@ -157,7 +177,7 @@ export default function SlideMenu(props) {
             <ScrollView>
                 <View style={{ flexDirection: 'column' }}>
                     {
-                        listItems.map(item =>
+                        lista.map(item =>
                             <TouchableOpacity onPress={item.action} style={styles.listItemRows} key={item.name}>
                                 <View style={styles.listItem}>
 
