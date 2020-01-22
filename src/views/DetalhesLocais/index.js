@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, ActivityIndicator } from 'react-native'
-import { get } from 'lodash'
+import { Topo } from '../../components'
 
 import {
     Container,
@@ -28,11 +28,13 @@ export default function DetalhesLocais({ navigation }) {
 
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState()
+    const [tipo, setTipo] = useState()
 
     useEffect(() => {
         let data = navigation.getParam('data')
+        let tipo = navigation.getParam('tipo')
         setData(data)
-        console.log(data)
+        setTipo(tipo)
     }, [])
 
 
@@ -95,8 +97,13 @@ export default function DetalhesLocais({ navigation }) {
         )
     }
 
+    function actionBack() {
+        navigation.pop()
+    }
+
     return (
         <Container>
+            <Topo title={`Detalhes ${tipo}`} perfil iconBack iconName="md-arrow-back" onPress={actionBack} />
             {data && (
                 renderDetalhes()
             )}

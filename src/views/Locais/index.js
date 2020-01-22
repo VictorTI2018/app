@@ -19,7 +19,7 @@ function Locais(props) {
     useEffect(() => {
         let tipo = props.navigation.getParam("tipo")
         setTipo(tipo)
-    }, [ tipo ])
+    }, [  ])
 
     useEffect(() => {
         loadLocais()
@@ -42,7 +42,7 @@ function Locais(props) {
     }
 
     function detalhesLocais(item) {
-        props.navigation.push('DetalhesLocais', { data: item })
+        props.navigation.push('DetalhesLocais', { data: item, tipo: tipo })
     }
 
     function renderLocais({ item }) {
