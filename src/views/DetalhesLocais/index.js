@@ -31,10 +31,16 @@ export default function DetalhesLocais({ navigation }) {
     const [tipo, setTipo] = useState()
 
     useEffect(() => {
-        let data = navigation.getParam('data')
-        let tipo = navigation.getParam('tipo')
-        setData(data)
-        setTipo(tipo)
+        try {
+            setLoading(true)
+            let data = navigation.getParam('data')
+            let tipo = navigation.getParam('tipo')
+            setData(data)
+            setTipo(tipo)
+        } finally {
+            setLoading(false)
+        }
+
     }, [])
 
 
