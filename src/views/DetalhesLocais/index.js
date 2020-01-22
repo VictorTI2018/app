@@ -27,13 +27,13 @@ export default function DetalhesLocais({ navigation }) {
 
 
     const [loading, setLoading] = useState(false)
-    const [ data, setData ] = useState()
+    const [data, setData] = useState()
 
     useEffect(() => {
         let data = navigation.getParam('data')
         setData(data)
-        console.log(data.nome)
-    }, [ data ])
+        console.log(data)
+    }, [])
 
 
     function renderFoto() {
@@ -83,13 +83,24 @@ export default function DetalhesLocais({ navigation }) {
         )
     }
 
+    function renderDetalhes() {
+        return (
+            <>
+                {renderFoto()}
+                {loading ? <ActivityIndicator size="large" color={theme.colors.primary} />
+                    : renderDados()}
+                <Anchor>www.vetcenter.com.br</Anchor>
+                <Submit>Galeria de Fotos</Submit>
+            </>
+        )
+    }
+
     return (
         <Container>
-            {renderFoto()}
-            {loading ? <ActivityIndicator size="large" color={theme.colors.primary} />
-                : renderDados()}
-            <Anchor>www.vetcenter.com.br</Anchor>
-            <Submit>Galeria de Fotos</Submit>
+            {data && (
+                renderDetalhes()
+            )}
+
         </Container>
     )
 }

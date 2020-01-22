@@ -9,9 +9,6 @@ import SlideMenu from '../views/SlideMenu'
 import DashBoard from '../views/DashBoard'
 
 import GaleriaPet from '../views/GaleriaPet'
-import DetalhesPetShop from '../views/DetalhesPetShop'
-
-import DetalhesClinica from '../views/DetalhesClinica'
 
 import Chat from '../views/Chat'
 import ChatAmizade from '../views/ChatAmizade'
@@ -27,10 +24,8 @@ import Adocao from '../views/Adocao'
 const Screens = {
     DashBoard,
     GaleriaPet,
-    DetalhesPetShop,
     BuscarPet,
     CadastroPet,
-    DetalhesClinica,
     Chat,
     ChatAmizade,
     Adocao,
