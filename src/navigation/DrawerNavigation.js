@@ -5,9 +5,8 @@ import { isDrawerLocker } from '../helpers'
 
 import SlideMenu from '../views/SlideMenu'
 
-import PetShops from '../views/PetShops'
+
 import DashBoard from '../views/DashBoard'
-import Clinicas from '../views/Clinicas'
 
 import GaleriaPet from '../views/GaleriaPet'
 import DetalhesPetShop from '../views/DetalhesPetShop'
@@ -20,12 +19,12 @@ import ChatAmizade from '../views/ChatAmizade'
 import BuscarPet from '../views/BuscarPet'
 import CadastroPet from '../views/CadastroPet'
 
+import Locais from '../views/Locais'
+
 import Adocao from '../views/Adocao'
 
 const Screens = {
     DashBoard,
-    PetShops,
-    Clinicas,
     GaleriaPet,
     DetalhesPetShop,
     BuscarPet,
@@ -33,7 +32,8 @@ const Screens = {
     DetalhesClinica,
     Chat,
     ChatAmizade,
-    Adocao
+    Adocao,
+    Locais
 }
 
 const stackOptions = {

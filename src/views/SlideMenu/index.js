@@ -111,18 +111,22 @@ export default function SlideMenu(props) {
 
     async function loadLocais() {
         const resp = await getLocais()
-        let local = resp.data.map(element => element);
-        console.log(local[0].nome)
-        let locais =
+        let i = 0
+        let local = resp.data
+        let locais
+        for(let k = 0; k < local.length; k++) {
+            locais = local[k]
+        }
+        let items =
         {
-            name: local[0].nome,
-            action: () => props.navigation.navigate('DashBoard'),
+            name: locais.nome,
+            action: () => props.navigation.navigate('Locais'),
             icon: {
                 name: 'home',
                 type: 'MaterialIcons'
             }
         }
-        lista.push(locais)
+        lista.push(items)
     }
 
     let nome_pet = ''
