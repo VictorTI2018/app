@@ -111,22 +111,23 @@ export default function SlideMenu(props) {
 
     async function loadLocais() {
         const resp = await getLocais()
-        let i = 0
         let local = resp.data
-        let locais
-        for(let k = 0; k < local.length; k++) {
-            locais = local[k]
-        }
-        let items =
-        {
-            name: locais.nome,
-            action: () => props.navigation.navigate('Locais'),
-            icon: {
-                name: 'home',
-                type: 'MaterialIcons'
+        if (local.length) {
+            for (let k = 0; k < local.length; k++) {
+                let items =
+                {
+                    name: local[k].nome,
+                    action: () => props.navigation.push('Locais', { tipo: local[k].tipo }),
+                    icon: {
+                        name: 'home',
+                        type: 'MaterialIcons'
+                    }
+                }
+                lista.push(items)
             }
+           
         }
-        lista.push(items)
+
     }
 
     let nome_pet = ''
@@ -181,8 +182,8 @@ export default function SlideMenu(props) {
             <ScrollView>
                 <View style={{ flexDirection: 'column' }}>
                     {
-                        lista.map(item =>
-                            <TouchableOpacity onPress={item.action} style={styles.listItemRows} key={item.name}>
+                        lista.map((item, index) =>
+                            <TouchableOpacity onPress={item.action} style={styles.listItemRows} key={index}>
                                 <View style={styles.listItem}>
 
                                     <Icon name={item.icon.name} type={item.icon.type} style={styles.icon} />
