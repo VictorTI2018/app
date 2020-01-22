@@ -5,26 +5,25 @@ import { Topo } from '../../components'
 
 import theme from '../../theme'
 
-import styles, { Submit }  from './styles'
+import styles, { Submit } from './styles'
 
 import { getLocais } from '../../webservice/locais'
 
 function Locais(props) {
 
-    const [ loading, setLoading ] = useState(false)
-    const [ locais, setLocais ] = useState()
-    const [ tipo, setTipo ] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [locais, setLocais] = useState()
+    const [tipo, setTipo] = useState('')
 
 
     useEffect(() => {
         let tipo = props.navigation.getParam("tipo")
-        console.log(tipo)
         setTipo(tipo)
-    }, [])
+    }, [ tipo ])
 
     useEffect(() => {
         loadLocais()
-    }, [ tipo ])
+    }, [tipo])
 
     async function loadLocais() {
         try {
@@ -32,7 +31,7 @@ function Locais(props) {
             const resp = await getLocais()
             let local = resp.data.filter(item => item.tipo === tipo)
             setLocais(local)
-        }finally {
+        } finally {
             setLoading(false)
         }
     }
@@ -42,8 +41,11 @@ function Locais(props) {
         props.navigation.pop()
     }
 
+    function detalhesLocais(item) {
+        props.navigation.push('DetalhesLocais', { data: item })
+    }
+
     function renderLocais({ item }) {
-        console.log(item)
         return (
             <SafeAreaView style={styles.container}>
                 <View>
@@ -56,7 +58,7 @@ function Locais(props) {
                         <Text style={styles.endereco}>{item.cidade || 'Cidade'}  - {item.uf || 'Estado'}</Text>
                     </View>
                     <Submit style={{ marginTop: 10, width: '75%' }} colors="#0D47A1"
-                    >Saiba mais +</Submit>
+                        onPress={() => { detalhesLocais(item) }}>Saiba mais +</Submit>
                 </View>
             </SafeAreaView>
         )

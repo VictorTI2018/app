@@ -20,6 +20,7 @@ import BuscarPet from '../views/BuscarPet'
 import CadastroPet from '../views/CadastroPet'
 
 import Locais from '../views/Locais'
+import DetalhesLocais from '../views/DetalhesLocais'
 
 import Adocao from '../views/Adocao'
 
@@ -33,7 +34,8 @@ const Screens = {
     Chat,
     ChatAmizade,
     Adocao,
-    Locais
+    Locais,
+    DetalhesLocais
 }
 
 const stackOptions = {
