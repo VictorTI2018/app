@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from 'react-native-flash-message'
+import { connect } from 'react-redux'
+import { userLogged } from '../../store/user/action'
 
 import { View, Alert } from 'react-native'
 
 import { Image, PasswordField, Topo } from '../../components'
 import { Input, FormContainer, Submit, Anchor } from './styles'
 
-import { login } from '../../webservice/login'
+import { logar } from '../../webservice/login'
 
 function Login(props) {
 
@@ -31,7 +33,7 @@ function Login(props) {
         try {
             if (email && password) {
                 setLoading(true)
-                const resp = await login(getModel())
+                const resp = await logar(getModel())
                 if (resp.data.errorEmail) {
                     showMessage({
                         message: 'ATENÇÃO',
@@ -53,11 +55,7 @@ function Login(props) {
                     const user = resp.data.user
                     if (token && user) {
                         await AsyncStorage.setItem('token', token)
-                        await AsyncStorage.setItem('usuario', JSON.stringify(user))
-                        await AsyncStorage.setItem('nome_usuario', user.nome)
-                        await AsyncStorage.setItem('id_usuario', `${user.id_usuario}`)
-
-
+                        props.onLogin(user)
                         showMessage({
                             message: 'Logado com sucesso',
                             type: 'success',
@@ -123,5 +121,11 @@ Login.navigationOptions = () => ({
 })
 
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: user => dispatch(userLogged(user))
+    }
+}
 
-export default Login
+
+export default connect(null, mapDispatchToProps)(Login)

@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { Icon } from 'native-base'
+import { connect } from 'react-redux'
+import { logout } from '../../store/user/action'
 import { View, TouchableOpacity, Text, ScrollView, Image, Alert, SafeAreaView } from 'react-native'
 import { removeStorage } from '../../helpers'
 import theme from '../../theme'
 
 import { Submit, Nome } from './styles'
-import AsyncStorage from '@react-native-community/async-storage';
-import { loadUsuario } from '../../webservice/usuario'
+
 import { getLocais } from '../../webservice/locais'
 
 import { toggleDrawer, openDrawer } from '../../navigation'
 
 
-export default function SlideMenu(props) {
+function SlideMenu(props) {
 
-    const [id_usuario, setIdUsuario] = useState()
-    const [qtd_pets, setQtdPets] = useState()
-    const [model, setModel] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [nomeUsuario, setNomeUsuario] = useState()
+
+    const usuario = {
+        nome: props.usuario.nome,
+        imagem: props.usuario.imagem,
+        qtd_pets: props.usuario.qtd_pets,
+        pets: props.usuario.pets
+    }
+
+
 
     let listItems = [
         {
@@ -39,7 +44,7 @@ export default function SlideMenu(props) {
         },
         {
             name: 'Sair',
-            action: () => logout(),
+            action: () => sair(),
             icon: {
                 name: 'power-off',
                 type: 'FontAwesome'
@@ -49,31 +54,7 @@ export default function SlideMenu(props) {
 
     const [lista, setLista] = useState(listItems)
 
-    async function loadUser() {
-        try {
-            setLoading(true)
-            const resp = await loadUsuario(id_usuario)
-            setModel(resp.data)
-            setQtdPets(resp.data.qtd_pets)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    async function userLogged() {
-        let id_usuario = await AsyncStorage.getItem("id_usuario")
-        let nome_usuario = await AsyncStorage.getItem("nome_usuario")
-        setNomeUsuario(nome_usuario)
-        setIdUsuario(id_usuario)
-    }
-
-    useEffect(() => {
-        userLogged()
-    }, [id_usuario])
-
-    useEffect(() => {
-        loadUser()
-    }, [id_usuario])
+    
 
     useEffect(() => {
         loadLocais()
@@ -88,7 +69,7 @@ export default function SlideMenu(props) {
     }
 
 
-    function logout() {
+    function sair() {
         Alert.alert(
             'ATENÇÃO',
             'Tem certeza que deseja sair ?',
@@ -106,7 +87,7 @@ export default function SlideMenu(props) {
     }
 
     function editarCliente() {
-        props.navigation.push('CadastroUsuario', { id_usuario: id_usuario, model: model })
+        props.navigation.push('CadastroUsuario')
     }
 
     async function loadLocais() {
@@ -125,14 +106,11 @@ export default function SlideMenu(props) {
                 }
                 lista.push(items)
             }
-           
+
         }
 
     }
 
-    let nome_pet = ''
-    let imagem = model ? model.imagem : null
-    let imagePet = ''
     return (
         <View style={styles.menu}>
             <View style={{ borderBottomColor: '#FFF', borderBottomWidth: 1 }}>
@@ -145,18 +123,14 @@ export default function SlideMenu(props) {
 
                 <View style={styles.rowImage}>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        {imagem
-                            ? <Image style={styles.rounded} source={{ uri: imagem }} />
-                            : <Image style={styles.rounded} source={require('../../assets/mulher1.png')} />}
+                        <Image style={styles.rounded} source={{ uri: usuario.imagem }} />
                         <Submit onPress={editarCliente}>Editar Perfil</Submit>
-                        <Nome>{nomeUsuario || 'Nome do Cliente'}</Nome>
+                        <Nome>{usuario.nome}</Nome>
                     </View>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        {imagePet !== ''
-                            ? <Image style={styles.roundedDog} source={{ uri: imagePet }} />
-                            : <Image style={styles.roundedDog} source={require('../../assets/cachorro1.png')} />}
+                        <Image style={styles.roundedDog} source={require('../../assets/cachorro1.png')} />
                         <Submit>Editar Perfil</Submit>
-                        <Nome>{nome_pet || 'Nome Pet'}</Nome>
+                        <Nome>{usuario.pets.nome}</Nome>
                     </View>
                 </View>
                 <SafeAreaView style={{
@@ -170,7 +144,7 @@ export default function SlideMenu(props) {
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
-                        <Text style={{ color: '#FFF', fontSize: 17 }}>Pets Cadastrado: {qtd_pets || 0}</Text>
+                        <Text style={{ color: '#FFF', fontSize: 17 }}>Pets Cadastrado: {usuario.qtd_pets || 0}</Text>
                         <Submit textColor="#000" colors="#FF8A80">Trocar de pet</Submit>
                     </View>
                 </SafeAreaView>
@@ -200,6 +174,9 @@ export default function SlideMenu(props) {
     )
 
 }
+
+
+
 
 const styles = {
     menu: {
@@ -246,3 +223,16 @@ const styles = {
         borderRadius: 50
     },
 }
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario: usuario
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(logout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SlideMenu)

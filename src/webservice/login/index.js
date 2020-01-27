@@ -1,5 +1,5 @@
 import { http } from '../../http'
 
-export async function login(model) {
+export async function logar(model) {
     return http.post(`/api/login`, model)
 }

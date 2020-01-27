@@ -1,11 +1,14 @@
-import * as types from './types'
+import  { USER_LOGGED_IN, USER_LOGGED_OUT } from './types'
 
-export const setToken = ( token ) => ({
-    type: types.SET_API_TOKEN,
-    token
-})
+export const userLogged = user => {
+    return {
+        type: USER_LOGGED_IN,
+        payload: user
+    }
+}
 
-export const setUsuario = (usuario) => ({
-    type: types.SET_USUARIO,
-    usuario
-})
+export const logout = () => {
+    return {
+        type: USER_LOGGED_OUT
+    }
+}

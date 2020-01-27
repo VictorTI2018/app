@@ -1,24 +1,38 @@
-import * as t from './types'
-import Reducer from '../reducer'
+import {
+    USER_LOGGED_IN,
+    USER_LOGGED_OUT
+} from './types'
 
 const initialState = {
-    usuario: null
+    id_usuario: null,
+    nome: null,
+    email: null,
+    imagem: null,
+    qtd_pets: null,
+    pets: {},
+    endereco: {}
 }
 
-export default(state = initialState, action) => {
-    const r = new Reducer(state, action)
-
-    switch(action.type) {
-        case t.SET_API_TOKEN:
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case USER_LOGGED_IN:
             return {
                 ...state,
-                usuario: {
-                    ...state.usuario,
-                    token: action.token
-                }
+                nome: action.payload.nome,
+                email: action.payload.email,
+                imagem: action.payload.imagem,
+                qtd_pets: action.payload.qtd_pets,
+                pets: action.payload.pets,
+                endereco: action.payload.endereco
             }
-        case t.SET_USUARIO: return r.set('usuario')
+        case USER_LOGGED_OUT:
+            return {
+                ...initialState
+            }
+
         default:
             return state
     }
 }
+
+export default reducer

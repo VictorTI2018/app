@@ -1,2 +1,2 @@
-export const SET_USUARIO = 'SET_USUARIO'
-export const SET_API_TOKEN = 'SET_API_TOKEN'
+export const USER_LOGGED_IN = 'USER_LOGGED_IN'
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'

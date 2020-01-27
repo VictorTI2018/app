@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react'
 import { Dimensions, ScrollView, ActivityIndicator, Text } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
-import AsyncStorage from '@react-native-community/async-storage'
+import { connect } from 'react-redux'
+
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Iconn from 'react-native-vector-icons/AntDesign'
@@ -55,34 +56,10 @@ export default function DashBoard(props) {
     const [pet, setPet] = useState([])
     const [pets, setPets] = useState([])
     const [qtd_pets, setQtdPet] = useState(0)
-    const [id_usuario, setIdUsuario] = useState()
-    const [usuario, setUsuario] = useState([])
     const [loading, setLoading] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
-    const [nome_usuario, setNomeUsuario ] = useState()
 
-    async function getIdUser() {
-        const id_usuario = await AsyncStorage.getItem('id_usuario')
-        let nome_usuario = await AsyncStorage.getItem("nome_usuario")
-        setIdUsuario(id_usuario)
-        setNomeUsuario(nome_usuario)
-    }
-
-    useEffect(() => {
-        getIdUser()
-    }, [])
-
-    async function loadUser() {
-        try {
-            setLoading(true)
-            const res = await loadUsuario(id_usuario)
-            setUsuario(res.data)
-            setPet(res.data.pets)
-            setQtdPet(res.data.qtd_pets)
-        } finally {
-            setLoading(false)
-        }
-    }
+  
 
     async function loadPets() {
         try {
@@ -98,9 +75,9 @@ export default function DashBoard(props) {
         loadPets()
     }, [])
 
-    useEffect(() => {
-        loadUser()
-    }, [qtd_pets])
+
+
+
 
 
     function buscarPet() {
@@ -184,7 +161,7 @@ export default function DashBoard(props) {
     }
 
     function cadastrarPetDoar() {
-        props.navigation.navigate('CadastroPet', { doar: true, usuario: usuario, id_usuario: id_usuario })
+        props.navigation.navigate('CadastroPet', { doar: true})
     }
 
     function renderButtons() {
@@ -203,7 +180,7 @@ export default function DashBoard(props) {
 
     return (
         <>
-            <Topo title={`Olá ${nome_usuario}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
+            <Topo title={`Olá Fulano, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
             <BuscarPet isVisible={isVisible} onCancel={() => { setIsVisible(false) }} />
             <ScrollView>
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
