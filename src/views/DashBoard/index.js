@@ -14,7 +14,7 @@ import {
     Container,
     CardPet,
     ContainerCard,
-    FotoPet,
+    ImagePet,
     ContainerIcon,
     ContainerPet,
     NomePet,
@@ -35,9 +35,6 @@ import theme from '../../theme'
 import { get } from 'lodash'
 
 import { getPets } from '../../webservice/pet'
-import { loadUsuario } from '../../webservice/usuario'
-
-
 
 const horizontalMargin = 20
 const slideWidth = 300
@@ -54,14 +51,8 @@ function DashBoard(props) {
         qtd_pets: props.usuario.qtd_pets
     }
 
-    const _carousel = useRef(null)
-
     const [pets, setPets] = useState([])
     const [loading, setLoading] = useState(false)
-    const [isVisible, setIsVisible] = useState(false)
-
-
-
 
     async function loadPets() {
         try {
@@ -101,7 +92,7 @@ function DashBoard(props) {
                         <Icon name='pets' size={40} color='#FFF' />
                     </ContainerIcon>
                     <ContainerPet>
-                        <FotoPet source={require('../../assets/cachorro2.png')} />
+                        <ImagePet source={require('../../assets/cachorro2.png')} />
                         <Detalhes>Saiba +</Detalhes>
                     </ContainerPet>
                     <ContainerIcon color={theme.colors.errors}>
@@ -140,7 +131,7 @@ function DashBoard(props) {
                         <Icon name='pets' size={40} color='#FFF' />
                     </SubmitChat>
                     <ContainerPet>
-                        <FotoPet source={require('../../assets/cachorro1.png')} />
+                        <ImagePet source={{ uri: usuario.pets.imagem }} />
                         <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors}>
@@ -186,7 +177,6 @@ function DashBoard(props) {
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
                     <Container>
                         {usuario.qtd_pets > 0 ? renderPet() : renderButtons()}
-                        {/* {renderPet()} */}
                         <ContainerCarosel>
                             {pets.length ? (
 

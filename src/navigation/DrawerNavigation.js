@@ -38,7 +38,8 @@ const stackOptions = {
     headerMode: 'none',
     initialRouteName: 'DashBoard',
     navigationOptions: () => ({
-        drawerLockMode: isDrawerLocker() ? 'locked-closed' : 'unlocked'
+        drawerLockMode: isDrawerLocker() ? 'locked-closed' : 'unlocked',
+       
     })
 }
 

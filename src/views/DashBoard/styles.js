@@ -54,11 +54,17 @@ export const ContainerCard = styled.View`
     margin: 10px;
 `
 
-export const FotoPet = styled.Image`
+const FotoPet = styled.Image`
     border-radius: 50px;
     height: 100px;
     width: 100px;
 `
+
+export const ImagePet = props => {
+    return (
+        <FotoPet {...props} />
+    )
+}
 
 export const NomePet = styled.Text`
     font-size: 23px;

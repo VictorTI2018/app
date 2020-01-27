@@ -24,6 +24,9 @@ function SlideMenu(props) {
         pets: props.usuario.pets
     }
 
+    console.log(usuario.pets.imagem)
+    console.log(usuario.imagem)
+
 
     let listItems = [
         {
@@ -131,7 +134,7 @@ function SlideMenu(props) {
                         <Nome>{usuario.nome}</Nome>
                     </View>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        <Image style={styles.roundedDog} source={require('../../assets/cachorro1.png')} />
+                        <Image style={styles.roundedDog} source={{ uri: usuario.pets.imagem }} />
                         <Submit onPress={editarPet}>Editar Perfil</Submit>
                         <Nome>{usuario.pets.nome}</Nome>
                     </View>
