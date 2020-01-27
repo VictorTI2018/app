@@ -10,7 +10,6 @@ import { showMessage } from 'react-native-flash-message'
 import { createUsuario, updateUsuario } from '../../webservice/cadastro-usuario'
 
 
-import RNFetchBlob from 'react-native-fetch-blob'
 import AsyncStorage from '@react-native-community/async-storage'
 
 const MAX_FILE_SIZE = 3
