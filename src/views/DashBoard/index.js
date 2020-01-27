@@ -3,7 +3,6 @@ import { Dimensions, ScrollView, ActivityIndicator, Text } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import { connect } from 'react-redux'
 
-
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Iconn from 'react-native-vector-icons/AntDesign'
 
@@ -49,17 +48,22 @@ const sliderWidth = Dimensions.get('window').width
 const itemWidth = slideWidth + horizontalMargin * 1
 const itemHeight = 200
 
-export default function DashBoard(props) {
+function DashBoard(props) {
+
+    const usuario = {
+        nome: props.usuario.nome,
+        pets: props.usuario.pets,
+        qtd_pets: props.usuario.qtd_pets
+    }
 
     const _carousel = useRef(null)
 
-    const [pet, setPet] = useState([])
     const [pets, setPets] = useState([])
-    const [qtd_pets, setQtdPet] = useState(0)
     const [loading, setLoading] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
 
-  
+
+
 
     async function loadPets() {
         try {
@@ -74,10 +78,6 @@ export default function DashBoard(props) {
     useEffect(() => {
         loadPets()
     }, [])
-
-
-
-
 
 
     function buscarPet() {
@@ -135,7 +135,6 @@ export default function DashBoard(props) {
 
 
     function renderPet() {
-        const nome_pet = ''
         return (
             <CardPet>
                 <ContainerCard>
@@ -144,7 +143,7 @@ export default function DashBoard(props) {
                     </SubmitChat>
                     <ContainerPet>
                         <FotoPet source={require('../../assets/cachorro1.png')} />
-                        <NomePet>{nome_pet || 'Totozinho'}</NomePet>
+                        <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors}>
                         <Iconn name='heart' size={40} color='#FFF' />
@@ -161,7 +160,7 @@ export default function DashBoard(props) {
     }
 
     function cadastrarPetDoar() {
-        props.navigation.navigate('CadastroPet', { doar: true})
+        props.navigation.navigate('CadastroPet', { doar: true })
     }
 
     function renderButtons() {
@@ -180,12 +179,12 @@ export default function DashBoard(props) {
 
     return (
         <>
-            <Topo title={`Olá Fulano, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
+            <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
             <BuscarPet isVisible={isVisible} onCancel={() => { setIsVisible(false) }} />
             <ScrollView>
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
                     <Container>
-                        {qtd_pets > 0 ? renderPet() : renderButtons()}
+                        {usuario.qtd_pets > 0 ? renderPet() : renderButtons()}
                         {/* {renderPet()} */}
                         <ContainerCarosel>
                             {pets.length ? (
@@ -197,7 +196,7 @@ export default function DashBoard(props) {
                                     sliderWidth={sliderWidth}
                                     itemWidth={itemWidth} />
                             ) : (
-                                    <Text style={{ fontSize: 23}}>Não há pets no momento!</Text>
+                                    <Text style={{ fontSize: 23 }}>Não há pets no momento!</Text>
                                 )}
 
                         </ContainerCarosel>
@@ -207,3 +206,11 @@ export default function DashBoard(props) {
         </>
     )
 }
+
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario: usuario
+    }
+}
+
+export default connect(mapStateToProps, null)(DashBoard)

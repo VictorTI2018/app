@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { toggleDrawer } from '../navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 

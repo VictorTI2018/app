@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ImagePicker from 'react-native-image-picker'
+import { connect } from 'react-redux'
 import { View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { PasswordField, Topo } from '../../components'
@@ -14,7 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const MAX_FILE_SIZE = 3
 
-function CadastroUsuario({ navigation }) {
+function CadastroUsuario(props) {
 
 
     const [senha, setSenha] = useState()
@@ -24,16 +25,16 @@ function CadastroUsuario({ navigation }) {
     const [sobrenome, setSobreNome] = useState()
     const [id_usuario, setIdUsuario] = useState()
     const [loading, setLoading] = useState(false)
-    const [ imagem, setImagem ] = useState()
+    const [imagem, setImagem] = useState()
     const [foto, setFoto] = useState()
 
     useEffect(() => {
-        let id_usuario = navigation.getParam('id_usuario')
+        let id_usuario = props.navigation.getParam('id_usuario')
         if (id_usuario > 0) {
-            let model = navigation.getParam('model')
-            setNome(model.nome)
-            setEmail(model.email)
-            setSobreNome(model.sobrenome)
+            setNome(props.usuario.nome)
+            setSobreNome(props.usuario.sobrenome)
+            setEmail(props.usuario.email)
+            setFoto({ uri: props.usuario.imagem })
         }
         setIdUsuario(id_usuario)
     }, [id_usuario])
@@ -50,7 +51,7 @@ function CadastroUsuario({ navigation }) {
     }
 
     function actionBack() {
-        navigation.pop()
+        props.navigation.pop()
     }
 
     async function register() {
@@ -58,10 +59,9 @@ function CadastroUsuario({ navigation }) {
             setLoading(true)
 
             const resp = await createUsuario(getModel())
-            console.log(resp.data)
             if (resp.data.status) {
                 const id_usuario = resp.data.id_usuario
-                navigation.push('CadastroEndereco', { id_usuario: id_usuario, usuario: resp.data })
+                props.navigation.push('CadastroEndereco', { id_usuario: id_usuario, usuario: resp.data })
             } else if (resp.data.email) {
                 showMessage({
                     message: "ATENÇÃO",
@@ -82,8 +82,7 @@ function CadastroUsuario({ navigation }) {
             setLoading(true)
             const resp = await updateUsuario(id_usuario, getModel())
             if (resp.status === 200) {
-                let endereco = resp.data.endereco
-                navigation.push('CadastroEndereco', { id_usuario: id_usuario, endereco: endereco, usuario: resp.data, id_endereco: endereco.id_endereco, update: true })
+                props.navigation.push('CadastroEndereco', { id_usuario: id_usuario, update: true })
             }
         } finally {
             setLoading(false)
@@ -143,7 +142,7 @@ function CadastroUsuario({ navigation }) {
         }, res => {
             if (!res.didCancel) {
                 setFoto({ uri: res.uri })
-                setImagem({ uri: 'data:image/png;base64,' + res.data})
+                setImagem({ uri: 'data:image/png;base64,' + res.data })
             }
         })
     }
@@ -195,4 +194,10 @@ function CadastroUsuario({ navigation }) {
     )
 }
 
-export default CadastroUsuario
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario: usuario
+    }
+}
+
+export default connect(mapStateToProps, null)(CadastroUsuario)

@@ -17,12 +17,12 @@ function SlideMenu(props) {
 
 
     const usuario = {
+        id_usuario: props.usuario.id_usuario,
         nome: props.usuario.nome,
         imagem: props.usuario.imagem,
         qtd_pets: props.usuario.qtd_pets,
         pets: props.usuario.pets
     }
-
 
 
     let listItems = [
@@ -54,7 +54,7 @@ function SlideMenu(props) {
 
     const [lista, setLista] = useState(listItems)
 
-    
+
 
     useEffect(() => {
         loadLocais()
@@ -62,9 +62,8 @@ function SlideMenu(props) {
 
 
     async function removeStore() {
+        props.onLogout()
         await removeStorage('token')
-        await removeStorage('nome_usuario')
-        await removeStorage('id_usuario')
         props.navigation.push('Login')
     }
 
@@ -86,8 +85,12 @@ function SlideMenu(props) {
         props.navigation.push('CadastroPet')
     }
 
+    function editarPet() {
+        props.navigation.push('CadastroPet', { id_pet: usuario.pets.id_pet })
+    }
+
     function editarCliente() {
-        props.navigation.push('CadastroUsuario')
+        props.navigation.push('CadastroUsuario', { id_usuario: usuario.id_usuario })
     }
 
     async function loadLocais() {
@@ -129,7 +132,7 @@ function SlideMenu(props) {
                     </View>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
                         <Image style={styles.roundedDog} source={require('../../assets/cachorro1.png')} />
-                        <Submit>Editar Perfil</Submit>
+                        <Submit onPress={editarPet}>Editar Perfil</Submit>
                         <Nome>{usuario.pets.nome}</Nome>
                     </View>
                 </View>

@@ -23,7 +23,7 @@ export const ImageAbsolute = styled.Image`
 export const ImagePequena = styled.Image`
     width: 120;
     height: 120;
-    left: 120;
+    left: 140;
     top: -80px;
     border-radius: 10px;
     border-width: 1px;

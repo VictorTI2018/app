@@ -54,7 +54,8 @@ const LogoImage = styled.Image.attrs({
   resizeMode: 'contain'
 })`
   height: 100%;
-  width: 50%;
+  width: 40%;
+  border-radius: 100px;
 `
 
 export const Logo = props => (

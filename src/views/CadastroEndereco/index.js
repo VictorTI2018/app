@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity, ActivityIndicator, View } from 'react-native'
-
+import { connect } from 'react-redux'
 import { Topo } from '../../components'
 import { FormContainer, Input, Submit, Logo, Title, ButtonContainer } from './styles'
 
@@ -12,7 +12,9 @@ import { showMessage } from 'react-native-flash-message'
 
 const MAX_FILE_SIZE = 3
 
-export default function CadastroEndereco({ navigation }) {
+function CadastroEndereco(props) {
+
+    const endereco = props.usuario.endereco
 
     const [loading, setLoading] = useState(false)
     const [cep, setCep] = useState()
@@ -28,25 +30,23 @@ export default function CadastroEndereco({ navigation }) {
     const [imagem, setImagem] = useState()
 
     useEffect(() => {
-        let id_usuario = navigation.getParam('id_usuario')
-        let data = navigation.getParam('usuario')
+        let id_usuario = props.navigation.getParam('id_usuario')
+        let data = props.navigation.getParam('usuario')
         setIdUsuario(id_usuario)
         setData(data)
     }, [])
 
     useEffect(() => {
-        let id_endereco = navigation.getParam('id_endereco') || 0
-        let update = navigation.getParam('update')
-        if (id_endereco > 0 && update) {
-            let model = navigation.getParam('endereco')
-            setCep(model.cep)
-            setLogradouro(model.logradouro)
-            setBairro(model.bairro)
-            setCidade(model.cidade.cidade)
-            setUf(model.cidade.uf)
-            setIdCidade(model.cidade.id_cidade)
+        let update = props.navigation.getParam('update')
+        if (update) {
+            setIdEndereco(endereco.id_endereco)
+            setCep(endereco.cep)
+            setLogradouro(endereco.logradouro)
+            setBairro(endereco.bairro)
+            setCidade(endereco.cidade.cidade)
+            setUf(endereco.cidade.uf)
+            setIdCidade(endereco.cidade.id_cidade)
         }
-        setIdEndereco(id_endereco)
     }, [])
 
     function getModel() {
@@ -126,15 +126,15 @@ export default function CadastroEndereco({ navigation }) {
 
 
     function cadastroPet() {
-        navigation.push('CadastroPet', { id_usuario: id_usuario, usuario: data })
+        props.navigation.push('CadastroPet', { id_usuario: id_usuario, usuario: data })
     }
 
     function actionBack() {
-        navigation.pop()
+        props.navigation.pop()
     }
 
     function doarPet() {
-        navigation.push('CadastroPet', { doar: true, usuario: data, id_usuario: id_usuario })
+        props.navigation.push('CadastroPet', { doar: true, usuario: data, id_usuario: id_usuario })
     }
 
     let title = id_endereco > 0 ? 'Atualizar Endereço' : 'Cadastrar Endereço'
@@ -165,3 +165,11 @@ export default function CadastroEndereco({ navigation }) {
         </FormContainer>
     )
 }
+
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario: usuario
+    }
+}
+
+export default connect(mapStateToProps, null)(CadastroEndereco)

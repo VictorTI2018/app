@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux'
 import RNPickerSelect from 'react-native-picker-select';
 import { View, TouchableOpacity } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
@@ -47,7 +48,7 @@ const idade = { label: 'Qual Idade ?', value: null }
 
 const MAX_FILE_SIZE = 3
 
-function CadastroPet({ navigation }) {
+function CadastroPet(props) {
 
     const [nome, setNome] = useState('')
     const [dataRaca, setDataRaca] = useState([
@@ -56,6 +57,10 @@ function CadastroPet({ navigation }) {
     const [dataEspecie, setDataEspecie] = useState([
         { label: '', value: '', key: '' }
     ])
+
+
+    const pets = props.usuario.pets
+
     const [raca, setRaca] = useState()
     const [especie, setEspecie] = useState()
     const [sexos, setSexos] = useState('')
@@ -65,12 +70,13 @@ function CadastroPet({ navigation }) {
     const [termos, setTermos] = useState(false)
     const [foto, setFoto] = useState()
     const [id_usuario, setIdUsuario] = useState()
-    const [doar, setDoar] = useState(navigation.getParam('doar'))
+    const [doar, setDoar] = useState(props.navigation.getParam('doar'))
     const [token, setToken] = useState(null)
     const [loading, setLoading] = useState(false)
     const [ong, setOng] = useState(false)
     const [nomeOng, setNomeOng] = useState('')
     const [imagem, setImagem] = useState()
+    const [ id_pet, setIdPet ] = useState(0)
 
     function getModel() {
         return {
@@ -89,12 +95,19 @@ function CadastroPet({ navigation }) {
         }
     }
 
-
+    useEffect(() => {
+        let id_pet = props.navigation.getParam('id_pet')
+        if(id_pet > 0) {
+            console.log(pets)
+            setNome(pets.nome)
+            setEspecie(pets.especie.nome)
+        }
+    }, [])
 
 
     async function getToken() {
         const token = await AsyncStorage.getItem('token') || null
-        let id_usuario = token ? await AsyncStorage.getItem('id_usuario') : navigation.getParam("id_usuario")
+        let id_usuario = token ? props.usuario.id_usuario : props.navigation.getParam("id_usuario")
         setToken(token)
         setIdUsuario(id_usuario)
     }
@@ -142,12 +155,12 @@ function CadastroPet({ navigation }) {
                     setLoading(true)
                     if (token) {
                         let res = await createPet(getModel())
-                        console.log(res.data)
                         if (res.data.status === 'sucesso') {
-                            navigation.push('Parabens', { pet: getModel() })
+                            props.navigation.push('Parabens', { pet: getModel() })
                         }
                     } else {
                         let res = await createPetNoToken(getModel())
+                        console.log(res.data)
                     }
                 } finally {
                     setLoading(false)
@@ -175,7 +188,7 @@ function CadastroPet({ navigation }) {
 
 
     function galeriaFotos() {
-        navigation.push('GaleriaPet')
+        props.navigation.push('GaleriaPet')
     }
 
     function pickImage() {
@@ -205,7 +218,7 @@ function CadastroPet({ navigation }) {
     }
 
     function actionBack() {
-        navigation.pop()
+        props.navigation.pop()
     }
 
     const title = doar ? 'Cadastro para adoção' : 'Cadastro do Pet'
@@ -278,4 +291,10 @@ function CadastroPet({ navigation }) {
     )
 }
 
-export default CadastroPet
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario: usuario
+    }
+}
+
+export default connect(mapStateToProps, null)(CadastroPet)

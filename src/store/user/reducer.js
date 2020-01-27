@@ -6,6 +6,7 @@ import {
 const initialState = {
     id_usuario: null,
     nome: null,
+    sobrenome: null,
     email: null,
     imagem: null,
     qtd_pets: null,
@@ -18,7 +19,9 @@ const reducer = (state = initialState, action) => {
         case USER_LOGGED_IN:
             return {
                 ...state,
+                id_usuario: action.payload.id_usuario,
                 nome: action.payload.nome,
+                sobrenome: action.payload.sobrenome,
                 email: action.payload.email,
                 imagem: action.payload.imagem,
                 qtd_pets: action.payload.qtd_pets,
