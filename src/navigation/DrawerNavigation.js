@@ -21,6 +21,7 @@ import DetalhesLocais from '../views/DetalhesLocais'
 
 import Adocao from '../views/Adocao'
 
+
 const Screens = {
     DashBoard,
     GaleriaPet,

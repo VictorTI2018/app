@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Iconn from 'react-native-vector-icons/AntDesign'
 
-import BuscarPet from '../BuscarPet'
-
 import { toggleDrawer } from '../../navigation'
 
 import { Topo } from '../../components'
@@ -149,7 +147,7 @@ function DashBoard(props) {
                         <Iconn name='heart' size={40} color='#FFF' />
                     </SubmitChat>
                 </ContainerCard>
-                <Submit colors={theme.colors.errors} onPress={() => { setIsVisible(true) }}>Achar um pet Ideal</Submit>
+                <Submit colors={theme.colors.errors} onPress={buscarPet}>Achar um pet Ideal</Submit>
             </CardPet>
         )
 
@@ -173,6 +171,10 @@ function DashBoard(props) {
         )
     }
 
+    function buscarPet() {
+        props.navigation.navigate('BuscarPet')
+    }
+
     function openDrawer() {
         props.navigation.toggleDrawer()
     }
@@ -180,7 +182,6 @@ function DashBoard(props) {
     return (
         <>
             <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
-            <BuscarPet isVisible={isVisible} onCancel={() => { setIsVisible(false) }} />
             <ScrollView>
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
                     <Container>

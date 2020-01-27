@@ -75,11 +75,9 @@ export default function BuscarPet(props) {
     }
 
     return (
-        <Modal onRequestClose={onCancel}
-            visible={isVisible}
-            animationType='slide'
+        <View 
         >
-            <Topo title="Busca" iconBack iconName="md-arrow-back" perfil onPress={onCancel} />
+            <Topo title="Busca" iconBack iconName="md-arrow-back" perfil  />
             <Container>
                 <ContainerImage>
                     <FotoPet source={require("../../assets/pesquisa-cachorro.png")} />
@@ -123,7 +121,7 @@ export default function BuscarPet(props) {
             <TouchableWithoutFeedback onPress={onCancel}>
                 <View style={styles.offset}></View>
             </TouchableWithoutFeedback>
-        </Modal>
+        </View>
     )
 }
 

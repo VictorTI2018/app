@@ -7,3 +7,7 @@ export async function loadUsuario(id_usuario) {
 export async function loadUsuarios() {
     return http.get(`/api/cliente/users`)
 }
+
+export async function filter() {
+    
+}
