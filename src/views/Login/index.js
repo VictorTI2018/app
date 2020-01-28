@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from 'react-native-flash-message'
 import { connect } from 'react-redux'
@@ -31,6 +31,7 @@ function Login(props) {
             password
         }
     }
+
 
     async function handleSubmit() {
         try {

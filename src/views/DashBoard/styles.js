@@ -21,7 +21,7 @@ export const ContainerPet = styled.View`
     flex-direction: column;
 `
 
-export const ContainerIcon = styled.View`
+export const ContainerIcon = styled.TouchableOpacity`
     border-radius: 55px;
     background-color: ${props => props.color ? props.color : theme.colors.primary};
     height: 70px;

@@ -35,6 +35,7 @@ import theme from '../../theme'
 import { get } from 'lodash'
 
 import { getPets } from '../../webservice/pet'
+import { addPet } from '../../webservice/amizade'
 
 const horizontalMargin = 20
 const slideWidth = 300
@@ -58,7 +59,8 @@ function DashBoard(props) {
         try {
             setLoading(true)
             const resp = await getPets()
-            setPets(resp.data)
+            let pets = resp.data.filter(item => item.id_pet !== usuario.pets.id_pet)
+            setPets(pets)
         } finally {
             setLoading(false)
         }
@@ -67,6 +69,21 @@ function DashBoard(props) {
     useEffect(() => {
         loadPets()
     }, [])
+
+    async function handleFriend(pet_amigo_id) {
+        let id_pet = usuario.pets.id_pet
+        let model = {
+            pet_amigo_id,
+            id_pet
+        }
+
+        try {
+            const resp = await addPet(model)
+            console.log(resp.data)
+        }catch(err) {
+
+        }
+    }
 
 
     function buscarPet() {
@@ -77,22 +94,32 @@ function DashBoard(props) {
         props.navigation.push('Chat')
     }
 
+    function cadastrarPet() {
+        props.navigation.navigate('CadastroPet')
+    }
+
+    function cadastrarPetDoar() {
+        props.navigation.navigate('CadastroPet', { doar: true })
+    }
+
+
     function renderCarouselPets({ item }) {
         const nome = get(item, 'nome', '')
         const genero = get(item, 'sexo', '')
         const idade = get(item, 'idade', 0)
         const raca = get(item.raca, 'nome', '')
+        const imagem = get(item, 'imagem', '')
         return (
             <ContainerPets >
                 <ContainerNome >
                     <NomePet cor>{nome || ''}</NomePet>
                 </ContainerNome>
                 <ContainerCard>
-                    <ContainerIcon >
+                    <ContainerIcon onPress={() => handleFriend(item.id_pet)}>
                         <Icon name='pets' size={40} color='#FFF' />
                     </ContainerIcon>
                     <ContainerPet>
-                        <ImagePet source={require('../../assets/cachorro2.png')} />
+                        <ImagePet source={{ uri : imagem }} />
                         <Detalhes>Saiba +</Detalhes>
                     </ContainerPet>
                     <ContainerIcon color={theme.colors.errors}>
@@ -144,13 +171,6 @@ function DashBoard(props) {
 
     }
 
-    function cadastrarPet() {
-        props.navigation.navigate('CadastroPet')
-    }
-
-    function cadastrarPetDoar() {
-        props.navigation.navigate('CadastroPet', { doar: true })
-    }
 
     function renderButtons() {
         return (
@@ -162,13 +182,7 @@ function DashBoard(props) {
         )
     }
 
-    function buscarPet() {
-        props.navigation.navigate('BuscarPet')
-    }
-
-    function openDrawer() {
-        props.navigation.toggleDrawer()
-    }
+    
 
     return (
         <>

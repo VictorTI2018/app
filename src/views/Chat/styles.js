@@ -7,12 +7,11 @@ export const ContainerTopo = styled.View`
     background-color: #546E7A;
     flex-direction: row;
     height: 80px;
-    justify-content: space-around;
     align-items: center;
 `
 
 export const Container = styled.View`
-    
+    text-align: center;
 `
 
 export const NomePet = styled.Text`

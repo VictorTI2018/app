@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar } from 'react-native-elements'
+import { Avatar, Badge } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {
@@ -55,8 +55,25 @@ export function Topo(props) {
                 </View>
 
                 <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30 }]}>
-                    {token && perfil && <Avatar rounded source={{ uri: pet_perfil }} /> }
-                    {}
+                    {token && perfil &&
+                        <View style={{ flexDirection: 'row' }}>
+                            <View>
+                                <Avatar
+                                    rounded
+                                    source={{
+                                        uri: pet_perfil,
+                                    }}
+                                />
+
+                                <Badge
+                                    status="error"
+                                    value="7"
+                                    containerStyle={{ position: 'absolute', top: -4, right: -4 }}
+                                />
+                            </View>
+                        </View>
+                    }
+
                 </TouchableOpacity>
 
             </Container>
