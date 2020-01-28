@@ -109,7 +109,7 @@ export default function DetalhesLocais({ navigation }) {
 
     return (
         <Container>
-            <Topo title={`Detalhes ${tipo}`} perfil iconBack iconName="md-arrow-back" onPress={actionBack} />
+            <Topo title={`Detalhes ${tipo}`} perfil iconBack iconName="md-arrow-back" onPress={actionBack} pet_perfil={usuario.pets.imagem}/>
             {data && (
                 renderDetalhes()
             )}

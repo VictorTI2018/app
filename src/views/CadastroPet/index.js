@@ -5,7 +5,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { View, TouchableOpacity } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 
-import { Topo } from '../../components'
+import {Topo} from '../../components'
 import { Logo, FormContainer, Input, Row, Check, Submit, RoundedSelect } from './styles'
 
 import theme from '../../theme'

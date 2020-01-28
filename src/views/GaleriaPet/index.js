@@ -67,7 +67,7 @@ export default function GaleriaPet(props) {
 
     return (
         <Container>
-            <Topo title="Album de Fotos" iconMenu iconName="md-menu" onPress={actionBack} perfil />
+            <Topo title="Album de Fotos" iconMenu iconName="md-menu" onPress={actionBack} perfil pet_perfil={usuario.pets.imagem} />
             <ScrollView>
                 <ContainerFoto>
                     <View style={{ margin: 10 }}>

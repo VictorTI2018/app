@@ -17,7 +17,7 @@ import styles, { Container } from './styles'
 export function Topo(props) {
     const { iconBack, iconName, iconMenu, perfil, pet_perfil, } = props
     const [token, setToken] = useState()
-    const stylesToken = !token ? {  } : {  }
+    const stylesToken = !token ? {} : {}
 
     async function getToken() {
         let token = await AsyncStorage.getItem("token")
@@ -30,7 +30,7 @@ export function Topo(props) {
     return (
         <>
             <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
-            <Container style={!token ? { justifyContent: 'space-around' } : { justifyContent: 'space-between'}} >
+            <Container style={!token ? { justifyContent: 'space-around' } : { justifyContent: 'space-between' }} >
 
                 <View style={{ stylesToken }}>
                     {iconBack && (
@@ -53,15 +53,17 @@ export function Topo(props) {
                         {props.title}
                     </Text>
                 </View>
-                
+
                 <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30 }]}>
-                    {token && perfil && <Avatar rounded icon={{ name: 'user', type: 'font-awesome' }}  />}
+                    {token && perfil && <Avatar rounded source={{ uri: pet_perfil }} /> }
+                    {}
                 </TouchableOpacity>
 
             </Container>
         </>
     )
 }
+
 
 
 

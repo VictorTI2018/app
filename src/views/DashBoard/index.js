@@ -172,7 +172,7 @@ function DashBoard(props) {
 
     return (
         <>
-            <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
+            <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil pet_perfil={usuario.pets.imagem} />
             <ScrollView>
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
                     <Container>

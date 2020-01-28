@@ -6,7 +6,10 @@ import { userLogged } from '../../store/user/action'
 
 import { View, Alert } from 'react-native'
 
-import { Image, PasswordField, Topo } from '../../components'
+import { Image, PasswordField } from '../../components'
+
+import { Topo } from '../../components'
+
 import { Input, FormContainer, Submit, Anchor } from './styles'
 
 import { logar } from '../../webservice/login'
@@ -94,7 +97,7 @@ function Login(props) {
 
     return (
         <FormContainer >
-            <Topo title="Login" />
+            <Topo title="Login" perfil  />
             <View>
                 <Image title="Seja Bem-Vindo!"
                     sub="Faça seu login ou cadastre-se gratuitamente"
@@ -102,7 +105,6 @@ function Login(props) {
             </View>
             <View style={{ paddingLeft: 15, paddingRight: 15 }}>
                 <Input placeholder='Email...'
-                    KeyboardType="email-address"
                     value={email}
                     onChangeText={(value) => setEmail(value)} />
                 <PasswordField
@@ -116,9 +118,6 @@ function Login(props) {
         </FormContainer>
     )
 }
-Login.navigationOptions = () => ({
-    title: 'Login'
-})
 
 
 const mapDispatchToProps = dispatch => {

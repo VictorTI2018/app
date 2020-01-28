@@ -77,7 +77,6 @@ export default function Adocao(props) {
         let pets = resp.data.map(item => item.pets)
         let pet = pets.filter(item => item.status === 'adoção')
         setPets(pet)
-        console.log(pet)
     }
 
     useEffect(() => {

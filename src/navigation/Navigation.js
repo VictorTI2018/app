@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
@@ -12,21 +12,11 @@ import CadastroPet from '../../src/views/CadastroPet'
 import GaleriaPet from '../views/GaleriaPet'
 import Parabens from '../views/Parabens'
 import MainStack from './MainStack'
-import AsyncStorage from '@react-native-community/async-storage'
 
 export let navigator
 
 export function Navigator() {
-    const [token, setToken] = useState()
 
-    async function getToken() {
-        let token = await AsyncStorage.getItem("token")
-        setToken(token)
-    }
-
-    useEffect(() => {
-        getToken()
-    }, [token])
     const Screens = {
         Login,
         CadastroUsuario,

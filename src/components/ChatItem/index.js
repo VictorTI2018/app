@@ -1,31 +1,26 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 
 export function ChatItem(props) {
-    const [messages, setMessages] = useState([
-        {
-            _id: 1,
-            text: 'Hello developer',
-            createdAt: new Date(),
-            user: {
-                _id: 2,
-                name: 'GiftedChat',
-                avatar: 'https://placeimg.com/140/140/any',
-            },
-        },
-    ]);
-    const onSend = (newMessages) =>
-        setMessages(GiftedChat.append(messages, newMessages));
+
     return (
-        <View style={styles.container}>
-            <GiftedChat
-                {...{ messages, onSend }}
-                user={{
-                    _id: 1,
-                }}
-            />
+        <View style={{ flex: 1, marginTop: 50, backgroundColor: '#eee4dc', padding: 10 }}>
+        <View style={{ flex: 1, paddingBottom: 20 }}>
+
+            
         </View>
+
+        <View style={{ flexDirection: 'row', height: 60}}>
+            <TextInput 
+                style={{ flex: 4, backgroundColor: '#fff', fontSize: 18 }}
+            />
+
+            <TouchableHighlight  underlayColor="#fff">
+                <Image source={require('../../assets/enviar_mensagem.png')} />
+            </TouchableHighlight>
+
+        </View>
+    </View>
     );
 }
 

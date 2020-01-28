@@ -1,4 +1,4 @@
-import store from '../store'
+import store from '../store/storeConfig'
 import { includes } from 'lodash'
 
 export * from './rules'
@@ -15,13 +15,6 @@ export const unmask = v => {
 export const hex2rgba = ( hex, alpha = 1) => {
     const [r, g, b] = hex.match(/\w\w/g).map(x => parseInt(x, 16))
     return `rgba(${r}, ${g}, ${b}, ${alpha})`
-}
-
-function getProps() {
-  const state = store.getState()
-  return {
-    drawerLocked: state.navigation.drawerLocked
-  }
 }
 
 export function isDrawerLocker(props) {
