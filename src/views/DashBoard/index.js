@@ -8,7 +8,7 @@ import Iconn from 'react-native-vector-icons/AntDesign'
 
 import { toggleDrawer } from '../../navigation'
 
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 
 import {
     Container,
@@ -186,7 +186,7 @@ function DashBoard(props) {
 
     return (
         <>
-            <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil pet_perfil={usuario.pets.imagem} />
+            <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
             <ScrollView>
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
                     <Container>

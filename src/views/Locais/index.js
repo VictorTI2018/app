@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, SafeAreaView, Text, FlatList, ActivityIndicator, Image } from 'react-native'
 
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 
 import theme from '../../theme'
 

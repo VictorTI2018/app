@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
-import { Topo } from '../../components/Topo'
+import Topo from '../../components/Topo'
 
 import { get } from 'lodash'
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Badge } from 'react-native-elements'
+import { connect } from 'react-redux'
+import { Avatar, Badge, Icon as IconPush } from 'react-native-elements'
 import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {
@@ -15,7 +16,7 @@ import theme from '../../theme'
 import styles, { Container } from './styles'
 
 export function Topo(props) {
-    const { iconBack, iconName, iconMenu, perfil, pet_perfil, } = props
+    const { iconBack, iconName, iconMenu, perfil, pet_perfil } = props
     const [token, setToken] = useState()
     const stylesToken = !token ? {} : {}
 
@@ -27,6 +28,8 @@ export function Topo(props) {
     useEffect(() => {
         getToken()
     }, [])
+
+    const pet = props.usuario.pets
     return (
         <>
             <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
@@ -55,16 +58,16 @@ export function Topo(props) {
                 </View>
 
                 <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30 }]}>
-                    {token && perfil &&
-                        <View style={{ flexDirection: 'row' }}>
-                            <View>
+                    {token && perfil && (
+                        <View >
+
+                            <View style={{ flexDirection: 'row' }}>
                                 <Avatar
                                     rounded
                                     source={{
-                                        uri: pet_perfil,
+                                        uri: pet.imagem,
                                     }}
                                 />
-
                                 <Badge
                                     status="error"
                                     value="7"
@@ -72,7 +75,7 @@ export function Topo(props) {
                                 />
                             </View>
                         </View>
-                    }
+                    )}
 
                 </TouchableOpacity>
 
@@ -81,6 +84,13 @@ export function Topo(props) {
     )
 }
 
+const mapStateToProps = ({ usuario }) => {
+    return {
+        usuario: usuario
+    }
+}
+
+export default connect(mapStateToProps, null)(Topo)
 
 
 

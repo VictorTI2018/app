@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, ActivityIndicator } from 'react-native'
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 
 import {
     Container,

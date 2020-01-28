@@ -8,7 +8,7 @@ import { View, Alert } from 'react-native'
 
 import { Image, PasswordField } from '../../components'
 
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 
 import { Input, FormContainer, Submit, Anchor } from './styles'
 

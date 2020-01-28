@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { PasswordField } from '../../components'
-import {Topo} from '../../components'
+import Topo from '../../components/Topo'
 import { FormContainer, Input, Submit, Logo, Container } from './styles'
 
 import { showMessage } from 'react-native-flash-message'

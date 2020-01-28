@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 
 import {
     Container,

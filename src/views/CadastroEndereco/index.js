@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TouchableOpacity, ActivityIndicator, View } from 'react-native'
 import { connect } from 'react-redux'
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 import { FormContainer, Input, Submit, Logo, Title, ButtonContainer } from './styles'
 
 import theme from '../../theme'

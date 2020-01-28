@@ -10,7 +10,7 @@ import BuscarPet from '../BuscarPet'
 
 import { toggleDrawer } from '../../navigation'
 
-import { Topo } from '../../components'
+import Topo from '../../components/Topo'
 
 import {
     Container,
