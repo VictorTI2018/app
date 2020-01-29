@@ -20,7 +20,10 @@ import styles, { Container } from './styles'
 
 export function Topo(props) {
     const { iconBack, iconName, iconMenu, perfil, pet_perfil } = props
+
     const [token, setToken] = useState()
+    const [ value, setValue ] = useState()
+
     const stylesToken = !token ? {} : {}
     const pet = props.usuario.pets
 
@@ -31,6 +34,7 @@ export function Topo(props) {
 
     async function notificacao() {
         const resp = await getNotificacao(pet.id_pet)
+        setValue(resp.data.length)
     }
 
     useEffect(() => {
@@ -38,8 +42,11 @@ export function Topo(props) {
     }, [])
 
     useEffect(() => {
-
-    }, [])
+        if(pet.id_pet !== undefined) {
+            notificacao()
+        }
+        
+    }, [ value ])
 
     let boasVindas = `Ola ${props.usuario.nome} seja bem vindo(a)`
     return (
@@ -85,7 +92,7 @@ export function Topo(props) {
                                 />
                                 <Badge
                                     status="error"
-                                    value="7"
+                                    value={value}
                                     containerStyle={{ position: 'absolute', top: -4, right: -4 }}
                                 />
                             </View>

@@ -32,6 +32,7 @@ import { get } from 'lodash'
 
 import { getPets } from '../../webservice/pet'
 import { addPet } from '../../webservice/amizade'
+import { addMeet } from '../../webservice/petmeet'
 
 const horizontalMargin = 20
 const slideWidth = 300
@@ -74,7 +75,20 @@ function DashBoard(props) {
         }
 
         try {
-            const resp = await addPet(model)
+            await addPet(model)
+        }catch(err) {
+
+        }
+    }
+
+    async function handleMeet(pet_petmeet_id) {
+        let id_pet = usuario.pets.id_pet
+        let model = {
+            pet_petmeet_id,
+            id_pet
+        }
+        try {
+            const resp = await addMeet(model)
             console.log(resp.data)
         }catch(err) {
 
@@ -118,7 +132,7 @@ function DashBoard(props) {
                         <ImagePet source={{ uri : imagem }} />
                         <Detalhes>Saiba +</Detalhes>
                     </ContainerPet>
-                    <ContainerIcon color={theme.colors.errors}>
+                    <ContainerIcon color={theme.colors.errors} onPress={() => handleMeet(item.id_pet)}>
                         <Iconn name='heart' size={40} color='#FFF' />
                     </ContainerIcon>
                 </ContainerCard>
