@@ -10,12 +10,10 @@ import styles from './styles'
 function ChatItem(props) {
 
     function _enviarMensagem() {
-        const { usuario, nome, id_pet } = props.navigation.getParam('model')
+        const { id_pet } = props.navigation.getParam('model')
         const pet = props.navigation.getParam('pet')
         const { mensagem } = props
         const model =  {
-            usuario,
-            nome,
             id_pet,
             mensagem,
             pet

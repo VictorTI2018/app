@@ -10,19 +10,19 @@ export const modificaMensagem = texto => {
     }
 }
 
-export const enviarMensagem = ({ usuario, nome, id_pet, mensagem, pet }) => {
+export const enviarMensagem = ({ id_pet, mensagem, pet }) => {
     return dispatch => {
 
         //dados do contato => usuario, nome, id_pet, mensagem
 
         // dados do usuario autenticado
-        const amigo_pet = nome
-        const nome_pet = pet.nome
-        const menssage = mensagem.mensagem
+        const amigo_id = id_pet
+        const pet_id   = pet.id_pet
+        const menssages = mensagem.mensagem
         const model = {
-            amigo_pet,
-            menssage,
-            nome_pet,
+            amigo_id,
+            pet_id,
+            menssages,
             tipo: 'e'
 
         }
