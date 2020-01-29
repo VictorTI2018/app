@@ -6,10 +6,6 @@ import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Iconn from 'react-native-vector-icons/AntDesign'
 
-import { toggleDrawer } from '../../navigation'
-
-import Topo from '../../components/Topo'
-
 import {
     Container,
     CardPet,
@@ -186,7 +182,6 @@ function DashBoard(props) {
 
     return (
         <>
-            <Topo title={`Olá ${usuario.nome}, seja bem vindo(a)`} onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
             <ScrollView>
                 {loading ? <ActivityIndicator size="large" color={theme.colors.primary} /> : (
                     <Container>

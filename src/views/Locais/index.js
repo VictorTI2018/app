@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, SafeAreaView, Text, FlatList, ActivityIndicator, Image } from 'react-native'
 
-import Topo from '../../components/Topo'
-
 import theme from '../../theme'
 
 import styles, { Submit } from './styles'
@@ -66,7 +64,6 @@ function Locais(props) {
 
     return (
         <>
-            <Topo title={`${tipo}`} perfil iconBack iconName="md-arrow-back" onPress={actionBack} />
             <View >
                 <View style={styles.topo}>
                     <Submit>+ filtros</Submit>

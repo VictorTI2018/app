@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Text } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
-import Topo from '../../components/Topo'
 
 import { get } from 'lodash'
 
@@ -92,7 +91,6 @@ export default function Parabens({ navigation }) {
     }
     return (
         <Container>
-            <Topo title="Parabéns" iconBack iconName="md-arrow-back" onPress={actionBack} perfil/>
             {renderParabens()}
             <Submit onPress={dashboard}>Pagina Inicial</Submit>
         </Container>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, ActivityIndicator } from 'react-native'
-import Topo from '../../components/Topo'
+
 
 import {
     Container,
@@ -109,7 +109,6 @@ export default function DetalhesLocais({ navigation }) {
 
     return (
         <Container>
-            <Topo title={`Detalhes ${tipo}`} perfil iconBack iconName="md-arrow-back" onPress={actionBack} pet_perfil={usuario.pets.imagem}/>
             {data && (
                 renderDetalhes()
             )}

@@ -2,8 +2,6 @@ import React from 'react'
 
 import { Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 
-import Topo from '../../components/Topo'
-
 import {
     Container,
     ContainerImage,
@@ -38,7 +36,7 @@ const raca = [
 ]
 
 const placeholderRaca = [
-    { label : 'Qual raça ?', value: null }
+    { label: 'Qual raça ?', value: null }
 ]
 
 
@@ -47,7 +45,7 @@ const especie = [
 ]
 
 const placeholderEspecie = [
-    { label : 'Qual especie ?', value: null }
+    { label: 'Qual especie ?', value: null }
 ]
 
 const sexo = [
@@ -55,7 +53,7 @@ const sexo = [
 ]
 
 const placeholderSexo = [
-    { label : 'Qual sexo?', value: null }
+    { label: 'Qual sexo?', value: null }
 ]
 
 const idade = [
@@ -63,7 +61,7 @@ const idade = [
 ]
 
 const placeholderIdade = [
-    { label : 'Qual idade?', value: null }
+    { label: 'Qual idade?', value: null }
 ]
 
 
@@ -75,9 +73,7 @@ export default function BuscarPet(props) {
     }
 
     return (
-        <View 
-        >
-            <Topo title="Busca" iconBack iconName="md-arrow-back" perfil  />
+        <View>
             <Container>
                 <ContainerImage>
                     <FotoPet source={require("../../assets/pesquisa-cachorro.png")} />

@@ -8,9 +8,6 @@ import Iconn from 'react-native-vector-icons/AntDesign'
 
 import BuscarPet from '../BuscarPet'
 
-import { toggleDrawer } from '../../navigation'
-
-import Topo from '../../components/Topo'
 
 import {
     Container,
@@ -75,7 +72,7 @@ export default function Adocao(props) {
     async function loadUsuariosWithPets() {
         const resp = await loadUsuarios()
         let pets = resp.data.map(item => item.pets)
-        let pet = pets.filter(item => item.status === 'adoção')
+        let pet = pets.filter(item => item.status === 'adoção' || [])
         setPets(pet)
     }
 
@@ -166,7 +163,6 @@ export default function Adocao(props) {
 
     return (
         <>
-            <Topo title="Adoção" onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
             <BuscarPet isVisible={isVisible} onCancel={() => { setIsVisible(false) }} data={pets} />
             <ScrollView>
                 <Container>

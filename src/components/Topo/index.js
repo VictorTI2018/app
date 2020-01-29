@@ -13,29 +13,41 @@ import {
 } from 'react-native'
 import theme from '../../theme'
 
+import { getNotificacao } from '../../webservice/notificacao'
+
+
 import styles, { Container } from './styles'
 
 export function Topo(props) {
     const { iconBack, iconName, iconMenu, perfil, pet_perfil } = props
     const [token, setToken] = useState()
     const stylesToken = !token ? {} : {}
+    const pet = props.usuario.pets
 
     async function getToken() {
         let token = await AsyncStorage.getItem("token")
         setToken(token)
     }
 
+    async function notificacao() {
+        const resp = await getNotificacao(pet.id_pet)
+    }
+
     useEffect(() => {
         getToken()
     }, [])
 
-    const pet = props.usuario.pets
+    useEffect(() => {
+
+    }, [])
+
+    let boasVindas = `Ola ${props.usuario.nome} seja bem vindo(a)`
     return (
         <>
             <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
             <Container style={!token ? { justifyContent: 'space-around' } : { justifyContent: 'space-between' }} >
 
-                <View style={{ stylesToken }}>
+                <View >
                     {iconBack && (
                         <TouchableOpacity style={styles.colorIconBack} {...props}>
                             <Icon name={iconName} color="#000" size={30} />
@@ -52,9 +64,12 @@ export function Topo(props) {
                 <View style={[styles.logo, stylesToken]}>
                     <Image style={styles.imagem}
                         source={require('../../assets/logo.png')} />
-                    <Text style={styles.title}>
+                    {!token ? (<Text style={styles.title}>
                         {props.title}
                     </Text>
+                    ) : <Text style={styles.title}>
+                            {boasVindas}
+                        </Text>}
                 </View>
 
                 <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30 }]}>

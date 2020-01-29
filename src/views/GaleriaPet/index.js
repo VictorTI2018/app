@@ -3,7 +3,6 @@ import { View, Text, Image, ScrollView } from 'react-native'
 import { Icon } from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 
-import { Topo } from '../../components'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Container, ContainerFoto, ContainerRenderFoto, ContainerFlexWrap, ContainerFlexBasis, Submit } from './styles'
@@ -67,7 +66,6 @@ export default function GaleriaPet(props) {
 
     return (
         <Container>
-            <Topo title="Album de Fotos" iconMenu iconName="md-menu" onPress={actionBack} perfil pet_perfil={usuario.pets.imagem} />
             <ScrollView>
                 <ContainerFoto>
                     <View style={{ margin: 10 }}>

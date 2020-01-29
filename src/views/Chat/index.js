@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import Topo from '../../components/Topo'
 
 import {
     ContainerTopo,
@@ -96,7 +95,6 @@ function Chat(props) {
 
     return (
         <>
-        <Topo  title="Lista de Contatos"  iconBack iconName="md-arrow-back"   perfil onPress={actionBack} />
             {renderTopo()}
             <List renderItem={renderListaChat}
                 data={petFfriend}
