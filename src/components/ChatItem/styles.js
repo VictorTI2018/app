@@ -4,7 +4,6 @@ import theme from '../../theme'
 export default StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 50,
         padding: 10,
         backgroundColor: '#BBDEFB'
     },
@@ -23,6 +22,7 @@ export default StyleSheet.create({
         fontSize: 20,
         borderRadius: 10,
         height: 50,
-        marginRight: 5
+        marginRight: 5,
+        paddingLeft: 10
     }
 })

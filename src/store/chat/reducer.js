@@ -1,20 +1,14 @@
 import { SET_MENSAGEM } from './types'
 
 const initialState = {
-    mensagem: 'teste'
+    mensagem: null
 }
 
 const reducers = (state = initialState, action) => {
-    console.log(action)
-    switch(action.type) {
-        case SET_MENSAGEM:
-            return {
-                ...state,
-                mensagem: action.payload.mensagem
-            }
-        default:
-            state
+    if (action.type === SET_MENSAGEM) {
+        return { ...state, mensagem: action.payload }
     }
+    return state
 }
 
 export default reducers
