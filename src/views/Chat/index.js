@@ -41,21 +41,7 @@ function Chat(props) {
     }
 
 
-    async function loadFriends () {
-        try {
-            setLoading(true)
-            const resp = await listFriendPet(pet.id_pet)
-            setPetFriend(resp.data)
-        }catch(err) {
-
-        }finally {
-            setLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        loadFriends()
-    }, [ pet ])
+ 
 
 
     function renderTopo() {
@@ -97,7 +83,7 @@ function Chat(props) {
         <>
             {renderTopo()}
             <List renderItem={renderListaChat}
-                data={petFfriend}
+                data={dados}
                 keyExtractor={item => String(item.id_pet)}
             />
         </>

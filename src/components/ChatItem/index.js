@@ -1,31 +1,41 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux'
+import { modificaMensagem } from '../../store/chat/actions'
+import { View, TextInput } from 'react-native'
 
-export function ChatItem(props) {
+import { Button } from 'react-native-elements'
 
+import styles from './styles'
+
+function ChatItem(props) {
+    
+    const [ mensagem, setMensagem ] = useState('')
+
+    function handleChange () {
+        modificaMensagem(mensagem)
+    }
     return (
-        <View style={{ flex: 1, marginTop: 50, backgroundColor: '#eee4dc', padding: 10 }}>
-        <View style={{ flex: 1, paddingBottom: 20 }}>
+        <View style={styles.container}>
+            <View style={styles.listContainer}></View>
+            <View style={styles.sendContainer}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Digite sua mensagemn..."
+                    value={mensagem}
+                    onChangeText={handleChange}/>
 
-            
+                <Button title="Enviar" buttonStyle={{ borderRadius: 10, height: 50 }} />
+            </View>
         </View>
-
-        <View style={{ flexDirection: 'row', height: 60}}>
-            <TextInput 
-                style={{ flex: 4, backgroundColor: '#fff', fontSize: 18 }}
-            />
-
-            <TouchableHighlight  underlayColor="#fff">
-                <Image source={require('../../assets/enviar_mensagem.png')} />
-            </TouchableHighlight>
-
-        </View>
-    </View>
-    );
+    )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
+
+
+const mapDispatchProps = dispatch => {
+    return {
+        onChange: mensagem => dispatch(modificaMensagem(mensagem))
+    }
+}
+
+export default connect(null, mapDispatchProps)(ChatItem)
