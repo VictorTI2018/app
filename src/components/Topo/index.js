@@ -46,7 +46,7 @@ export function Topo(props) {
             notificacao()
         }
         
-    }, [ value ])
+    }, [])
 
     let boasVindas = `Ola ${props.usuario.nome} seja bem vindo(a)`
     return (

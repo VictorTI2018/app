@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Badge } from 'react-native-elements'
 import { Dimensions, ScrollView, ActivityIndicator, Text } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import { connect } from 'react-redux'
@@ -34,6 +35,8 @@ import { getPets } from '../../webservice/pet'
 import { addPet } from '../../webservice/amizade'
 import { addMeet } from '../../webservice/petmeet'
 
+import { getNotificacao } from '../../webservice/notificacao'
+
 const horizontalMargin = 20
 const slideWidth = 300
 
@@ -51,6 +54,8 @@ function DashBoard(props) {
 
     const [pets, setPets] = useState([])
     const [loading, setLoading] = useState(false)
+    const [amizade, setAmizade] = useState()
+    const [meet, setMeet] = useState()
 
     async function loadPets() {
         try {
@@ -62,6 +67,26 @@ function DashBoard(props) {
             setLoading(false)
         }
     }
+
+    async function notificacao() {
+        try {
+            const resp = await getNotificacao(usuario.pets.id_pet)
+            let amizade = resp.data.filter(item => item.amizade)
+            let meet = resp.data.filter(item => item.petmeet)
+            setAmizade(amizade.length)
+            setMeet(meet.length)
+        } catch (err) {
+
+        }
+    }
+
+    useEffect(() => {
+        if (usuario.pets) {
+            if (usuario.pets.id_pet !== undefined) {
+                notificacao()
+            }
+        }
+    }, [])
 
     useEffect(() => {
         loadPets()
@@ -76,7 +101,7 @@ function DashBoard(props) {
 
         try {
             await addPet(model)
-        }catch(err) {
+        } catch (err) {
 
         }
     }
@@ -88,12 +113,13 @@ function DashBoard(props) {
             id_pet
         }
         try {
-            const resp = await addMeet(model)
-            console.log(resp.data)
-        }catch(err) {
+            await addMeet(model)
+        } catch (err) {
 
         }
     }
+
+
 
 
     function buscarPet() {
@@ -119,6 +145,7 @@ function DashBoard(props) {
         const idade = get(item, 'idade', 0)
         const raca = get(item.raca, 'nome', '')
         const imagem = get(item, 'imagem', '')
+        const usuario = get(item, 'usuario', '')
         return (
             <ContainerPets >
                 <ContainerNome >
@@ -129,7 +156,7 @@ function DashBoard(props) {
                         <Icon name='pets' size={40} color='#FFF' />
                     </ContainerIcon>
                     <ContainerPet>
-                        <ImagePet source={{ uri : imagem }} />
+                        <ImagePet source={{ uri: imagem }} />
                         <Detalhes>Saiba +</Detalhes>
                     </ContainerPet>
                     <ContainerIcon color={theme.colors.errors} onPress={() => handleMeet(item.id_pet)}>
@@ -138,7 +165,7 @@ function DashBoard(props) {
                 </ContainerCard>
                 <RowContainer>
                     <ContainerDono>
-                        <FotoDono source={require('../../assets/mulher1.png')} />
+                        <FotoDono source={{ uri: usuario.imagem}} />
                     </ContainerDono>
                     <ContainerDono>
                         <ViewRow>
@@ -166,6 +193,11 @@ function DashBoard(props) {
                 <ContainerCard>
                     <SubmitChat onPress={chat}>
                         <Icon name='pets' size={40} color='#FFF' />
+                        <Badge value={amizade} status="primary" containerStyle={{
+                            position: 'absolute',
+                            top: -4,
+                            right: -4
+                        }} />
                     </SubmitChat>
                     <ContainerPet>
                         <ImagePet source={{ uri: usuario.pets.imagem }} />
@@ -173,6 +205,11 @@ function DashBoard(props) {
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors}>
                         <Iconn name='heart' size={40} color='#FFF' />
+                        <Badge value={meet} status="error" containerStyle={{
+                            position: 'absolute',
+                            top: -4,
+                            right: -4
+                        }} />
                     </SubmitChat>
                 </ContainerCard>
                 <Submit colors={theme.colors.errors} onPress={buscarPet}>Achar um pet Ideal</Submit>
@@ -192,7 +229,7 @@ function DashBoard(props) {
         )
     }
 
-    
+
 
     return (
         <>
