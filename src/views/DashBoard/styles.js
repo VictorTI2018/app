@@ -17,7 +17,7 @@ export const CardPet = styled.View`
     border-color: ${theme.colors.primary};
 `
 
-export const ContainerPet = styled.View`
+export const ContainerPet = styled.TouchableOpacity`
     flex-direction: column;
 `
 

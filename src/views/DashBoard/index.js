@@ -191,7 +191,7 @@ function DashBoard(props) {
         return (
             <CardPet>
                 <ContainerCard>
-                    <SubmitChat onPress={chat}>
+                    <SubmitChat>
                         <Icon name='pets' size={40} color='#FFF' />
                         <Badge value={amizade} status="primary" containerStyle={{
                             position: 'absolute',
@@ -199,7 +199,7 @@ function DashBoard(props) {
                             right: -4
                         }} />
                     </SubmitChat>
-                    <ContainerPet>
+                    <ContainerPet  onPress={chat}>
                         <ImagePet source={{ uri: usuario.pets.imagem }} />
                         <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>

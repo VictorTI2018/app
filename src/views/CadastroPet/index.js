@@ -224,7 +224,7 @@ function CadastroPet(props) {
     const title = doar ? 'Cadastro para adoção' : 'Cadastro do Pet'
     return (
         <>
-            <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" />
+            {!token && <Topo title={title} iconBack onPress={actionBack} iconName="md-arrow-back" />}
             <FormContainer>
 
                 <TouchableOpacity onPress={pickImage} style={{ flex: 1 }}>

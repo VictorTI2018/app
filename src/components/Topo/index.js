@@ -79,7 +79,7 @@ export function Topo(props) {
                         </Text>}
                 </View>
 
-                <TouchableOpacity {...props} style={[stylesToken, { marginRight: 30 }]}>
+                <TouchableOpacity  style={[stylesToken, { marginRight: 30 }]}>
                     {token && perfil && (
                         <View >
 
