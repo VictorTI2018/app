@@ -1,0 +1,1 @@
+export const LISTA_CONVERSA_PET = 'LISTA_CONVERSA_PET'

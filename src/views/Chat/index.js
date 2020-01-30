@@ -21,13 +21,6 @@ import { get } from 'lodash'
 
 import { listFriendPet } from '../../webservice/amizade'
 
-
-const dados = [
-    { id_pet: 1, usuario: 'Victor', nome: 'Thor', imagem: require('../../assets/cachorro1.png')},
-    { id_pet: 2, usuario: 'Cibele', nome: 'Totozinho', imagem: require('../../assets/cachorro2.png') },
-    { id_pet: 3, usuario: 'Debora', nome: 'Lilika', imagem: require('../../assets/cachorro1.png') }
-]
-
 function Chat(props) {
 
 
@@ -40,9 +33,14 @@ function Chat(props) {
         props.navigation.push('ChatAmizade', { model: item, pet: pet })
     }
 
+    async function getFriends() {
+        const resp = await listFriendPet(pet.id_pet)
+        setPetFriend(resp.data)
+    }
 
-
-
+    useEffect(() => {
+        getFriends()
+    }, [])
 
     function renderTopo() {
         return (
@@ -60,7 +58,7 @@ function Chat(props) {
         return (
             <SelectedChat onPress={() => { selectedItem(data) }}>
                 <ContainerPetChat>
-                    <FotoPet source={data.imagem} />
+                    <FotoPet source={{ uri: data.imagem }} />
                     <ContainerDadosChat>
                         <NomePetChat>{data.nome}</NomePetChat>
                         <NomeDonoPet>Dono(a): {data.usuario}</NomeDonoPet>
@@ -82,7 +80,7 @@ function Chat(props) {
         <>
             {renderTopo()}
             <List renderItem={renderListaChat}
-                data={dados}
+                data={petFfriend}
                 keyExtractor={item => String(item.id_pet)}
             />
         </>
