@@ -130,6 +130,10 @@ function DashBoard(props) {
         props.navigation.push('Chat', { tipo: 'amizade' })
     }
 
+    function chatMeet() {
+        props.navigation.push('Chat', { tipo: 'meet' })
+    }
+
     function cadastrarPet() {
         props.navigation.navigate('CadastroPet')
     }

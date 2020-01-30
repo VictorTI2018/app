@@ -4,32 +4,28 @@ import { View, Image, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Iconn from 'react-native-vector-icons/AntDesign'
 import {
-    ContainerTopo,
-    Container,
-    NomePet,
     FotoPet,
     SelectedChat,
-    ContainerNotification,
     ContainerPetChat,
-    TextNotification,
     List,
     NomePetChat,
-    ContainerDadosChat,
-    NomeDonoPet
+    ContainerDadosChat
 } from './styles'
 
 import { get } from 'lodash'
 
 import { listFriendPet } from '../../webservice/amizade'
+import { listMeetPet } from '../../webservice/petmeet'
 import theme from '../../theme'
 
 function Chat(props) {
 
-
+    const tipo = props.navigation.getParam('tipo')
     const pet = props.usuario.pets
 
     const [loading, setLoading] = useState(false)
     const [petFfriend, setPetFriend] = useState([])
+    const [ petmeet, setPetMeet ] = useState([])
 
     function selectedItem(item) {
         props.navigation.push('ChatAmizade', { model: item, pet: pet })
@@ -40,8 +36,18 @@ function Chat(props) {
         setPetFriend(resp.data)
     }
 
+    async function getMeet() {
+        const resp = await listMeetPet(pet.id_pet)
+        setPetMeet(resp.data)
+    }
+
     useEffect(() => {
-        getFriends()
+        if(tipo === 'amizade') {
+            getFriends()
+        }
+        if(tipo === 'meet') {
+            getMeet()
+        }
     }, [])
 
     function renderTopo() {
@@ -75,18 +81,21 @@ function Chat(props) {
         )
     }
 
-    function actionBack() {
-        props.navigation.pop()
+    function renderListAmizade() {
+        return (
+            <List renderItem={renderListaChat}
+                data={petFfriend}
+                keyExtractor={item => String(item.id_pet)}
+            />
+        )
     }
+
 
 
     return (
         <>
             {renderTopo()}
-            <List renderItem={renderListaChat}
-                data={petFfriend}
-                keyExtractor={item => String(item.id_pet)}
-            />
+            {renderListAmizade()}
         </>
     )
 }
