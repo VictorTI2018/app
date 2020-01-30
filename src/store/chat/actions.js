@@ -29,10 +29,10 @@ export const enviarMensagem = ({ amigo_pet, mensagem, pet }) => {
             })
             .then(() => {
                 firebase.database().ref(`/pet_conversas/${nomePetB4}/${amigoNomeB64}`)
-                    .set({ nome: nome_amigo })
+                    .set({ nome: nome_amigo, imagem: amigo_pet.imagem })
             }).then(() => {
                 firebase.database().ref(`/pet_conversas/${amigoNomeB64}/${nomePetB4}`)
-                    .set({ nome: nome })
+                    .set({ nome: nome, imagem: pet.imagem })
             })
 
     }

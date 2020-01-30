@@ -126,8 +126,8 @@ function DashBoard(props) {
         props.navigation.navigate('BuscarPet')
     }
 
-    function chat() {
-        props.navigation.push('Chat')
+    function chatAmizade() {
+        props.navigation.push('Chat', { tipo: 'amizade' })
     }
 
     function cadastrarPet() {
@@ -165,7 +165,7 @@ function DashBoard(props) {
                 </ContainerCard>
                 <RowContainer>
                     <ContainerDono>
-                        <FotoDono source={{ uri: usuario.imagem}} />
+                        <FotoDono source={{ uri: usuario.imagem }} />
                     </ContainerDono>
                     <ContainerDono>
                         <ViewRow>
@@ -191,7 +191,7 @@ function DashBoard(props) {
         return (
             <CardPet>
                 <ContainerCard>
-                    <SubmitChat>
+                    <SubmitChat onPress={chatAmizade}>
                         <Icon name='pets' size={40} color='#FFF' />
                         <Badge value={amizade} status="primary" containerStyle={{
                             position: 'absolute',
@@ -199,11 +199,11 @@ function DashBoard(props) {
                             right: -4
                         }} />
                     </SubmitChat>
-                    <ContainerPet  onPress={chat}>
+                    <ContainerPet  >
                         <ImagePet source={{ uri: usuario.pets.imagem }} />
                         <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>
-                    <SubmitChat color={theme.colors.errors}>
+                    <SubmitChat color={theme.colors.errors} onPress={chat}>
                         <Iconn name='heart' size={40} color='#FFF' />
                         <Badge value={meet} status="error" containerStyle={{
                             position: 'absolute',

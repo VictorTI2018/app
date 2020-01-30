@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-
-
+import { View, Image, Text } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Iconn from 'react-native-vector-icons/AntDesign'
 import {
     ContainerTopo,
     Container,
@@ -20,6 +21,7 @@ import {
 import { get } from 'lodash'
 
 import { listFriendPet } from '../../webservice/amizade'
+import theme from '../../theme'
 
 function Chat(props) {
 
@@ -44,12 +46,14 @@ function Chat(props) {
 
     function renderTopo() {
         return (
-            <ContainerTopo>
-                <FotoPet source={require('../../assets/cachorro1.png')} />
-                <Container>
-                    <NomePet>{pet.nome}</NomePet>
-                </Container>
-            </ContainerTopo>
+            <View style={{ backgroundColor: '#546E7A', height: 80, alignItems: 'center', flexDirection: 'row' }}>
+                <View style={{ alignItems: 'flex-start', marginLeft: 10 }}>
+                    <Image source={{ uri: pet.imagem }} style={{ height: 65, width: 65, borderRadius: 65 }} />
+                </View>
+                <View style={{ alignItems: 'flex-end', marginLeft: 100 }}>
+                    <Text style={{ color: '#FFF', fontSize: 24 }}>{pet.nome}</Text>
+                </View>
+            </View >
         )
     }
 
@@ -61,12 +65,12 @@ function Chat(props) {
                     <FotoPet source={{ uri: data.imagem }} />
                     <ContainerDadosChat>
                         <NomePetChat>{data.nome}</NomePetChat>
-                        <NomeDonoPet>Dono(a): {data.usuario}</NomeDonoPet>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 200, height: 30, width: 30, backgroundColor: theme.colors.primary }}>
+                            <Icon name="pets" size={20} color="#FFF" />
+                        </View>
                     </ContainerDadosChat>
                 </ContainerPetChat>
-                <ContainerNotification>
-                    <TextNotification>1</TextNotification>
-                </ContainerNotification>
+
             </SelectedChat>
         )
     }

@@ -9,7 +9,7 @@ const reducers = combineReducers({
     usuario: userReducer,
     navigation: navigationReducer,
     mensagem: mensagemReducer,
-    lista: listaConversa
+    lista: listaConversa,
 })
 
 export const storeConfig = () => {

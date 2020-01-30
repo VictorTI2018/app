@@ -46,7 +46,6 @@ function ChatItem(props) {
 
 
     function renderRow({ item }) {
-        console.log(item)
         const mensagem = _.get(item, 'mensagem.mensagem')
         const tipo = _.get(item, 'tipo')
         if (tipo === 'e') {
