@@ -23,15 +23,18 @@ function Conversas(props) {
     function criarFonteDados(conversas) {
         setDataSource(conversas)
     }
+    function selectedItem(item) {
+        props.navigation.push('ChatAmizade', { model: item, pet: pet })
+    }
 
     function renderRow({ item }) {
         return (
-            <SelectedChat >
+            <SelectedChat onPress={() => selectedItem(item)}>
                 <ContainerPetChat>
 
-                <Image source={{ uri: item.imagem }} style={{ height: 65, width: 65, borderRadius: 65 }} />
-                        <NomeDonoPet>{item.nome}</NomeDonoPet>
-                    
+                    <Image source={{ uri: item.imagem }} style={{ height: 65, width: 65, borderRadius: 65 }} />
+                    <NomeDonoPet>{item.nome}</NomeDonoPet>
+
                 </ContainerPetChat>
                 <ContainerNotification>
                     <TextNotification>1</TextNotification>
