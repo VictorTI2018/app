@@ -120,8 +120,6 @@ function DashBoard(props) {
     }
 
 
-
-
     function buscarPet() {
         props.navigation.navigate('BuscarPet')
     }
@@ -207,7 +205,7 @@ function DashBoard(props) {
                         <ImagePet source={{ uri: usuario.pets.imagem }} />
                         <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>
-                    <SubmitChat color={theme.colors.errors} onPress={chat}>
+                    <SubmitChat color={theme.colors.errors} >
                         <Iconn name='heart' size={40} color='#FFF' />
                         <Badge value={meet} status="error" containerStyle={{
                             position: 'absolute',
