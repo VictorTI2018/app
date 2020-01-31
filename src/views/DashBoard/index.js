@@ -205,7 +205,7 @@ function DashBoard(props) {
                         <ImagePet source={{ uri: usuario.pets.imagem }} />
                         <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>
-                    <SubmitChat color={theme.colors.errors} >
+                    <SubmitChat color={theme.colors.errors} onPress={chatMeet}>
                         <Iconn name='heart' size={40} color='#FFF' />
                         <Badge value={meet} status="error" containerStyle={{
                             position: 'absolute',
