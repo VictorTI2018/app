@@ -14,7 +14,7 @@ export default createStackNavigator(
     },
     {
         defaultNavigationOptions: {
-            header:  <Topo  onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
+            header:  () => <Topo  onPress={toggleDrawer} iconMenu iconName="md-menu" perfil />
         }
 
     }

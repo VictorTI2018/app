@@ -12,10 +12,16 @@ import {
     ContainerDadosChat
 } from './styles'
 
-import { get } from 'lodash'
+import _ from 'lodash'
 
-import { listFriendPet } from '../../webservice/amizade'
-import { listMeetPet } from '../../webservice/petmeet'
+const dados = [
+    { id_pet: 1, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
+    { id_pet: 2, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
+    { id_pet: 3, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
+    { id_pet: 4, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
+    { id_pet: 5, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
+]
+
 import theme from '../../theme'
 
 function Contatos(props) {
@@ -25,30 +31,13 @@ function Contatos(props) {
 
     const [loading, setLoading] = useState(false)
     const [petFfriend, setPetFriend] = useState([])
-    const [ petmeet, setPetMeet ] = useState([])
+    const [petmeet, setPetMeet] = useState([])
 
     function selectedItem(item) {
         props.navigation.push('ChatAmizade', { model: item, pet: pet })
     }
 
-    async function getFriends() {
-        const resp = await listFriendPet(pet.id_pet)
-        setPetFriend(resp.data)
-    }
 
-    async function getMeet() {
-        const resp = await listMeetPet(pet.id_pet)
-        setPetMeet(resp.data)
-    }
-
-    useEffect(() => {
-        if(tipo === 'amizade') {
-            getFriends()
-        }
-        if(tipo === 'meet') {
-            getMeet()
-        }
-    }, [])
 
     function renderTopo() {
         return (
@@ -63,12 +52,12 @@ function Contatos(props) {
         )
     }
 
-    function renderListaChat(item) {
-        const data = get(item, 'item')
+    function renderRow(item) {
+        const data = item
         return (
             <SelectedChat onPress={() => { selectedItem(data) }}>
                 <ContainerPetChat>
-                    <FotoPet source={{ uri: data.imagem }} />
+                    <FotoPet source={data.imagem} />
                     <ContainerDadosChat>
                         <NomePetChat>{data.nome}</NomePetChat>
                         <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 200, height: 30, width: 30, backgroundColor: theme.colors.primary }}>
@@ -83,8 +72,8 @@ function Contatos(props) {
 
     function renderListAmizade() {
         return (
-            <List renderItem={renderListaChat}
-                data={petFfriend}
+            <List renderItem={renderRow}
+                data={dados}
                 keyExtractor={item => String(item.id_pet)}
             />
         )

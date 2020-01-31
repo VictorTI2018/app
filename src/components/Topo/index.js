@@ -15,6 +15,8 @@ import theme from '../../theme'
 
 import { getNotificacao } from '../../webservice/notificacao'
 
+import Notificacao from '../../views/Notificacao'
+
 
 import styles, { Container } from './styles'
 
@@ -23,6 +25,7 @@ export function Topo(props) {
 
     const [token, setToken] = useState()
     const [ value, setValue ] = useState()
+    const [ isVisible, setIsVisible ] = useState(false)
 
     const stylesToken = !token ? {} : {}
     const pet = props.usuario.pets
@@ -51,9 +54,10 @@ export function Topo(props) {
     let boasVindas = `Ola ${props.usuario.nome} seja bem vindo(a)`
     return (
         <>
+           <Notificacao isVisible={isVisible} onCancel={() => setIsVisible(false)}/>
             <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
             <Container style={!token ? { justifyContent: 'space-around' } : { justifyContent: 'space-between' }} >
-
+                
                 <View >
                     {iconBack && (
                         <TouchableOpacity style={styles.colorIconBack} {...props}>
@@ -78,8 +82,8 @@ export function Topo(props) {
                             {boasVindas}
                         </Text>}
                 </View>
-
-                <TouchableOpacity  style={[stylesToken, { marginRight: 30 }]}>
+                
+                <TouchableOpacity  style={[stylesToken, { marginRight: 30 }]} onPress={() => setIsVisible(true)}>
                     {token && perfil && (
                         <View >
 

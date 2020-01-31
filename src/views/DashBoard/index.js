@@ -32,8 +32,8 @@ import theme from '../../theme'
 import { get } from 'lodash'
 
 import { getPets } from '../../webservice/pet'
-import { addPet } from '../../webservice/amizade'
-import { addMeet } from '../../webservice/petmeet'
+
+import { addAmizade, addMeet } from '../../webservice/contatos'
 
 import { getNotificacao } from '../../webservice/notificacao'
 
@@ -68,25 +68,7 @@ function DashBoard(props) {
         }
     }
 
-    async function notificacao() {
-        try {
-            const resp = await getNotificacao(usuario.pets.id_pet)
-            let amizade = resp.data.filter(item => item.amizade)
-            let meet = resp.data.filter(item => item.petmeet)
-            setAmizade(amizade.length)
-            setMeet(meet.length)
-        } catch (err) {
 
-        }
-    }
-
-    useEffect(() => {
-        if (usuario.pets) {
-            if (usuario.pets.id_pet !== undefined) {
-                notificacao()
-            }
-        }
-    }, [])
 
     useEffect(() => {
         loadPets()
@@ -100,7 +82,7 @@ function DashBoard(props) {
         }
 
         try {
-            await addPet(model)
+            await addAmizade(model)
         } catch (err) {
 
         }
@@ -195,7 +177,7 @@ function DashBoard(props) {
                 <ContainerCard>
                     <SubmitChat onPress={chatAmizade}>
                         <Icon name='pets' size={40} color='#FFF' />
-                        <Badge value={amizade} status="primary" containerStyle={{
+                        <Badge value="4" status="primary" containerStyle={{
                             position: 'absolute',
                             top: -4,
                             right: -4
@@ -207,7 +189,7 @@ function DashBoard(props) {
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors} onPress={chatMeet}>
                         <Iconn name='heart' size={40} color='#FFF' />
-                        <Badge value={meet} status="error" containerStyle={{
+                        <Badge value="4" status="error" containerStyle={{
                             position: 'absolute',
                             top: -4,
                             right: -4
