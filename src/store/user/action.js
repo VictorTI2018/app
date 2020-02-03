@@ -1,4 +1,4 @@
-import  { USER_LOGGED_IN, USER_LOGGED_OUT } from './types'
+import  { USER_LOGGED_IN, USER_LOGGED_OUT, USER_UPDATED } from './types'
 
 export const userLogged = user => {
     return {
@@ -10,5 +10,12 @@ export const userLogged = user => {
 export const logout = () => {
     return {
         type: USER_LOGGED_OUT
+    }
+}
+
+export const updateUser = user => {
+    return {
+        type: USER_UPDATED,
+        payload: user
     }
 }

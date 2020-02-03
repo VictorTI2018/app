@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux'
+import { userLogged, updateUser } from '../../store/user/action'
 import { View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { PasswordField } from '../../components'
 import Topo from '../../components/Topo'
-import { FormContainer, Input, Submit, Logo, Container } from './styles'
+import { FormContainer, Input, Submit, Logo } from './styles'
 
 import { showMessage } from 'react-native-flash-message'
 import { createUsuario, updateUsuario } from '../../webservice/cadastro-usuario'
 
-
-import AsyncStorage from '@react-native-community/async-storage'
 
 const MAX_FILE_SIZE = 3
 
@@ -81,6 +80,7 @@ function CadastroUsuario(props) {
         try {
             setLoading(true)
             const resp = await updateUsuario(id_usuario, getModel())
+
             if (resp.status === 200) {
                 props.navigation.push('CadastroEndereco', { id_usuario: id_usuario, update: true })
             }
@@ -200,4 +200,11 @@ const mapStateToProps = ({ usuario }) => {
     }
 }
 
-export default connect(mapStateToProps, null)(CadastroUsuario)
+const mapDispatchToProps = dispatch => {
+    return {
+        setUser: user => dispatch(updateUser(user))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CadastroUsuario)

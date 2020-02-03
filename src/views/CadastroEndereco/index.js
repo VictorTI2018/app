@@ -9,6 +9,7 @@ import axios from 'axios'
 
 import { createEndereco, updateEndereco } from '../../webservice/cadastro-usuario'
 import { showMessage } from 'react-native-flash-message'
+import { userLogged } from '../../store/user/action'
 
 const MAX_FILE_SIZE = 3
 
@@ -66,7 +67,7 @@ function CadastroEndereco(props) {
         try {
             setLoading(true)
             const res = await createEndereco(getModel())
-            if (res.data.status === "sucesso") {
+            if (resp.data.status === "sucesso") {
                 showMessage({
                     message: 'SUCESSO',
                     description: 'Endereco Cadastrado com sucesso...',
@@ -84,15 +85,16 @@ function CadastroEndereco(props) {
         try {
             setLoading(true)
             const resp = await updateEndereco(id_endereco, getModel())
-            if (resp.data.status === "sucesso") {
-                showMessage({
-                    message: "SUCESSO",
-                    description: "Endereco Atualizado com sucesso",
-                    type: "success",
-                    icon: 'auto',
-                    duration: 1500
-                })
-            }
+            console.log(resp.data)
+            // if (resp.status === 200) {
+            //     showMessage({
+            //         message: "SUCESSO",
+            //         description: "Endereco Atualizado com sucesso",
+            //         type: "success",
+            //         icon: 'auto',
+            //         duration: 1500
+            //     })
+            // }
         } finally {
             setLoading(false)
         }
@@ -172,4 +174,10 @@ const mapStateToProps = ({ usuario }) => {
     }
 }
 
-export default connect(mapStateToProps, null)(CadastroEndereco)
+const mapDispatchProps = dispatch => {
+    return {
+        setUser: user => dispatch(userLogged(user))
+    }
+}
+
+export default connect(mapStateToProps, mapStateToProps)(CadastroEndereco)
