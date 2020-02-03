@@ -5,10 +5,10 @@ import firebase from 'firebase'
 export const conversasPetFetch = (pet) => {
 
     return dispatch => {
-        const { nome } = pet
-        const nomePetB64 = b64.encode(nome)
+        const { id_pet } = pet
+        const petIdB64 = b64.encode(id_pet)
 
-        firebase.database().ref(`/pet_conversas/${nomePetB64}`)
+        firebase.database().ref(`/pet_conversas/${petIdB64}`)
             .on("value", snapshot => {
                 dispatch({
                     type: LISTA_CONVESAS_PET,

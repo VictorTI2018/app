@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { modificaMensagem, enviarMensagem, conversaPetFetch } from '../../store/chat/actions'
-import { View, TextInput, FlatList, Text } from 'react-native'
+import { View, TextInput, FlatList, Text, Image } from 'react-native'
 import _ from 'lodash'
 
 import { Button } from 'react-native-elements'
@@ -13,9 +13,10 @@ function ChatItem(props) {
     const [dataSource, setDataSource] = useState()
     const situacao = props.navigation.getParam('situacao')
 
+    const { pets } = props.usuario
     useEffect(() => {
         const amigo = props.navigation.getParam('model')
-        const pet = props.navigation.getParam('pet')
+        const pet = pets
         let model = {
             amigo,
             pet
@@ -30,7 +31,7 @@ function ChatItem(props) {
 
     function _enviarMensagem() {
         const amigo_pet = props.navigation.getParam('model')
-        const pet = props.navigation.getParam('pet')
+        const pet = pets
         const { mensagem } = props
         const model = {
             amigo_pet,
@@ -49,16 +50,26 @@ function ChatItem(props) {
     function renderRow({ item }) {
         const mensagem = _.get(item, 'mensagem.mensagem')
         const tipo = _.get(item, 'tipo')
+        const imagem = _.get(item, 'imagem')
         if (tipo === 'e') {
             return (
                 <View style={styles.mensagemLeft}>
-                    <Text style={styles.textMensagem}>{mensagem}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.textMensagem}>{mensagem}</Text>
+                        <Image source={{ uri: imagem }} style={{ height: 30, width: 30, borderRadius: 60 }} />
+
+                    </View>
+
                 </View>
             )
         } else {
             return (
                 <View style={styles.mensagemRigth}>
-                    <Text style={styles.textMensagemRigth}>{mensagem}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.textMensagemRigth}>{mensagem}</Text>
+                        <Image source={{ uri: imagem }} style={{ height: 30, width: 30, borderRadius: 60 }} />
+                    </View>
+
                 </View>
             )
         }
@@ -89,7 +100,7 @@ function ChatItem(props) {
     )
 }
 
-const mapStateToProps = ({ mensagem, lista }) => {
+const mapStateToProps = ({ mensagem, lista, usuario }) => {
     const conversa = _.map(lista, (val, uid) => {
 
         return { ...val, uid }
@@ -97,7 +108,8 @@ const mapStateToProps = ({ mensagem, lista }) => {
 
     return {
         conversa,
-        mensagem: mensagem
+        mensagem: mensagem,
+        usuario
     }
 }
 

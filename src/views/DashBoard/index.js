@@ -74,7 +74,7 @@ function DashBoard(props) {
         loadPets()
     }, [])
 
-    async function handleFriend(pet_amigo_id) {
+    async function handleFriend(pet_amigo_id, item) {
         let id_pet = usuario.pets.id_pet
         let model = {
             pet_amigo_id,
@@ -83,12 +83,13 @@ function DashBoard(props) {
 
         try {
             await addAmizade(model)
+            chatAmizade(item)
         } catch (err) {
 
         }
     }
 
-    async function handleMeet(pet_petmeet_id) {
+    async function handleMeet(pet_petmeet_id, item) {
         let id_pet = usuario.pets.id_pet
         let model = {
             pet_petmeet_id,
@@ -96,6 +97,7 @@ function DashBoard(props) {
         }
         try {
             await addMeet(model)
+            chatMeet(item)
         } catch (err) {
 
         }
@@ -106,12 +108,12 @@ function DashBoard(props) {
         props.navigation.navigate('BuscarPet')
     }
 
-    function chatAmizade() {
-        props.navigation.push('Chat', { tipo: true })
+    function chatAmizade(model) {
+        props.navigation.push('Chat', { tipo: true, model })
     }
 
-    function chatMeet() {
-        props.navigation.push('Chat', { tipo: false})
+    function chatMeet(model) {
+        props.navigation.push('Chat', { tipo: false, model })
     }
 
     function cadastrarPet() {
@@ -120,6 +122,10 @@ function DashBoard(props) {
 
     function cadastrarPetDoar() {
         props.navigation.navigate('CadastroPet', { doar: true })
+    }
+
+    function conversas() {
+        props.navigation.navigate('Conversas')
     }
 
 
@@ -136,14 +142,14 @@ function DashBoard(props) {
                     <NomePet cor>{nome || ''}</NomePet>
                 </ContainerNome>
                 <ContainerCard>
-                    <ContainerIcon onPress={() => handleFriend(item.id_pet)}>
+                    <ContainerIcon onPress={() => handleFriend(item.id_pet, item)}>
                         <Icon name='pets' size={40} color='#FFF' />
                     </ContainerIcon>
                     <ContainerPet>
                         <ImagePet source={{ uri: imagem }} />
                         <Detalhes>Saiba +</Detalhes>
                     </ContainerPet>
-                    <ContainerIcon color={theme.colors.errors} onPress={() => handleMeet(item.id_pet)}>
+                    <ContainerIcon color={theme.colors.errors} onPress={() => handleMeet(item.id_pet, item)}>
                         <Iconn name='heart' size={40} color='#FFF' />
                     </ContainerIcon>
                 </ContainerCard>
@@ -175,7 +181,7 @@ function DashBoard(props) {
         return (
             <CardPet>
                 <ContainerCard>
-                    <SubmitChat onPress={chatAmizade}>
+                    <SubmitChat >
                         <Icon name='pets' size={40} color='#FFF' />
                         <Badge value="4" status="primary" containerStyle={{
                             position: 'absolute',
@@ -183,11 +189,11 @@ function DashBoard(props) {
                             right: -4
                         }} />
                     </SubmitChat>
-                    <ContainerPet  >
+                    <ContainerPet onPress={conversas}>
                         <ImagePet source={{ uri: usuario.pets.imagem }} />
                         <NomePet>{usuario.pets.nome}</NomePet>
                     </ContainerPet>
-                    <SubmitChat color={theme.colors.errors} onPress={chatMeet}>
+                    <SubmitChat color={theme.colors.errors} >
                         <Iconn name='heart' size={40} color='#FFF' />
                         <Badge value="4" status="error" containerStyle={{
                             position: 'absolute',

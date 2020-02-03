@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, Image } from 'react-native'
+import { Badge } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { conversasPetFetch } from '../../store/listaConversas/actions'
 import _ from 'lodash'
@@ -36,9 +37,7 @@ function Conversas(props) {
                     <NomeDonoPet>{item.nome}</NomeDonoPet>
 
                 </ContainerPetChat>
-                <ContainerNotification>
-                    <TextNotification>1</TextNotification>
-                </ContainerNotification>
+                <Badge value={props.conversa.length} status="success" />
             </SelectedChat>
         )
     }
@@ -51,8 +50,6 @@ function Conversas(props) {
             />
         )
     }
-
-    console.log()
     return (
         <>
 
@@ -61,13 +58,19 @@ function Conversas(props) {
     )
 }
 
-const mapStateToProps = ({ usuario, listas }) => {
+const mapStateToProps = ({ usuario, listas, lista }) => {
 
     const conversas = _.map(listas, (val, uid) => {
         return { ...val, uid }
     })
+
+    const conversa = _.map(lista, (val, uid) => {
+        return { ...val, uid }
+    })
+
     return {
         conversas,
+        conversa,
         usuario
     }
 }

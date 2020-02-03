@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, ActivityIndicator } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Iconn from 'react-native-vector-icons/AntDesign'
 import {
@@ -59,7 +59,7 @@ function Contatos(props) {
         if (id_pet > 0) {
             if (tipo === true) {
                 loadAmigos(id_pet)
-            } else if(tipo === false) {
+            } else if (tipo === false) {
                 loadMeets(id_pet)
             }
 
@@ -78,7 +78,7 @@ function Contatos(props) {
             </View >
         )
     }
-    let iconCor = tipo === true ? {  backgroundColor: theme.colors.primary  } : { backgroundColor: theme.colors.errors}
+    let iconCor = tipo === true ? { backgroundColor: theme.colors.primary } : { backgroundColor: theme.colors.errors }
     function renderRow({ item }) {
         const data = item
         return (
@@ -101,10 +101,17 @@ function Contatos(props) {
     function renderListAmizade() {
         return (
             <>
-                <List renderItem={renderRow}
-                    data={tipo === true ? amigos : meet}
-                    keyExtractor={item => String(item.id_pet)}
-                />
+                {loading ? (
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="large" color={theme.colors.primary} />
+                    </View>
+                ) : (
+                        <List renderItem={renderRow}
+                            data={tipo === true ? amigos : meet}
+                            keyExtractor={item => String(item.id_pet)}
+                        />
+                    )}
+
             </>
 
         )
