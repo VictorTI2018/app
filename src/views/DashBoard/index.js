@@ -35,7 +35,7 @@ import { getPets } from '../../webservice/pet'
 
 import { addAmizade, addMeet } from '../../webservice/contatos'
 
-import { getNotificacao } from '../../webservice/notificacao'
+import _ from 'lodash'
 
 const horizontalMargin = 20
 const slideWidth = 300
@@ -183,7 +183,7 @@ function DashBoard(props) {
                 <ContainerCard>
                     <SubmitChat >
                         <Icon name='pets' size={40} color='#FFF' />
-                        <Badge value="4" status="primary" containerStyle={{
+                        <Badge value={props.conversas.length} status="primary" containerStyle={{
                             position: 'absolute',
                             top: -4,
                             right: -4
@@ -195,7 +195,7 @@ function DashBoard(props) {
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors} >
                         <Iconn name='heart' size={40} color='#FFF' />
-                        <Badge value="4" status="error" containerStyle={{
+                        <Badge value={props.conversas.length} status="error" containerStyle={{
                             position: 'absolute',
                             top: -4,
                             right: -4
@@ -248,9 +248,14 @@ function DashBoard(props) {
     )
 }
 
-const mapStateToProps = ({ usuario }) => {
+const mapStateToProps = ({ usuario, listas }) => {
+    const conversas = _.map(listas, (val, uid) => {
+        return { ...val, uid }
+    })
+    console.log(conversas)
     return {
-        usuario: usuario
+        usuario: usuario,
+        conversas
     }
 }
 
