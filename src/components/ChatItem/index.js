@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import Notification from 'react-native-push-notification'
 import { modificaMensagem, enviarMensagem, conversaPetFetch } from '../../store/chat/actions'
 import { View, TextInput, FlatList, Text, Image } from 'react-native'
 import _ from 'lodash'
@@ -11,7 +12,7 @@ import styles from './styles'
 function ChatItem(props) {
 
     const [dataSource, setDataSource] = useState()
-    const situacao = props.navigation.getParam('situacao')
+    const situacao = props.navigation.getParam('tipo')
 
     const { pets } = props.usuario
     useEffect(() => {
@@ -29,6 +30,8 @@ function ChatItem(props) {
         criarFonteDados(props.conversa)
     }, [props.conversa])
 
+
+
     function _enviarMensagem() {
         const amigo_pet = props.navigation.getParam('model')
         const pet = pets
@@ -38,7 +41,26 @@ function ChatItem(props) {
             mensagem,
             pet
         }
+
         props.enviarMensagem(model)
+        for(let value of dataSource) {
+            if(value.tipo === "e")  {
+                notificarMensagem()
+            } else {
+                notificarMensagem()
+            }
+        }
+    }
+
+
+    function notificarMensagem() {
+        const amigo = props.navigation.getParam('model')
+        const { id_pet } = amigo
+        Notification.localNotification({
+            title: "Notificação PetMeet", // (optional)
+            message: props.mensagem, // (required)
+            userInfo: id_pet
+        })
     }
 
     function criarFonteDados(conversa) {
@@ -105,7 +127,6 @@ const mapStateToProps = ({ mensagem, lista, usuario }) => {
 
         return { ...val, uid }
     })
-
     return {
         conversa,
         mensagem: mensagem,

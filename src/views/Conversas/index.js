@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { conversasPetFetch } from '../../store/listaConversas/actions'
 import _ from 'lodash'
 
-import { SelectedChat, ContainerPetChat, ContainerNotification, TextNotification, NomeDonoPet } from './styles'
+import { SelectedChat, ContainerPetChat, NomeDonoPet } from './styles'
 
 function Conversas(props) {
 
@@ -52,8 +52,11 @@ function Conversas(props) {
     }
     return (
         <>
-
-            {renderLista()}
+            {dataSource.length ? renderLista() : (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text>Não há mensagens no momento!</Text>
+                </View>
+            )}
         </>
     )
 }
