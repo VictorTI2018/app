@@ -15,37 +15,38 @@ export const enviarMensagem = ({ amigo_pet, mensagem, pet }) => {
     return dispatch => {
 
         //dados do contato => usuario, nome, id_pet, mensagem
-        const nome_amigo = amigo_pet.nome
-        const nome = pet.nome
-        const amigoNomeB64 = b64.encode(nome_amigo)
-        const nomePetB4 = b64.encode(nome)
+        const id_amigo = amigo_pet.id_pet
+        const pet_id = pet.id_pet
+        const amigoIdB64 = b64.encode(id_amigo)
+        const petIdB4 = b64.encode(pet_id)
 
-        firebase.database().ref(`/mensagem/${nomePetB4}/${amigoNomeB64}`)
+        firebase.database().ref(`/mensagem/${petIdB4}/${amigoIdB64}`)
             .push({ mensagem, tipo: 'e' })
             .then(() => {
-                firebase.database().ref(`/mensagem/${amigoNomeB64}/${nomePetB4}`)
+                firebase.database().ref(`/mensagem/${amigoIdB64}/${petIdB4}`)
                     .push({ mensagem, tipo: 'r' })
                     .then(() => dispatch({ type: ENVIA_MENSAGEM_SUCESSO }))
             })
             .then(() => {
-                firebase.database().ref(`/pet_conversas/${nomePetB4}/${amigoNomeB64}`)
-                    .set({ nome: nome_amigo, imagem: amigo_pet.imagem })
+                firebase.database().ref(`/pet_conversas/${petIdB4}/${amigoIdB64}`)
+                    .set({ nome: amigo_pet.nome, imagem: amigo_pet.imagem })
             }).then(() => {
-                firebase.database().ref(`/pet_conversas/${amigoNomeB64}/${nomePetB4}`)
-                    .set({ nome: nome, imagem: pet.imagem })
+                firebase.database().ref(`/pet_conversas/${amigoIdB64}/${petIdB4}`)
+                    .set({ nome: pet.nome, imagem: pet.imagem })
             })
 
     }
 
 }
 
-export const conversaPetFetch = ({ nome_amigo, pet }) => {
+export const conversaPetFetch = (model) => {
     //compor os nome
+    const { amigo, pet } = model
 
-    let nomePetB64 = b64.encode(pet.nome)
-    let amigoNomeB64 = b64.encode(nome_amigo)
+    let petIdB4 = b64.encode(pet.id_pet)
+    let amigoIdB64 = b64.encode(amigo.id_pet)
     return dispatch => {
-        firebase.database().ref(`/mensagem/${nomePetB64}/${amigoNomeB64}`)
+        firebase.database().ref(`/mensagem/${petIdB4}/${amigoIdB64}`)
             .on("value", snapshot => {
                 dispatch({ type: LISTA_CONVERSA_PET, payload: snapshot.val() })
             })

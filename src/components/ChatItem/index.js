@@ -11,12 +11,13 @@ import styles from './styles'
 function ChatItem(props) {
 
     const [dataSource, setDataSource] = useState()
+    const situacao = props.navigation.getParam('situacao')
 
     useEffect(() => {
-        const { nome } = props.navigation.getParam('model')
+        const amigo = props.navigation.getParam('model')
         const pet = props.navigation.getParam('pet')
         let model = {
-            nome_amigo: nome,
+            amigo,
             pet
         }
         props.conversaPetFetch(model)
@@ -63,8 +64,10 @@ function ChatItem(props) {
         }
 
     }
+
+    let backGround = situacao === 'amigo' ? { backgroundColor: '#BBDEFB' } : { backgroundColor: '#E57373' }
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, backGround]}>
             <View style={styles.listContainer}>
                 <FlatList data={dataSource}
                     renderItem={renderRow}

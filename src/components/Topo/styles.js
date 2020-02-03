@@ -8,6 +8,7 @@ export const Container = styled.View`
     align-items: center;
     padding: 3px;
     background-color: ${theme.colors.primary};
+    height: 100;
     
 `
 

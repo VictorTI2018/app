@@ -1,4 +1,5 @@
 import React from 'react'
+import { StyleSheet } from 'react-native'
 import styled from 'styled-components'
 import theme from '../../theme'
 
@@ -75,3 +76,15 @@ export const NomeDonoPet = styled.Text`
     font-size: 15px;
     margin-left: 15px;
 `
+
+export default StyleSheet.create({
+    containerIcon: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 200,
+        height: 30,
+        width: 30,
+        backgroundColor: theme.colors.primary,
+        marginLeft: 10
+    }
+})

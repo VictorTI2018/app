@@ -14,6 +14,8 @@ import {
 
 import _ from 'lodash'
 
+import { getAmigos } from '../../webservice/contatos'
+
 const dados = [
     { id_pet: 1, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
     { id_pet: 2, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
@@ -22,7 +24,7 @@ const dados = [
     { id_pet: 5, nome: 'Bryan', imagem: require("../../assets/cachorro1.png") },
 ]
 
-import theme from '../../theme'
+import styles from './styles'
 
 function Contatos(props) {
 
@@ -30,14 +32,30 @@ function Contatos(props) {
     const pet = props.usuario.pets
 
     const [loading, setLoading] = useState(false)
-    const [petFfriend, setPetFriend] = useState([])
-    const [petmeet, setPetMeet] = useState([])
+    const [amigos, setAmigos] = useState([])
+    const [meet, setMeet] = useState([])
 
     function selectedItem(item) {
-        props.navigation.push('ChatAmizade', { model: item, pet: pet })
+        props.navigation.push('ChatAmizade', { model: item, pet: pet, situacao: tipo })
     }
 
 
+    async function loadAmigos(id_pet) {
+        try {
+            setLoading(true)
+            const resp = await getAmigos(id_pet)
+            setAmigos(resp.data)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        let { id_pet } = pet
+        if (id_pet > 0) {
+            loadAmigos(id_pet)
+        }
+    }, [])
 
     function renderTopo() {
         return (
@@ -52,15 +70,15 @@ function Contatos(props) {
         )
     }
 
-    function renderRow(item) {
+    function renderRow({ item }) {
         const data = item
         return (
             <SelectedChat onPress={() => { selectedItem(data) }}>
                 <ContainerPetChat>
-                    <FotoPet source={data.imagem} />
+                    <FotoPet source={{ uri: data.imagem }} />
                     <ContainerDadosChat>
                         <NomePetChat>{data.nome}</NomePetChat>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 200, height: 30, width: 30, backgroundColor: theme.colors.primary }}>
+                        <View style={styles.containerIcon}>
                             <Icon name="pets" size={20} color="#FFF" />
                         </View>
                     </ContainerDadosChat>
@@ -73,7 +91,7 @@ function Contatos(props) {
     function renderListAmizade() {
         return (
             <List renderItem={renderRow}
-                data={dados}
+                data={amigos}
                 keyExtractor={item => String(item.id_pet)}
             />
         )

@@ -15,8 +15,6 @@ import theme from '../../theme'
 
 import { getNotificacao } from '../../webservice/notificacao'
 
-import Notificacao from '../../views/Notificacao'
-
 
 import styles, { Container } from './styles'
 
@@ -44,18 +42,12 @@ export function Topo(props) {
         getToken()
     }, [])
 
-    useEffect(() => {
-        if(pet.id_pet !== undefined) {
-            notificacao()
-        }
-        
-    }, [ value ])
+
 
     let boasVindas = `Ola ${props.usuario.nome} seja bem vindo(a)`
     return (
         <>
-           <Notificacao isVisible={isVisible} onCancel={() => setIsVisible(false)}/>
-            <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
+            <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content"  />
             <Container style={!token ? { justifyContent: 'space-around' } : { justifyContent: 'space-between' }} >
                 
                 <View >
@@ -96,7 +88,7 @@ export function Topo(props) {
                                 />
                                 <Badge
                                     status="error"
-                                    value={value}
+                                    value="2"
                                     containerStyle={{ position: 'absolute', top: -4, right: -4 }}
                                 />
                             </View>

@@ -107,7 +107,7 @@ function DashBoard(props) {
     }
 
     function chatAmizade() {
-        props.navigation.push('Chat', { tipo: 'amizade' })
+        props.navigation.push('Chat', { tipo: 'amigo' })
     }
 
     function chatMeet() {
