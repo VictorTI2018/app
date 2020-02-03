@@ -54,8 +54,7 @@ function DashBoard(props) {
 
     const [pets, setPets] = useState([])
     const [loading, setLoading] = useState(false)
-    const [amizade, setAmizade] = useState()
-    const [meet, setMeet] = useState()
+    const [value, setValue] = useState(0)
 
     async function loadPets() {
         try {
@@ -73,6 +72,11 @@ function DashBoard(props) {
     useEffect(() => {
         loadPets()
     }, [])
+
+
+    useEffect(() => {
+        setValue(props.conversas.length)
+    }, [props.conversas])
 
     async function handleFriend(pet_amigo_id, item) {
         let id_pet = usuario.pets.id_pet
@@ -183,7 +187,7 @@ function DashBoard(props) {
                 <ContainerCard>
                     <SubmitChat >
                         <Icon name='pets' size={40} color='#FFF' />
-                        <Badge value={props.conversas.length} status="primary" containerStyle={{
+                        <Badge value={value} status="primary" containerStyle={{
                             position: 'absolute',
                             top: -4,
                             right: -4
@@ -195,7 +199,7 @@ function DashBoard(props) {
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors} >
                         <Iconn name='heart' size={40} color='#FFF' />
-                        <Badge value={props.conversas.length} status="error" containerStyle={{
+                        <Badge value={value} status="error" containerStyle={{
                             position: 'absolute',
                             top: -4,
                             right: -4

@@ -85,16 +85,15 @@ function CadastroEndereco(props) {
         try {
             setLoading(true)
             const resp = await updateEndereco(id_endereco, getModel())
-            console.log(resp.data)
-            // if (resp.status === 200) {
-            //     showMessage({
-            //         message: "SUCESSO",
-            //         description: "Endereco Atualizado com sucesso",
-            //         type: "success",
-            //         icon: 'auto',
-            //         duration: 1500
-            //     })
-            // }
+            if (resp.status === 200) {
+                showMessage({
+                    message: "SUCESSO",
+                    description: "Endereco Atualizado com sucesso",
+                    type: "success",
+                    icon: 'auto',
+                    duration: 1500
+                })
+            }
         } finally {
             setLoading(false)
         }
