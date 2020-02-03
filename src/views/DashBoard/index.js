@@ -107,11 +107,11 @@ function DashBoard(props) {
     }
 
     function chatAmizade() {
-        props.navigation.push('Chat', { tipo: 'amigo' })
+        props.navigation.push('Chat', { tipo: true })
     }
 
     function chatMeet() {
-        props.navigation.push('Chat', { tipo: 'meet' })
+        props.navigation.push('Chat', { tipo: false})
     }
 
     function cadastrarPet() {

@@ -12,7 +12,9 @@ export async function addMeet(model) {
     return http.post('/api/petmeets/petmeet', model)
 }
 
-
+export async function getMeets(id_pet) {
+    return http.get(`/api/petmeets/meets/${id_pet}`)
+}
 
 export async function getContatos(id_pet) {
     return http.get(`/api/pet/pet/contatos/${id_pet}`)

@@ -84,7 +84,6 @@ export default StyleSheet.create({
         borderRadius: 200,
         height: 30,
         width: 30,
-        backgroundColor: theme.colors.primary,
         marginLeft: 10
     }
 })

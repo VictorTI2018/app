@@ -65,7 +65,7 @@ function ChatItem(props) {
 
     }
 
-    let backGround = situacao === 'amigo' ? { backgroundColor: '#BBDEFB' } : { backgroundColor: '#E57373' }
+    let backGround = situacao ? { backgroundColor: '#BBDEFB' } : { backgroundColor: '#E57373' }
     return (
         <View style={[styles.container, backGround]}>
             <View style={styles.listContainer}>
