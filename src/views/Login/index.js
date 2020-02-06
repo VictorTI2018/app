@@ -18,6 +18,7 @@ function Login(props) {
 
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
+    const [ token, setToken ] = useState(null)
 
     const [loading, setLoading] = useState(false)
 
@@ -31,6 +32,7 @@ function Login(props) {
             password
         }
     }
+
 
 
     async function handleSubmit() {

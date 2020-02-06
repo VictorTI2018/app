@@ -256,7 +256,6 @@ const mapStateToProps = ({ usuario, listas }) => {
     const conversas = _.map(listas, (val, uid) => {
         return { ...val, uid }
     })
-    console.log(conversas)
     return {
         usuario: usuario,
         conversas

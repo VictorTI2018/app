@@ -98,7 +98,6 @@ function CadastroPet(props) {
     useEffect(() => {
         let id_pet = props.navigation.getParam('id_pet')
         if(id_pet > 0) {
-            console.log(pets)
             setNome(pets.nome)
             setEspecie(pets.especie.nome)
         }
@@ -160,7 +159,6 @@ function CadastroPet(props) {
                         }
                     } else {
                         let res = await createPetNoToken(getModel())
-                        console.log(res.data)
                     }
                 } finally {
                     setLoading(false)

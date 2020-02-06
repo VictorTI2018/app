@@ -11,7 +11,7 @@ const reducers = combineReducers({
     navigation: navigationReducer,
     mensagem: mensagemReducer,
     lista: listaConversa,
-    listas: listaConversas
+    listas: listaConversas,
 })
 
 export const storeConfig = () => {

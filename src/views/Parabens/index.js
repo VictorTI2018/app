@@ -38,7 +38,6 @@ export default function Parabens({ navigation }) {
     async function getUser() {
         const usuario = await AsyncStorage.getItem("usuario")
         setUsuario(usuario)
-        console.log(usuario)
     }
 
     async function getToken() {
@@ -66,7 +65,6 @@ export default function Parabens({ navigation }) {
     function renderParabens() {
         const nomePet = get(pet, 'nome', '')
         const nomeUsuario = get(usuario, 'nome')
-        console.log(nomeUsuario)
         return (
             <CardPet>
                 <ContainerNome>

@@ -1,14 +1,14 @@
-import { SET_MENSAGEM, ENVIA_MENSAGEM_SUCESSO } from './types'
+import { SET_MENSAGEM, ENVIA_MENSAGEM_SUCESSO, NOTIFICACAO_CONVERSA } from './types'
 import { LISTA_CONVERSA_PET } from '../listaConversa/types'
 import b64 from 'base-64'
 import firebase from 'firebase'
 
 export const modificaMensagem = texto => {
 
-    return {
+    return ({
         type: SET_MENSAGEM,
         payload: texto
-    }
+    })
 }
 
 export const enviarMensagem = ({ amigo_pet, mensagem, pet }) => {
@@ -19,6 +19,7 @@ export const enviarMensagem = ({ amigo_pet, mensagem, pet }) => {
         const pet_id = pet.id_pet
         const amigoIdB64 = b64.encode(id_amigo)
         const petIdB4 = b64.encode(pet_id)
+        const { menssage } = mensagem
 
         firebase.database().ref(`/mensagem/${petIdB4}/${amigoIdB64}`)
             .push({ mensagem, tipo: 'e', nome: pet.nome, imagem: pet.imagem })
@@ -51,3 +52,4 @@ export const conversaPetFetch = (model) => {
             })
     }
 }
+

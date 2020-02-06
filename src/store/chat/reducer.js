@@ -1,17 +1,21 @@
-import { SET_MENSAGEM, ENVIA_MENSAGEM_SUCESSO } from './types'
+import { SET_MENSAGEM, ENVIA_MENSAGEM_SUCESSO, NOTIFICACAO_CONVERSA } from './types'
 
 const initialState = {
     mensagem: ''
 }
 
 const reducers = (state = initialState, action) => {
-    if (action.type === SET_MENSAGEM) {
-        return { ...state, mensagem: action.payload }
+    switch (action.type) {
+        case SET_MENSAGEM:
+            return { ...state, mensagem: action.payload }
+        case ENVIA_MENSAGEM_SUCESSO:
+            return { 
+                ...initialState
+            }
+        
+        default:
+            return state
     }
-    if (action.type === ENVIA_MENSAGEM_SUCESSO) {
-        return { ...state, mensagem: '' }
-    }
-    return state
 }
 
 export default reducers
