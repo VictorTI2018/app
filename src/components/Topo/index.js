@@ -26,7 +26,7 @@ export function Topo(props) {
     const [ isVisible, setIsVisible ] = useState(false)
 
     const stylesToken = !token ? {} : {}
-    const pet = props.usuario.pets
+    const petLogado = props.pet.pets
 
     async function getToken() {
         let token = await AsyncStorage.getItem("token")
@@ -82,9 +82,7 @@ export function Topo(props) {
                             <View style={{ flexDirection: 'row' }}>
                                 <Avatar
                                     rounded
-                                    source={{
-                                        uri: pet.imagem,
-                                    }}
+                                    source={{ uri: petLogado.imagem }}
                                 />
                                 <Badge
                                     status="error"
@@ -102,9 +100,10 @@ export function Topo(props) {
     )
 }
 
-const mapStateToProps = ({ usuario }) => {
+const mapStateToProps = ({ usuario, pet }) => {
     return {
-        usuario: usuario
+        usuario: usuario,
+        pet
     }
 }
 

@@ -80,8 +80,9 @@ function CadastroUsuario(props) {
         try {
             setLoading(true)
             const resp = await updateUsuario(id_usuario, getModel())
-
+            console.log(resp.data.user)
             if (resp.status === 200) {
+                props.setUser(resp.data)
                 props.navigation.push('CadastroEndereco', { id_usuario: id_usuario, update: true })
             }
         } finally {

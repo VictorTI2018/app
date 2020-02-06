@@ -20,10 +20,10 @@ function SlideMenu(props) {
         id_usuario: props.usuario.id_usuario,
         nome: props.usuario.nome,
         imagem: props.usuario.imagem,
-        qtd_pets: props.usuario.qtd_pets,
-        pets: props.usuario.pets
+        qtd_pets: props.usuario.qtd_pets
     }
 
+    const petLogado = props.pet.pets
 
 
     let listItems = [
@@ -133,13 +133,9 @@ function SlideMenu(props) {
                     </View>
 
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        {usuario.pets &&
-                            <>
-                                <Image style={styles.roundedDog} source={{ uri: usuario.pets.imagem }} />
-                                <Submit onPress={editarPet}>Editar Perfil</Submit>
-                                <Nome>{usuario.pets.nome}</Nome>
-                            </>
-                        }
+                        <Image style={styles.roundedDog} source={{ uri: petLogado.imagem }} />
+                        <Submit onPress={editarPet}>Editar Perfil</Submit>
+                        <Nome>{petLogado.nome}</Nome>
                     </View>
 
 
@@ -234,9 +230,10 @@ const styles = {
         borderRadius: 50
     },
 }
-const mapStateToProps = ({ usuario }) => {
+const mapStateToProps = ({ usuario, pet }) => {
     return {
-        usuario: usuario
+        usuario: usuario,
+        pet
     }
 }
 

@@ -11,7 +11,6 @@ const initialState = {
     email: null,
     imagem: null,
     qtd_pets: null,
-    pets: {},
     endereco: {}
 }
 
@@ -26,7 +25,6 @@ const reducer = (state = initialState, action) => {
                 email: action.payload.email,
                 imagem: action.payload.imagem,
                 qtd_pets: action.payload.qtd_pets,
-                pets: action.payload.pets,
                 endereco: action.payload.endereco
             }
         case USER_UPDATED:
@@ -38,7 +36,6 @@ const reducer = (state = initialState, action) => {
                 email: action.payload.email,
                 imagem: action.payload.imagem,
                 qtd_pets: action.payload.qtd_pets,
-                pets: action.payload.pets,
                 endereco: action.payload.endereco
             }
         case USER_LOGGED_OUT:

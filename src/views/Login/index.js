@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { showMessage } from 'react-native-flash-message'
 import { connect } from 'react-redux'
 import { userLogged } from '../../store/user/action'
+import { setPet } from '../../store/pet/actions'
 
 import { View, Alert } from 'react-native'
 
@@ -59,9 +60,11 @@ function Login(props) {
                 } else {
                     const token = resp.data.token
                     const user = resp.data.user
+                    console.log(user.pets)
                     if (token && user) {
                         await AsyncStorage.setItem('token', token)
                         props.onLogin(user)
+                        props.onPet(user.pets)
                         showMessage({
                             message: 'Logado com sucesso',
                             type: 'success',
@@ -125,7 +128,8 @@ function Login(props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: user => dispatch(userLogged(user))
+        onLogin: user => dispatch(userLogged(user)),
+        onPet: pet => dispatch(setPet(pet))
     }
 }
 

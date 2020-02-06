@@ -5,6 +5,7 @@ import navigationReducer from './navigation/reducer'
 import mensagemReducer from './chat/reducer'
 import listaConversa from './listaConversa/reducer'
 import listaConversas from './listaConversas/reducer'
+import petReducer from './pet/reducers'
 
 const reducers = combineReducers({
     usuario: userReducer,
@@ -12,6 +13,7 @@ const reducers = combineReducers({
     mensagem: mensagemReducer,
     lista: listaConversa,
     listas: listaConversas,
+    pet: petReducer
 })
 
 export const storeConfig = () => {

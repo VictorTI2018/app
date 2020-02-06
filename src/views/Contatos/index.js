@@ -70,7 +70,7 @@ function Contatos(props) {
         return (
             <View style={{ backgroundColor: '#546E7A', height: 80, alignItems: 'center', flexDirection: 'row' }}>
                 <View style={{ alignItems: 'flex-start', marginLeft: 10 }}>
-                    <Image source={{ uri: pet.imagem }} style={{ height: 65, width: 65, borderRadius: 65 }} />
+                    <Image source={require('../../assets/cachorro1.png')} style={{ height: 65, width: 65, borderRadius: 65 }} />
                 </View>
                 <View style={{ alignItems: 'flex-end', marginLeft: 100 }}>
                     <Text style={{ color: '#FFF', fontSize: 24 }}>{pet.nome}</Text>

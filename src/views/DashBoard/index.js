@@ -48,19 +48,21 @@ function DashBoard(props) {
 
     const usuario = {
         nome: props.usuario.nome,
-        pets: props.usuario.pets,
         qtd_pets: props.usuario.qtd_pets
     }
+
+    const petLogado = props.pet.pets
 
     const [pets, setPets] = useState([])
     const [loading, setLoading] = useState(false)
     const [value, setValue] = useState(0)
 
+
     async function loadPets() {
         try {
             setLoading(true)
             const resp = await getPets()
-            let pets = resp.data.filter(item => item.id_pet !== usuario.pets.id_pet)
+            let pets = resp.data.filter(item => item.id_pet !== petLogado.id_pet)
             setPets(pets)
         } finally {
             setLoading(false)
@@ -79,7 +81,7 @@ function DashBoard(props) {
     }, [props.conversas])
 
     async function handleFriend(pet_amigo_id, item) {
-        let id_pet = usuario.pets.id_pet
+        let id_pet = petLogado.id_pet
         let model = {
             pet_amigo_id,
             id_pet
@@ -94,7 +96,7 @@ function DashBoard(props) {
     }
 
     async function handleMeet(pet_petmeet_id, item) {
-        let id_pet = usuario.pets.id_pet
+        let id_pet = petLogado.id_pet
         let model = {
             pet_petmeet_id,
             id_pet
@@ -194,8 +196,8 @@ function DashBoard(props) {
                         }} />
                     </SubmitChat>
                     <ContainerPet onPress={conversas}>
-                        <ImagePet source={{ uri: usuario.pets.imagem }} />
-                        <NomePet>{usuario.pets.nome}</NomePet>
+                        <ImagePet source={{ uri: petLogado.imagem }} />
+                        <NomePet>{petLogado.nome}</NomePet>
                     </ContainerPet>
                     <SubmitChat color={theme.colors.errors} >
                         <Iconn name='heart' size={40} color='#FFF' />
@@ -252,13 +254,14 @@ function DashBoard(props) {
     )
 }
 
-const mapStateToProps = ({ usuario, listas }) => {
+const mapStateToProps = ({ usuario, listas, pet }) => {
     const conversas = _.map(listas, (val, uid) => {
         return { ...val, uid }
     })
     return {
         usuario: usuario,
-        conversas
+        conversas,
+        pet
     }
 }
 
