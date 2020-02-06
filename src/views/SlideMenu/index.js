@@ -16,12 +16,12 @@ import { toggleDrawer, openDrawer } from '../../navigation'
 function SlideMenu(props) {
 
 
-    const usuario = {
-        id_usuario: props.usuario.id_usuario,
-        nome: props.usuario.nome,
-        imagem: props.usuario.imagem,
-        qtd_pets: props.usuario.qtd_pets
-    }
+
+
+    const [id_usuario, setIdUsuario] = useState()
+    const [nome, setNome] = useState()
+    const [imagem, setImagem] = useState()
+    const [qtd_pets, setQtdPets] = useState(0)
 
     const petLogado = props.pet.pets
 
@@ -61,6 +61,13 @@ function SlideMenu(props) {
         loadLocais()
     }, [])
 
+    useEffect(() => {
+        setIdUsuario(props.usuario.id_usuario)
+        setNome(props.usuario.nome)
+        setImagem(props.usuario.imagem)
+        setQtdPets(props.usuario.qtd_pets)
+    }, [props.usuario])
+
 
     async function removeStore() {
         props.onLogout()
@@ -87,11 +94,11 @@ function SlideMenu(props) {
     }
 
     function editarPet() {
-        props.navigation.push('CadastroPet', { id_pet: usuario.pets.id_pet })
+        props.navigation.push('CadastroPet', { id_pet: petLogado.id_pet })
     }
 
     function editarCliente() {
-        props.navigation.push('CadastroUsuario', { id_usuario: usuario.id_usuario })
+        props.navigation.push('CadastroUsuario', { id_usuario: id_usuario })
     }
 
     async function loadLocais() {
@@ -127,9 +134,9 @@ function SlideMenu(props) {
 
                 <View style={styles.rowImage}>
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-                        <Image style={styles.rounded} source={{ uri: usuario.imagem }} />
+                        <Image style={styles.rounded} source={{ uri: imagem }} />
                         <Submit onPress={editarCliente}>Editar Perfil</Submit>
-                        <Nome>{usuario.nome}</Nome>
+                        <Nome>{nome}</Nome>
                     </View>
 
                     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
@@ -151,7 +158,7 @@ function SlideMenu(props) {
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
-                        <Text style={{ color: '#FFF', fontSize: 17 }}>Pets Cadastrado: {usuario.qtd_pets || 0}</Text>
+                        <Text style={{ color: '#FFF', fontSize: 17 }}>Pets Cadastrado: {qtd_pets || 0}</Text>
                         <Submit textColor="#000" colors="#FF8A80">Trocar de pet</Submit>
                     </View>
                 </SafeAreaView>

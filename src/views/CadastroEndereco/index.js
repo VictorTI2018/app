@@ -15,7 +15,7 @@ const MAX_FILE_SIZE = 3
 
 function CadastroEndereco(props) {
 
-    const endereco = props.endereco.endereco
+   
 
     const [loading, setLoading] = useState(false)
     const [cep, setCep] = useState()
@@ -40,13 +40,14 @@ function CadastroEndereco(props) {
     useEffect(() => {
         let update = props.navigation.getParam('update')
         if (update) {
-            setIdEndereco(endereco.id_endereco)
-            setCep(endereco.cep)
-            setLogradouro(endereco.logradouro)
-            setBairro(endereco.bairro)
-            setCidade(endereco.cidade.cidade)
-            setUf(endereco.cidade.uf)
-            setIdCidade(endereco.cidade.id_cidade)
+            console.log(props)
+            // setIdEndereco(endereco.id_endereco)
+            // setCep(endereco.cep)
+            // setLogradouro(endereco.logradouro)
+            // setBairro(endereco.bairro)
+            // setCidade(endereco.cidade.cidade)
+            // setUf(endereco.cidade.uf)
+            // setIdCidade(endereco.cidade.id_cidade)
         }
     }, [])
 

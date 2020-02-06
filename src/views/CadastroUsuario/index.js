@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux'
-import { userLogged, updateUser } from '../../store/user/action'
+import { userLogged } from '../../store/user/action'
 import { View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { PasswordField } from '../../components'
@@ -80,9 +80,9 @@ function CadastroUsuario(props) {
         try {
             setLoading(true)
             const resp = await updateUsuario(id_usuario, getModel())
-            console.log(resp.data.user)
+            const { user } = resp.data
             if (resp.status === 200) {
-                props.setUser(resp.data)
+                props.setUser(user)
                 props.navigation.push('CadastroEndereco', { id_usuario: id_usuario, update: true })
             }
         } finally {
@@ -203,7 +203,7 @@ const mapStateToProps = ({ usuario }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setUser: user => dispatch(updateUser(user))
+        setUser: user => dispatch(userLogged(user))
     }
 }
 

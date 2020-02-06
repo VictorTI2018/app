@@ -23,8 +23,7 @@ const reducer = (state = initialState, action) => {
                 sobrenome: action.payload.sobrenome,
                 email: action.payload.email,
                 imagem: action.payload.imagem,
-                qtd_pets: action.payload.qtd_pets,
-                endereco: action.payload.endereco
+                qtd_pets: action.payload.qtd_pets
             }
         case USER_UPDATED:
             return {
@@ -34,8 +33,7 @@ const reducer = (state = initialState, action) => {
                 sobrenome: action.payload.sobrenome,
                 email: action.payload.email,
                 imagem: action.payload.imagem,
-                qtd_pets: action.payload.qtd_pets,
-                endereco: action.payload.endereco
+                qtd_pets: action.payload.qtd_pets
             }
         case USER_LOGGED_OUT:
             return {
