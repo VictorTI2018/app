@@ -10,8 +10,7 @@ const initialState = {
     sobrenome: null,
     email: null,
     imagem: null,
-    qtd_pets: null,
-    endereco: {}
+    qtd_pets: null
 }
 
 const reducer = (state = initialState, action) => {

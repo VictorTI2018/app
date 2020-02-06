@@ -4,6 +4,7 @@ import { showMessage } from 'react-native-flash-message'
 import { connect } from 'react-redux'
 import { userLogged } from '../../store/user/action'
 import { setPet } from '../../store/pet/actions'
+import { setEndereco } from '../../store/endereco/actions'
 
 import { View, Alert } from 'react-native'
 
@@ -19,7 +20,7 @@ function Login(props) {
 
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
-    const [ token, setToken ] = useState(null)
+    const [token, setToken] = useState(null)
 
     const [loading, setLoading] = useState(false)
 
@@ -60,10 +61,10 @@ function Login(props) {
                 } else {
                     const token = resp.data.token
                     const user = resp.data.user
-                    console.log(user.pets)
                     if (token && user) {
                         await AsyncStorage.setItem('token', token)
                         props.onLogin(user)
+                        props.onEndereco(user.endereco)
                         props.onPet(user.pets)
                         showMessage({
                             message: 'Logado com sucesso',
@@ -103,7 +104,7 @@ function Login(props) {
 
     return (
         <FormContainer >
-            <Topo title="Login" perfil  />
+            <Topo title="Login" perfil />
             <View>
                 <Image title="Seja Bem-Vindo!"
                     sub="Faça seu login ou cadastre-se gratuitamente"
@@ -129,7 +130,8 @@ function Login(props) {
 const mapDispatchToProps = dispatch => {
     return {
         onLogin: user => dispatch(userLogged(user)),
-        onPet: pet => dispatch(setPet(pet))
+        onPet: pet => dispatch(setPet(pet)),
+        onEndereco: endereco => dispatch(setEndereco(endereco))
     }
 }
 

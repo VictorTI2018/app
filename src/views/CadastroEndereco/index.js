@@ -15,7 +15,7 @@ const MAX_FILE_SIZE = 3
 
 function CadastroEndereco(props) {
 
-    const endereco = props.usuario.endereco
+    const endereco = props.endereco.endereco
 
     const [loading, setLoading] = useState(false)
     const [cep, setCep] = useState()
@@ -167,9 +167,10 @@ function CadastroEndereco(props) {
     )
 }
 
-const mapStateToProps = ({ usuario }) => {
+const mapStateToProps = ({ usuario, endereco }) => {
     return {
-        usuario: usuario
+        usuario: usuario,
+        endereco
     }
 }
 

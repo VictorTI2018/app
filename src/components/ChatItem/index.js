@@ -15,7 +15,7 @@ function ChatItem(props) {
     const situacao = props.navigation.getParam('tipo')
     const [ tipo, setTipo ] = useState('')
 
-    const { pets } = props.usuario
+    const { pets } = props.pets
     useEffect(() => {
         const amigo = props.navigation.getParam('model')
         const pet = pets
@@ -141,7 +141,7 @@ function ChatItem(props) {
     )
 }
 
-const mapStateToProps = ({ mensagem, lista, usuario }) => {
+const mapStateToProps = ({ mensagem, lista, usuario, pet }) => {
     const conversa = _.map(lista, (val, uid) => {
 
         return { ...val, uid }
@@ -150,7 +150,8 @@ const mapStateToProps = ({ mensagem, lista, usuario }) => {
     return ({
         conversa,
         mensagem: mensagem,
-        usuario
+        usuario,
+        pet
     })
 }
 
