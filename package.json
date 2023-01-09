@@ -46,7 +46,7 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "stream-chat": "^1.2.2",
+    "stream-chat": "^8.2.1",
     "styled-components": "^4.4.1",
     "use-force-update": "^1.0.7",
     "validate.js": "^0.13.1"
